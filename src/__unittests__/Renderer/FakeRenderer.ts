@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import Logger from '../Logger';
 import BaseRenderer, {
   BaseRootRenderableType,
-  render,
+  renderChild,
 } from '../../BaseRenderer';
 import { InstanceTreeType } from '../../types/InstanceTree';
 import FakeRoot, { _FakeRoot } from './Components/FakeRoot';
@@ -24,7 +24,7 @@ export default class FakeRenderer extends BaseRenderer<_FakeRoot> {
     }, _.compact([
       toRender,
     ]));
-    render(this.instanceTree, renderRoot);
+    renderChild(this.instanceTree, renderRoot);
   }
   dispose() { }
 }

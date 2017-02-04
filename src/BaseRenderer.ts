@@ -22,7 +22,7 @@ export abstract class BaseReactiveRenderer<
 }
 
 // FIXME: implement a loop-variant for speed up!
-export function render(
+export function renderChild(
   instanceTree: InstanceTreeType,
   toRender: RenderableType<
     BasePropsType,
@@ -68,7 +68,7 @@ export function render(
     }
     const childInstanceTree = instanceTree.children[key];
     childInstanceTree.instance.updateBeforeChildren(renderableChild.props);
-    render(childInstanceTree, renderableChild);
+    renderChild(childInstanceTree, renderableChild);
     childInstanceTree.instance.updateAfterChildren(renderableChild.props);
   });
 

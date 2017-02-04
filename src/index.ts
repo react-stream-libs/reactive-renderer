@@ -1,7 +1,12 @@
 /**
  * Reactive Renderer
  */
-import BaseRenderer, { BaseRootRenderableType } from './BaseRenderer';
+import BaseRenderer, {
+  BaseRootRenderableType,
+  renderChild,
+  deleteChild,
+} from './BaseRenderer';
+
 import {
   createComponent,
 } from './createComponent';
@@ -15,6 +20,7 @@ import {
 
 export {
   BaseRenderer, BaseRootRenderableType,
+  renderChild, deleteChild,
 
   createComponent,
 
