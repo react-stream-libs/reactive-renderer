@@ -1,7 +1,7 @@
-import { BaseBlueprint } from '../types/BaseBlueprint';
-import { IParentableBy } from '../types/IParentableBy';
-import { BasePropsType } from '../types/BasePropsType';
-import { RenderableType } from '../types/Renderable';
+import { BaseBlueprint } from './types/BaseBlueprint';
+import { BasePropsType } from './types/BasePropsType';
+import { IParentableBy } from './types/IParentableBy';
+import { RenderableType } from './types/Renderable';
 
 export function createComponent<
   BlueprintClass extends BaseBlueprint<PropsType> & IParentableBy<ParentableTypes>,

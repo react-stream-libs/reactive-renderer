@@ -1,9 +1,26 @@
-import * as types from './types';
-import BaseRenderer, { BaseRootRenderableType } from './Renderer';
-import * as components from './components';
+/**
+ * Reactive Renderer
+ */
+import BaseRenderer, { BaseRootRenderableType } from './BaseRenderer';
+import {
+  createComponent,
+} from './createComponent';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  InstanceTreeType,
+  IParentableBy,
+  RenderableType,
+} from './types';
 
 export {
-  types,
   BaseRenderer, BaseRootRenderableType,
-  components,
+
+  createComponent,
+
+  BaseBlueprint,
+  BasePropsType,
+  InstanceTreeType,
+  IParentableBy,
+  RenderableType,
 };

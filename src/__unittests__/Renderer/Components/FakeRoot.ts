@@ -1,8 +1,8 @@
 import Logger from '../../Logger';
+import { createComponent } from '../../../createComponent';
 import { BaseBlueprint } from '../../../types/BaseBlueprint';
 import { BasePropsType } from '../../../types/BasePropsType';
 import { IParentableBy } from '../../../types/IParentableBy';
-import { createComponent } from '../../../components/createComponent';
 
 export class _NoneExistentBlueprint extends BaseBlueprint<BasePropsType> {
   init(parent: BaseBlueprint<BasePropsType>) {}

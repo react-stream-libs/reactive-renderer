@@ -1,6 +1,6 @@
 import { BaseBlueprint } from '../../../types/BaseBlueprint';
 import { BasePropsType } from '../../../types/BasePropsType';
-import { createComponent } from '../../../components/createComponent';
+import { createComponent } from '../../../createComponent';
 import { IParentableBy } from '../../../types/IParentableBy';
 import { RenderableType } from '../../../types/Renderable';
 import { __Parent } from './Parent';

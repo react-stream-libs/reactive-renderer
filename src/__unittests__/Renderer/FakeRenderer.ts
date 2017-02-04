@@ -3,7 +3,7 @@ import Logger from '../Logger';
 import BaseRenderer, {
   BaseRootRenderableType,
   render,
-} from '../../Renderer';
+} from '../../BaseRenderer';
 import { InstanceTreeType } from '../../types/InstanceTree';
 import FakeRoot, { _FakeRoot } from './Components/FakeRoot';
 

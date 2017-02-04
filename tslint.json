@@ -1,8 +1,17 @@
 {
-  "rulesDirectory": "node_modules/tslint-microsoft-contrib",
+  "rulesDirectory": [
+    "node_modules/tslint-microsoft-contrib"
+  ],
   "extends": "tslint-microsoft-contrib",
   "rules": {
     "no-for-in-array": false,
-    "restrict-plus-operands": false
+    "restrict-plus-operands": false,
+    "no-relative-imports": false,
+    "trailing-comma": [
+      true
+    ],
+    "ordered-imports": [
+      false
+    ]
   }
 }
