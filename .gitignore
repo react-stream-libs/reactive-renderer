@@ -1,0 +1,8 @@
+node_modules
+lib
+lib_es6
+*.log
+dist
+docs/*.js
+docs/**/*.js
+docs_ts_compiled
