@@ -61,6 +61,7 @@ export function renderChild(
     if (!instanceTree.children[key]) {
       const childInstance = new renderableChild.blueprint();
       childInstance.init(instanceTree.instance);
+      childInstance.applyInitialProps(renderableChild.props);
       instanceTree.children[key] = {
         instance: childInstance,
         children: {}
