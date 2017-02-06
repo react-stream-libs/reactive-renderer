@@ -15,9 +15,13 @@ export type BaseRootRenderableType<
 >
 
 export abstract class BaseReactiveRenderer<
-  RootType extends BaseBlueprint<BasePropsType>
+  RootType extends BaseBlueprint<RootPropsType>,
+  RootPropsType extends BasePropsType,
 > {
-  abstract render(rootRenderable: BaseRootRenderableType<RootType>): any;
+  abstract render(
+    rootRenderable: BaseRootRenderableType<RootType> | null,
+    rootProps?: RootPropsType
+  ): any;
   abstract dispose(): any;
 }
 

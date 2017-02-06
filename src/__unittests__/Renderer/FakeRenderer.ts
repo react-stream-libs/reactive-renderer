@@ -5,9 +5,9 @@ import BaseRenderer, {
   renderChild,
 } from '../../BaseRenderer';
 import { InstanceTreeType } from '../../types/InstanceTree';
-import FakeRoot, { _FakeRoot } from './Components/FakeRoot';
+import FakeRoot, { _FakeRoot, FakeRootPropsType } from './Components/FakeRoot';
 
-export default class FakeRenderer extends BaseRenderer<_FakeRoot> {
+export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsType> {
   logger: Logger;
   instanceTree: InstanceTreeType;
   constructor(logger: Logger) {
@@ -18,7 +18,7 @@ export default class FakeRenderer extends BaseRenderer<_FakeRoot> {
       children: {},
     };
   }
-  render(toRender?: BaseRootRenderableType<_FakeRoot>) {
+  render(toRender: BaseRootRenderableType<_FakeRoot> | null, rootProps?: FakeRootPropsType) {
     const renderRoot = FakeRoot({
       key: '__FAKEROOT__',
     }, _.compact([

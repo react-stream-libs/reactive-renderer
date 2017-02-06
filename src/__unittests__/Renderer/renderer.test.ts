@@ -48,7 +48,7 @@ describe('Renderer should...', () => {
         type: 'update',
       }),
     ]);
-    renderer.render();
+    renderer.render(null);
     const loggerAfterDeletion = new Logger(
       logger.logs.slice(5)
     )
