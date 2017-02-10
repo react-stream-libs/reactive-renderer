@@ -2,3 +2,4 @@ node_modules
 *.log
 docs
 docs_ts_compiled
+docs_src

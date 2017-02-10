@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "declaration": true,
+    "declaration": false,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "allowJs": false,
@@ -20,6 +20,8 @@
   ],
   "exclude": [
     "docs", "docs_ts_compiled",
+    "docs_src",
+    "dts-generator.js",
     "node_modules",
     "!node_modules/rxjs",
     "lib",
