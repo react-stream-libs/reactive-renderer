@@ -3,8 +3,8 @@ lib
 lib_es6
 *.log
 dist
+docs
 docs/*.js
 docs/**/*.js
-docs_src
 docs_ts_compiled
 reactive-renderer.d.ts
