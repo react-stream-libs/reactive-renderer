@@ -7,7 +7,7 @@ class _Root extends BaseBlueprint<BasePropsType> {
   init(parent: BaseBlueprint<BasePropsType>) { }
   updateBeforeChildren(props: BasePropsType) { }
   updateAfterChildren(props: BasePropsType) { }
-  delete() { }
+  cleanUp() { }
 }
 
 describe('unittest logger should...', () => {

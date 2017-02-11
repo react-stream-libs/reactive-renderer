@@ -86,7 +86,7 @@ export function deleteChild(
   _.forEach(childToDelete.children,
     (childOfChild, key) => deleteChild(childToDelete, key)
   );
-  childToDelete.instance.delete();
+  childToDelete.instance.cleanUp();
   delete instanceTree.children[childKey];
 }
 

@@ -28,7 +28,7 @@ export class __Child extends BaseBlueprint<ChildPropsType>
   }
   updateAfterChildren(props: ChildPropsType) {
   }
-  delete() {
+  cleanUp() {
   }
 }
 

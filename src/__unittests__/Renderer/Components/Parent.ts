@@ -19,7 +19,7 @@ export class __Parent extends BaseBlueprint<ParentPropsType>
   init(parent: _ParentParentTypes) { }
   updateBeforeChildren(props: ParentPropsType) { }
   updateAfterChildren(props: ParentPropsType) { }
-  delete() { }
+  cleanUp() { }
 }
 
 
@@ -56,7 +56,7 @@ export function getParentComps(logger: Logger): {
         props,
       }));
     }
-    delete() {
+    cleanUp() {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _Parent,

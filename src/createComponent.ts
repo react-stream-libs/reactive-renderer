@@ -3,6 +3,10 @@ import { BasePropsType } from './types/BasePropsType';
 import { IParentableBy } from './types/IParentableBy';
 import { RenderableType } from './types/Renderable';
 
+/**
+ * creates Component( Props => Renderable ) from a Blueprint Class.
+ * @param blueprintClass - the blueprint class
+ */
 export function createComponent<
   BlueprintClass extends BaseBlueprint<PropsType> & IParentableBy<ParentableTypes>,
   ParentableTypes extends BaseBlueprint<BasePropsType>,

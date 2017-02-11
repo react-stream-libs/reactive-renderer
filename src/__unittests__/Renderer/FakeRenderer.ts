@@ -1,3 +1,4 @@
+/** Fake Root */
 import * as _ from 'lodash';
 import Logger from '../Logger';
 import BaseRenderer, {
