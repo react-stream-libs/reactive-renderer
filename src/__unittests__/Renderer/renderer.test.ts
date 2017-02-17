@@ -1,7 +1,6 @@
 import { getGrandparentComps } from './Components/Grandparent';
 import { getLayerComps } from './Components/Layer';
 import Logger, { LogItem } from '../Logger';
-import * as stringify from 'json-stringify-safe';
 
 import FakeRenderer from './FakeRenderer';
 
