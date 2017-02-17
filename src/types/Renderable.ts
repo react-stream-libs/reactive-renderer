@@ -18,7 +18,8 @@ export type RenderableType<
   Blueprint extends BaseBlueprint<BasePropsType>,
   ParentableBy extends BaseBlueprint<BasePropsType>
 > = {
-  blueprint: { new(): Blueprint & IParentableBy<BaseBlueprint<BasePropsType>> },
+  // blueprint: { new(): Blueprint & IParentableBy<BaseBlueprint<BasePropsType>> },
+  blueprint: { new(): Blueprint & IParentableBy<ParentableBy> },
   // blueprint: {new(): Blueprint & IParentableBy<ParentableBlueprint>}
   props: PropsType,
   children: Array<

@@ -3,12 +3,11 @@ import { BasePropsType } from '../../../types/BasePropsType';
 import { createComponent } from '../../../createComponent';
 import { IParentableBy } from '../../../types/IParentableBy';
 import { RenderableType } from '../../../types/Renderable';
-import { __Parent } from './Parent';
+import { __Layer } from './Layer';
 
 import Logger, { LogItem } from '../../Logger';
 
-export type _ChildParentTypes = __Parent;
-;
+export type _ChildParentTypes = __Layer;
 export type ChildPropsType = {
 } & BasePropsType;
 

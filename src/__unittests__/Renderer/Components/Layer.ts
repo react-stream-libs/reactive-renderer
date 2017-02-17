@@ -7,51 +7,51 @@ import { __GrandParent } from './Grandparent';
 
 import Logger, { LogItem } from '../../Logger';
 
-export type _ParentParentTypes = __GrandParent;
+export type _LayerParentTypes = __GrandParent & __Layer;
 ;
-export type ParentPropsType = {
+export type LayerPropsType = {
 } & BasePropsType;
 
-export class __Parent extends BaseBlueprint<ParentPropsType>
-    implements IParentableBy<_ParentParentTypes> {
-  parent: _ParentParentTypes;
+export class __Layer extends BaseBlueprint<LayerPropsType>
+    implements IParentableBy<_LayerParentTypes> {
+  parent: _LayerParentTypes;
   logger: Logger;
-  init(parent: _ParentParentTypes) { }
-  updateBeforeChildren(props: ParentPropsType) { }
-  updateAfterChildren(props: ParentPropsType) { }
+  init(parent: _LayerParentTypes) { }
+  updateBeforeChildren(props: LayerPropsType) { }
+  updateAfterChildren(props: LayerPropsType) { }
   cleanUp() { }
 }
 
 
-export function getParentComps(logger: Logger): {
-  _Parent: typeof __Parent,
-  Parent: (
-    props: ParentPropsType,
+export function getLayerComps(logger: Logger): {
+  _Layer: typeof __Layer,
+  Layer: (
+    props: LayerPropsType,
     children: Array<
       RenderableType<
         BasePropsType,
-        BaseBlueprint<BasePropsType> & IParentableBy<__Parent>,
-        __Parent
+        BaseBlueprint<BasePropsType> & IParentableBy<__Layer>,
+        __Layer
       >
     >
-  ) => RenderableType<ParentPropsType, __Parent, _ParentParentTypes>
+  ) => RenderableType<LayerPropsType, __Layer, _LayerParentTypes>
 } {
-  class _Parent extends __Parent {
+  class _Layer extends __Layer {
     constructor() {
       super();
       this.logger = logger;
     }
-    init(parent: _ParentParentTypes) {
+    init(parent: _LayerParentTypes) {
       this.logger.add(new LogItem({
         instance: this,
-        blueprint: _Parent,
+        blueprint: _Layer,
         type: 'init',
       }));
     }
-    updateAfterChildren(props: ParentPropsType) {
+    updateAfterChildren(props: LayerPropsType) {
       this.logger.add(new LogItem({
         instance: this,
-        blueprint: _Parent,
+        blueprint: _Layer,
         type: 'update',
         props,
       }));
@@ -59,18 +59,18 @@ export function getParentComps(logger: Logger): {
     cleanUp() {
       this.logger.add(new LogItem({
         instance: this,
-        blueprint: _Parent,
+        blueprint: _Layer,
         type: 'delete',
       }));
     }
   }
-  const Parent = createComponent<
-    _Parent,
-    _ParentParentTypes,
-    ParentPropsType
-  >(_Parent);
+  const Layer = createComponent<
+    _Layer,
+    _LayerParentTypes,
+    LayerPropsType
+  >(_Layer);
   return {
-    _Parent, Parent,
+    _Layer, Layer,
   }
 }
 
