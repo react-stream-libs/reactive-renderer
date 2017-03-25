@@ -1,9 +1,11 @@
 import 'console-polyfill';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+import { createBrowserHistory } from 'history';
 
 import 'bootstrap/dist/css/bootstrap.css';
+
+const browserHistory = createBrowserHistory();
 
 import App from './App';
 

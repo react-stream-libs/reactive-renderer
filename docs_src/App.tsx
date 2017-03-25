@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { History } from 'react-router';
+import { History } from 'history';
 import { Router } from 'react-router';
 import routes from './Routes';
 export type PropsType = {
-  history: History.History,
+  history: History,
 };
 const App: React.SFC<PropsType> = ({ history }) => {
   return (

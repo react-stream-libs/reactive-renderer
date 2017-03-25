@@ -7,7 +7,7 @@ export type PropsType = {
 export type StateType = {
 
 };
-export default class PageRoot extends React.Component<PropsType, StateType> {
+export default class PageRoot extends React.Component<PropsType, void> {
   render() {
     return (
       <div>
