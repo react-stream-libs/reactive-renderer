@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as webpack from 'webpack';
 import * as ReactStaticPlugin from 'react-static-webpack-plugin';
-import * as CopyWebpackPlugin from 'copy-webpack-plugin'
+import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const config: webpack.Configuration = {
   entry: {
