@@ -9,7 +9,7 @@ const browserHistory = createBrowserHistory();
 
 import App from './App';
 
-const history = browserHistory;
+const history = createBrowserHistory();
 
 ReactDOM.render(
   <App

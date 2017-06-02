@@ -1,23 +1,8 @@
-import * as path from 'path';
 import * as webpack from 'webpack';
 import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const config: webpack.Configuration = {
-  entry: {
-    main: [
-      'babel-polyfill',
-      path.resolve(__dirname, '../index.tsx'),
-    ],
-  },
-  output: {
-    filename: 'index.js',
-    path: 'dist/docs',
-    libraryTarget: 'umd',
-  },
   plugins: [
-    // new HtmlPlugin({
-    //   template: path.resolve(__dirname, '../index.html'),
-    // }),
     new CopyWebpackPlugin([{
       from: 'node_modules/monaco-editor/min/vs',
       to: 'vs',

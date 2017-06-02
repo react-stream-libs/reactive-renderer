@@ -5,7 +5,7 @@ import routes from './Routes';
 export type PropsType = {
   history: History,
 };
-const App: React.SFC<PropsType> = ({ history }) => {
+const App: React.SFC<PropsType> = ({ history: History }) => {
   return (
     <Router history={history}>
       {routes}

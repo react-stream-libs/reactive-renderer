@@ -8,9 +8,13 @@ import { RenderableType } from './types/Renderable';
  * @param blueprintClass - the blueprint class
  */
 export function createComponent<
-  BlueprintClass extends BaseBlueprint<PropsType> & IParentableBy<ParentableTypes>,
+  BlueprintClass extends BaseBlueprint<PropsType> &
+    IParentableBy<ParentableTypes> &
+    CommonBlueprintBase
+  ,
   ParentableTypes extends BaseBlueprint<BasePropsType>,
-  PropsType extends BasePropsType
+  PropsType extends BasePropsType,
+  CommonBlueprintBase
 >(
   blueprintClass: {
     new(): BlueprintClass & IParentableBy<ParentableTypes>
@@ -21,11 +25,19 @@ export function createComponent<
     children: Array<
       RenderableType<
         BasePropsType,
-        BaseBlueprint<BasePropsType> & IParentableBy<BlueprintClass>,
-        BlueprintClass
+        BaseBlueprint<BasePropsType> &
+          IParentableBy<BlueprintClass> &
+          CommonBlueprintBase,
+        BlueprintClass,
+        CommonBlueprintBase
       >
     >
-  ): RenderableType<PropsType, BlueprintClass, ParentableTypes> {
+  ): RenderableType<
+    PropsType,
+    BlueprintClass & CommonBlueprintBase,
+    ParentableTypes & CommonBlueprintBase,
+    CommonBlueprintBase
+  > {
     return {
       blueprint: blueprintClass,
       props,

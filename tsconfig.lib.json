@@ -19,9 +19,11 @@
     "node_modules/**/*.d.ts"
   ],
   "exclude": [
+    "storybook-ts",
     "docs", "docs_ts_compiled",
     "docs_src",
     "dts-generator.js",
+    "dist",
     "node_modules",
     "!node_modules/rxjs",
     "lib",

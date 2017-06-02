@@ -3,6 +3,7 @@ import { BasePropsType } from '../../../types/BasePropsType';
 import { createComponent } from '../../../createComponent';
 import { IParentableBy } from '../../../types/IParentableBy';
 import { RenderableType } from '../../../types/Renderable';
+import { CommonBlueprintBase } from '../CommonBlueprintBase';
 import { __Layer } from './Layer';
 
 import Logger, { LogItem } from '../../Logger';
@@ -12,7 +13,9 @@ export type ChildPropsType = {
 } & BasePropsType;
 
 export class __Child extends BaseBlueprint<ChildPropsType>
-    implements IParentableBy<_ChildParentTypes> {
+    implements IParentableBy<_ChildParentTypes>, CommonBlueprintBase {
+
+  someCommonMethod: () => '__Child';
   parent: _ChildParentTypes;
   logger: Logger;
   init(parent: _ChildParentTypes) {
@@ -39,11 +42,19 @@ export function getChildComps(logger: Logger): {
     children: Array<
       RenderableType<
         BasePropsType,
-        BaseBlueprint<BasePropsType> & IParentableBy<__Child>,
-        __Child
+        BaseBlueprint<BasePropsType> &
+          IParentableBy<__Child> &
+          CommonBlueprintBase,
+        __Child,
+        CommonBlueprintBase
       >
     >
-  ) => RenderableType<ChildPropsType, __Child, _ChildParentTypes>
+  ) => RenderableType<
+    ChildPropsType,
+    __Child,
+    _ChildParentTypes,
+    CommonBlueprintBase
+  >
 } {
   class _Child extends __Child {
     constructor() {
@@ -54,7 +65,8 @@ export function getChildComps(logger: Logger): {
   const Child = createComponent<
     _Child,
     _ChildParentTypes,
-    ChildPropsType
+    ChildPropsType,
+    CommonBlueprintBase
   >(_Child);
   return {
     _Child, Child,
