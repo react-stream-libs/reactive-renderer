@@ -3,8 +3,8 @@ import { createComponent } from '../../../createComponent';
 import { BaseBlueprint } from '../../../types/BaseBlueprint';
 import { BasePropsType } from '../../../types/BasePropsType';
 import { IParentableBy } from '../../../types/IParentableBy';
+import { CommonBlueprintBase } from '../CommonBlueprintBase';
 
-// _NoneExistentBlueprint
 export class NoneExistentBlueprint extends BaseBlueprint<BasePropsType> {
   public init(parent: BaseBlueprint<BasePropsType>) {}
   public updateBeforeChildren(props: BasePropsType) {}
@@ -18,8 +18,9 @@ export type FakeRootPropsType = {
 
 export class _FakeRoot
     extends BaseBlueprint<FakeRootPropsType>
-    implements IParentableBy<NoneExistentBlueprint>
+    implements IParentableBy<NoneExistentBlueprint>, CommonBlueprintBase
 {
+  someCommonMethod: () => "hello";
   logger: Logger;
   constructor(logger?: Logger) {
     super();
@@ -38,7 +39,10 @@ export class _FakeRoot
  * @param props: FakeRoot props
  */
 export const FakeRoot = createComponent<
-  _FakeRoot, NoneExistentBlueprint, FakeRootPropsType
+  _FakeRoot,
+  NoneExistentBlueprint,
+  FakeRootPropsType,
+  CommonBlueprintBase
 > (_FakeRoot);
 
 export default FakeRoot;

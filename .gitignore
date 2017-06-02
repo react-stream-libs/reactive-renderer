@@ -8,3 +8,4 @@ docs/*.js
 docs/**/*.js
 docs_ts_compiled
 reactive-renderer.d.ts
+storybook-static

@@ -15,8 +15,9 @@ import { IParentableBy } from './IParentableBy';
 
 export type RenderableType<
   PropsType extends BasePropsType,
-  Blueprint extends BaseBlueprint<BasePropsType>,
-  ParentableBy extends BaseBlueprint<BasePropsType>
+  Blueprint extends BaseBlueprint<BasePropsType> & CommonBlueprintBase,
+  ParentableBy extends BaseBlueprint<BasePropsType> & CommonBlueprintBase,
+  CommonBlueprintBase
 > = {
   // blueprint: { new(): Blueprint & IParentableBy<BaseBlueprint<BasePropsType>> },
   blueprint: { new(): Blueprint & IParentableBy<ParentableBy> },
@@ -25,8 +26,9 @@ export type RenderableType<
   children: Array<
     RenderableType<
       BasePropsType,
-      BaseBlueprint<BasePropsType> & IParentableBy<Blueprint>,
-      Blueprint
+      BaseBlueprint<BasePropsType> & IParentableBy<Blueprint> & CommonBlueprintBase,
+      Blueprint,
+      CommonBlueprintBase
     >
   >,
   _parentables?: ParentableBy

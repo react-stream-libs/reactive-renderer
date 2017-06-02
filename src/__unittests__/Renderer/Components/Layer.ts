@@ -7,13 +7,17 @@ import { __GrandParent } from './Grandparent';
 
 import Logger, { LogItem } from '../../Logger';
 
+import { CommonBlueprintBase } from '../CommonBlueprintBase';
+
 export type _LayerParentTypes = __GrandParent & __Layer;
 ;
 export type LayerPropsType = {
 } & BasePropsType;
 
 export class __Layer extends BaseBlueprint<LayerPropsType>
-    implements IParentableBy<_LayerParentTypes> {
+    implements IParentableBy<_LayerParentTypes>, CommonBlueprintBase {
+
+  someCommonMethod: () => "__Layer";
   parent: _LayerParentTypes;
   logger: Logger;
   init(parent: _LayerParentTypes) { }
@@ -30,13 +34,19 @@ export function getLayerComps(logger: Logger): {
     children: Array<
       RenderableType<
         BasePropsType,
-        BaseBlueprint<BasePropsType> & IParentableBy<__Layer>,
-        __Layer
+        BaseBlueprint<BasePropsType> & IParentableBy<__Layer> & CommonBlueprintBase,
+        __Layer,
+        CommonBlueprintBase
       >
     >
-  ) => RenderableType<LayerPropsType, __Layer, _LayerParentTypes>
+  ) => RenderableType<
+    LayerPropsType,
+    __Layer,
+    _LayerParentTypes,
+    CommonBlueprintBase
+  >
 } {
-  class _Layer extends __Layer {
+  class _Layer extends __Layer implements CommonBlueprintBase {
     constructor() {
       super();
       this.logger = logger;
@@ -67,7 +77,8 @@ export function getLayerComps(logger: Logger): {
   const Layer = createComponent<
     _Layer,
     _LayerParentTypes,
-    LayerPropsType
+    LayerPropsType,
+    CommonBlueprintBase
   >(_Layer);
   return {
     _Layer, Layer,

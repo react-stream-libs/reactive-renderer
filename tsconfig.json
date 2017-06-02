@@ -9,7 +9,7 @@
     "jsx": "react",
     "experimentalDecorators": true,
     "rootDirs": [
-      "src", "docs"
+      "src", "storybook-ts"
     ],
     "outDir": "docs_ts_compiled"
   },
@@ -21,9 +21,13 @@
     "node_modules/**/*.d.ts"
   ],
   "exclude": [
+    "docs_src",
+    ".storybook",
     "src/__unittests__/TypeTests/fakes",
     "docs_ts_compiled",
     "dts-generator.js",
+    "dist",
+    "docs",
     "node_modules",
     "!node_modules/rxjs",
     "lib",

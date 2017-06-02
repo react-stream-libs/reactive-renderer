@@ -3,6 +3,7 @@ import { BasePropsType } from '../../../types/BasePropsType';
 import { createComponent } from '../../../createComponent';
 import { IParentableBy } from '../../../types/IParentableBy';
 import { RenderableType } from '../../../types/Renderable';
+import { CommonBlueprintBase } from '../CommonBlueprintBase';
 import { _FakeRoot } from './FakeRoot';
 
 import Logger, { LogItem } from '../../Logger';
@@ -13,7 +14,9 @@ export type GrandParentPropsType = {
 } & BasePropsType;
 
 export class __GrandParent extends BaseBlueprint<GrandParentPropsType>
-    implements IParentableBy<_GrandparentParentTypes> {
+    implements IParentableBy<_GrandparentParentTypes>, CommonBlueprintBase {
+
+  someCommonMethod: () => '__GrandParent';
   parent: _GrandparentParentTypes;
   logger: Logger;
   init(parent: _GrandparentParentTypes) { }
@@ -30,11 +33,19 @@ export function getGrandparentComps(logger: Logger): {
     children: Array<
       RenderableType<
         BasePropsType,
-        BaseBlueprint<BasePropsType> & IParentableBy<__GrandParent>,
-        __GrandParent
+        BaseBlueprint<BasePropsType> &
+          IParentableBy<__GrandParent> &
+          CommonBlueprintBase,
+        __GrandParent,
+        CommonBlueprintBase
       >
     >
-  ) => RenderableType<GrandParentPropsType, __GrandParent, _GrandparentParentTypes>
+  ) => RenderableType<
+    GrandParentPropsType,
+    __GrandParent,
+    _GrandparentParentTypes,
+    CommonBlueprintBase
+  >
 } {
   class _GrandParent extends __GrandParent {
     name: string;
@@ -69,7 +80,8 @@ export function getGrandparentComps(logger: Logger): {
   const GrandParent = createComponent<
     _GrandParent,
     _GrandparentParentTypes,
-    GrandParentPropsType
+    GrandParentPropsType,
+    CommonBlueprintBase
   >(_GrandParent);
   return {
     _GrandParent, GrandParent,
