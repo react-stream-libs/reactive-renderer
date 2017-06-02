@@ -29,7 +29,7 @@
     "@types/lodash": "^4.14.58",
     "@types/node": "^7.0.4",
     "@types/react": "^15.0.4",
-    "@types/react-bootstrap": "^0.0.46",
+    "@types/react-bootstrap": "^0.0.50",
     "@types/react-dom": "^0.14.21",
     "@types/sinon": "^1.16.34",
     "@types/webpack": "^2.2.4",
