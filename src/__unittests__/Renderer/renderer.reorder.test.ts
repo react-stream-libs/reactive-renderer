@@ -4,20 +4,15 @@ import Logger, { LogItem } from '../Logger';
 
 import FakeRenderer from './FakeRenderer';
 
-describe('[Renderer]', () => {
-  it('... should corrently init, update, and remove one-depth', () => {
+describe('[Renderer - reordering]', () => {
+  it('', () => {
     const logger = new Logger();
     const { GrandParent, _GrandParent } = getGrandparentComps(logger);
     const { Layer, _Layer } = getLayerComps(logger);
     const renderer = new FakeRenderer(logger);
-    renderer.render(
-      GrandParent(
-        {
-          key: 'grandparent'
-        },
-        []
-      )
-    );
+    renderer.render(GrandParent({
+      key: 'grandparent'
+    }, []));
 
     logger.partialMatch([
       new LogItem({
@@ -29,20 +24,17 @@ describe('[Renderer]', () => {
         type: 'update',
       }),
     ]);
-    renderer.render(
-      GrandParent(
-        {
-          key: 'grandparent',
+    renderer.render(GrandParent({
+      key: 'grandparent',
+    }, [
+      Layer({
+        key: 'parent',
       }, [
         Layer({
-          key: 'parent',
-        }, [
-          Layer({
-            key: 'innerLayer',
-          },    []),
-        ]),
-      ])
-    );
+          key: 'innerLayer',
+        }, []),
+      ]),
+    ]));
     const loggerAfterGrandparentInit = new Logger(
       logger.logs.slice(2)
     );

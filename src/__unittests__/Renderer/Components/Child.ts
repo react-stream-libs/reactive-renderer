@@ -1,59 +1,60 @@
-import { BaseBlueprint } from '../../../types/BaseBlueprint';
 import { BasePropsType } from '../../../types/BasePropsType';
 import { createComponent } from '../../../createComponent';
-import { IParentableBy } from '../../../types/IParentableBy';
-import { RenderableType } from '../../../types/Renderable';
-import { CommonBlueprintBase } from '../CommonBlueprintBase';
+import { ICommonBlueprintBase } from '../CommonBlueprintBase';
 import { __Layer } from './Layer';
 
-import Logger, { LogItem } from '../../Logger';
+import {
+  Blueprint,
+  IParentableBy,
+  Logger, LogItem,
+  RenderableType,
+} from './types';
 
 export type _ChildParentTypes = __Layer;
 export type ChildPropsType = {
 } & BasePropsType;
 
-export class __Child extends BaseBlueprint<ChildPropsType>
-    implements IParentableBy<_ChildParentTypes>, CommonBlueprintBase {
+export class __Child extends Blueprint<ChildPropsType>
+    implements IParentableBy<_ChildParentTypes> {
 
-  someCommonMethod: () => '__Child';
-  parent: _ChildParentTypes;
-  logger: Logger;
-  init(parent: _ChildParentTypes) {
+  public someCommonMethod: () => '__Child';
+  public parent: _ChildParentTypes;
+  protected logger: Logger;
+  public init(parent: _ChildParentTypes) {
     this.logger.add(new LogItem({
       instance: this,
       blueprint: __Child,
       type: 'init',
     }));
   }
-  updateBeforeChildren(props: ChildPropsType) {
+  public updateBeforeChildren(props: ChildPropsType) {
 
   }
-  updateAfterChildren(props: ChildPropsType) {
+  public updateAfterChildren(props: ChildPropsType) {
   }
-  cleanUp() {
+  public reorderChildren(
+    oldChildrenList: Blueprint<BasePropsType>[],
+    newChildrenList: Blueprint<BasePropsType>[]
+  ) { }
+  public cleanUp() {
   }
 }
 
-
 export function getChildComps(logger: Logger): {
   _Child: typeof __Child,
-  Child: (
+  Child (
     props: ChildPropsType,
-    children: Array<
-      RenderableType<
-        BasePropsType,
-        BaseBlueprint<BasePropsType> &
-          IParentableBy<__Child> &
-          CommonBlueprintBase,
-        __Child,
-        CommonBlueprintBase
-      >
-    >
-  ) => RenderableType<
+    children: RenderableType<
+      BasePropsType,
+      Blueprint<BasePropsType> &
+        IParentableBy<__Child> &
+        ICommonBlueprintBase,
+      __Child
+    > []
+  ): RenderableType<
     ChildPropsType,
     __Child,
-    _ChildParentTypes,
-    CommonBlueprintBase
+    _ChildParentTypes
   >
 } {
   class _Child extends __Child {
@@ -62,17 +63,18 @@ export function getChildComps(logger: Logger): {
       this.logger = logger;
     }
   }
-  const Child = createComponent<
+  const childComponent = createComponent<
     _Child,
     _ChildParentTypes,
     ChildPropsType,
-    CommonBlueprintBase
+    ICommonBlueprintBase
   >(_Child);
+
   return {
-    _Child, Child,
-  }
+    _Child, Child: childComponent,
+  };
 }
 
 export {
   RenderableType
-}
+};

@@ -1,67 +1,75 @@
-import { BaseBlueprint } from '../../../types/BaseBlueprint';
-import { BasePropsType } from '../../../types/BasePropsType';
-import { createComponent } from '../../../createComponent';
-import { IParentableBy } from '../../../types/IParentableBy';
-import { RenderableType } from '../../../types/Renderable';
-import { CommonBlueprintBase } from '../CommonBlueprintBase';
-import { _FakeRoot } from './FakeRoot';
+import {
+  BasePropsType,
+  createComponent,
+} from '../../..';
 
-import Logger, { LogItem } from '../../Logger';
+import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import { _FakeRoot } from './fakeRoot';
+
+import {
+  Blueprint,
+  IParentableBy,
+  RenderableType,
+  Logger, LogItem,
+} from './types';
 
 export type _GrandparentParentTypes = _FakeRoot;
-;
+
 export type GrandParentPropsType = {
 } & BasePropsType;
 
-export class __GrandParent extends BaseBlueprint<GrandParentPropsType>
-    implements IParentableBy<_GrandparentParentTypes>, CommonBlueprintBase {
+export class __GrandParent
+    extends Blueprint<GrandParentPropsType>
+    implements
+      IParentableBy<_GrandparentParentTypes> {
 
-  someCommonMethod: () => '__GrandParent';
-  parent: _GrandparentParentTypes;
-  logger: Logger;
-  init(parent: _GrandparentParentTypes) { }
-  updateBeforeChildren(props: GrandParentPropsType) { }
-  updateAfterChildren(props: GrandParentPropsType) { }
-  cleanUp() { }
+  public someCommonMethod: () => '__GrandParent';
+  protected parent: _GrandparentParentTypes;
+  protected logger: Logger;
+  public init(parent: _GrandparentParentTypes) { }
+  public updateBeforeChildren(props: GrandParentPropsType) { }
+  public updateAfterChildren(props: GrandParentPropsType) { }
+
+  public reorderChildren(
+    oldChildrenList: Blueprint<GrandParentPropsType>[],
+    newChildrenList: Blueprint<GrandParentPropsType>[]
+  ) {
+
+  }
+  public cleanUp() { }
 }
 
 
 export function getGrandparentComps(logger: Logger): {
   _GrandParent: typeof __GrandParent,
-  GrandParent: (
+  GrandParent (
     props: GrandParentPropsType,
-    children: Array<
-      RenderableType<
-        BasePropsType,
-        BaseBlueprint<BasePropsType> &
-          IParentableBy<__GrandParent> &
-          CommonBlueprintBase,
-        __GrandParent,
-        CommonBlueprintBase
-      >
-    >
-  ) => RenderableType<
+    children: RenderableType<
+      BasePropsType,
+      Blueprint<BasePropsType> & IParentableBy<__GrandParent>,
+      __GrandParent
+    > []
+  ): RenderableType<
     GrandParentPropsType,
     __GrandParent,
-    _GrandparentParentTypes,
-    CommonBlueprintBase
+    _GrandparentParentTypes
   >
 } {
   class _GrandParent extends __GrandParent {
-    name: string;
+    private name: string;
     constructor() {
       super();
       this.name = 'GrandParent';
       this.logger = logger;
     }
-    init(parent: _GrandparentParentTypes) {
+    public init(parent: _GrandparentParentTypes) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
         type: 'init',
       }));
     }
-    updateAfterChildren(props: GrandParentPropsType) {
+    public updateAfterChildren(props: GrandParentPropsType) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
@@ -69,7 +77,7 @@ export function getGrandparentComps(logger: Logger): {
         props,
       }));
     }
-    cleanUp() {
+    public cleanUp() {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
@@ -77,17 +85,19 @@ export function getGrandparentComps(logger: Logger): {
       }));
     }
   }
-  const GrandParent = createComponent<
+  const grandParentComponent = createComponent<
     _GrandParent,
     _GrandparentParentTypes,
     GrandParentPropsType,
-    CommonBlueprintBase
+    ICommonBlueprintBase
   >(_GrandParent);
+
   return {
-    _GrandParent, GrandParent,
-  }
+    _GrandParent,
+    GrandParent: grandParentComponent,
+  };
 }
 
 export {
   RenderableType
-}
+};

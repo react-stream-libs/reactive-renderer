@@ -1,64 +1,68 @@
-import { BaseBlueprint } from '../../../types/BaseBlueprint';
-import { BasePropsType } from '../../../types/BasePropsType';
-import { createComponent } from '../../../createComponent';
-import { IParentableBy } from '../../../types/IParentableBy';
-import { RenderableType } from '../../../types/Renderable';
+import {
+  createComponent,
+  BasePropsType,
+} from '../../..';
+
 import { __GrandParent } from './Grandparent';
-
 import Logger, { LogItem } from '../../Logger';
+import { ICommonBlueprintBase } from '../CommonBlueprintBase';
 
-import { CommonBlueprintBase } from '../CommonBlueprintBase';
+import {
+  Blueprint,
+  IParentableBy,
+  RenderableType,
+} from './types';
 
 export type _LayerParentTypes = __GrandParent & __Layer;
-;
 export type LayerPropsType = {
 } & BasePropsType;
 
-export class __Layer extends BaseBlueprint<LayerPropsType>
-    implements IParentableBy<_LayerParentTypes>, CommonBlueprintBase {
+export class __Layer extends Blueprint<LayerPropsType>
+    implements IParentableBy<_LayerParentTypes> {
 
-  someCommonMethod: () => "__Layer";
-  parent: _LayerParentTypes;
-  logger: Logger;
-  init(parent: _LayerParentTypes) { }
-  updateBeforeChildren(props: LayerPropsType) { }
-  updateAfterChildren(props: LayerPropsType) { }
-  cleanUp() { }
+  public someCommonMethod: () => '__Layer';
+  public parent: _LayerParentTypes;
+  protected logger: Logger<ICommonBlueprintBase>;
+  public init(parent: _LayerParentTypes) { }
+  public updateBeforeChildren(props: LayerPropsType) { }
+  public updateAfterChildren(props: LayerPropsType) { }
+  public reorderChildren(
+    oldChildrenList: Blueprint<BasePropsType>[],
+    newChildrenList: Blueprint<BasePropsType>[]
+  ) {
+
+  }
+  public cleanUp() { }
 }
 
-
-export function getLayerComps(logger: Logger): {
+export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
   _Layer: typeof __Layer,
-  Layer: (
+  Layer (
     props: LayerPropsType,
-    children: Array<
-      RenderableType<
-        BasePropsType,
-        BaseBlueprint<BasePropsType> & IParentableBy<__Layer> & CommonBlueprintBase,
-        __Layer,
-        CommonBlueprintBase
-      >
-    >
-  ) => RenderableType<
+    children: RenderableType<
+      BasePropsType,
+      Blueprint<BasePropsType> & IParentableBy<__Layer>,
+      __Layer
+    >[]
+  ): RenderableType<
     LayerPropsType,
     __Layer,
-    _LayerParentTypes,
-    CommonBlueprintBase
+    _LayerParentTypes
   >
 } {
-  class _Layer extends __Layer implements CommonBlueprintBase {
+  class _Layer extends __Layer implements ICommonBlueprintBase {
     constructor() {
       super();
       this.logger = logger;
     }
-    init(parent: _LayerParentTypes) {
+    public init(parent: _LayerParentTypes) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _Layer,
         type: 'init',
       }));
     }
-    updateAfterChildren(props: LayerPropsType) {
+    public updateAfterChildren(props: LayerPropsType) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _Layer,
@@ -66,25 +70,32 @@ export function getLayerComps(logger: Logger): {
         props,
       }));
     }
-    cleanUp() {
+    public cleanUp() {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _Layer,
         type: 'delete',
       }));
     }
+    public reorderChildren(
+      oldChildrenList: Blueprint<BasePropsType>[],
+      newChildrenList: Blueprint<BasePropsType>[]
+    ) {
+
+    }
   }
-  const Layer = createComponent<
+  const layerComponent = createComponent<
     _Layer,
     _LayerParentTypes,
     LayerPropsType,
-    CommonBlueprintBase
+    ICommonBlueprintBase
   >(_Layer);
+
   return {
-    _Layer, Layer,
-  }
+    _Layer, Layer: layerComponent,
+  };
 }
 
 export {
   RenderableType
-}
+};

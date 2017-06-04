@@ -1,17 +1,28 @@
-/** Fake Root */
-import * as _ from 'lodash';
-import Logger from '../Logger';
+/**
+ * FakeRenderer
+ */
+
+import {
+  compact,
+} from 'lodash';
 import BaseRenderer, {
   BaseRootRenderableType,
   renderChild,
 } from '../../BaseRenderer';
-import { InstanceTreeType } from '../../types/InstanceTree';
-import FakeRoot, { _FakeRoot, FakeRootPropsType } from './Components/FakeRoot';
 
-import { CommonBlueprintBase } from './CommonBlueprintBase';
-export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsType, CommonBlueprintBase> {
-  logger: Logger;
-  instanceTree: InstanceTreeType<CommonBlueprintBase>;
+import {
+  InstanceTreeType,
+  Logger,
+} from './Components/types';
+import fakeRoot, {
+  _FakeRoot,
+  FakeRootPropsType,
+} from './Components/fakeRoot';
+
+import { ICommonBlueprintBase } from './CommonBlueprintBase';
+export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsType, ICommonBlueprintBase> {
+  public logger: Logger;
+  public instanceTree: InstanceTreeType;
   constructor(logger: Logger) {
     super();
     this.logger = logger;
@@ -22,13 +33,14 @@ export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsT
       childrenList: [],
     };
   }
-  render(toRender: BaseRootRenderableType<_FakeRoot, CommonBlueprintBase> | null, rootProps?: FakeRootPropsType) {
-    const renderRoot = FakeRoot({
-      key: '__FAKEROOT__',
-    }, _.compact([
-      toRender,
-    ]));
+  public render(toRender: BaseRootRenderableType<_FakeRoot, ICommonBlueprintBase> | null, rootProps?: FakeRootPropsType) {
+    const renderRoot = fakeRoot(
+      {
+        key: '__FAKEROOT__',
+      },
+      compact([toRender])
+    );
     renderChild(this.instanceTree, renderRoot);
   }
-  dispose() { }
+  public dispose() { }
 }

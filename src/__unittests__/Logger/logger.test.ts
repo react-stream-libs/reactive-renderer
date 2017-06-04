@@ -1,13 +1,22 @@
 import * as chai from 'chai';
-import Logger, { LogItem } from '.';
+import {
+  default as Logger,
+  LogItem,
+} from '.';
 import { BaseBlueprint } from '../../types/BaseBlueprint';
 import { BasePropsType } from '../../types/BasePropsType';
 
-class _Root extends BaseBlueprint<BasePropsType> {
-  init(parent: BaseBlueprint<BasePropsType>) { }
-  updateBeforeChildren(props: BasePropsType) { }
-  updateAfterChildren(props: BasePropsType) { }
-  cleanUp() { }
+export interface ICommonBlueprintBase {
+
+}
+
+class RootBlueprint extends BaseBlueprint<BasePropsType, ICommonBlueprintBase> {
+  public init(parent: BaseBlueprint<BasePropsType, ICommonBlueprintBase>) { }
+  public updateBeforeChildren(props: BasePropsType) { }
+  public updateAfterChildren(props: BasePropsType) { }
+
+  public reorderChildren() { }
+  public cleanUp() { }
 }
 
 describe('unittest logger should...', () => {
@@ -19,7 +28,7 @@ describe('unittest logger should...', () => {
     }));
     logger.add(new LogItem({
       type: 'init',
-      blueprint: _Root,
+      blueprint: RootBlueprint,
       props: {
         key: '123',
       }
@@ -30,7 +39,7 @@ describe('unittest logger should...', () => {
       }),
       new LogItem({
         type: 'init',
-        blueprint: _Root
+        blueprint: RootBlueprint
       })
     ]);
     chai.expect(() => {
@@ -40,9 +49,9 @@ describe('unittest logger should...', () => {
         }),
         new LogItem({
           type: 'update',
-          blueprint: _Root
+          blueprint: RootBlueprint
         })
-      ])
+      ]);
     }).to.throw();
-  })
-})
+  });
+});

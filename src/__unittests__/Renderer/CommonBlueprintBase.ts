@@ -1,3 +1,3 @@
-export interface CommonBlueprintBase {
-  someCommonMethod: () => string;
+export interface ICommonBlueprintBase {
+  someCommonMethod(): string;
 }

@@ -4,28 +4,33 @@ import { BasePropsType } from './types/BasePropsType';
 import { IParentableBy } from './types/IParentableBy';
 import { InstanceTreeType } from './types/InstanceTree';
 
-import * as _ from 'lodash';
+import {
+  reduce,
+  forEach,
+} from 'lodash';
 
 export type BaseRootRenderableType<
-    _Root extends BaseBlueprint<BasePropsType>,
+    _Root extends BaseBlueprint<BasePropsType, CommonBlueprintBase>,
     CommonBlueprintBase,
 > = RenderableType<
   BasePropsType,
-  BaseBlueprint<BasePropsType> & IParentableBy<_Root> & CommonBlueprintBase,
+  BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+    IParentableBy<_Root, CommonBlueprintBase> &
+    CommonBlueprintBase,
   _Root & CommonBlueprintBase,
   CommonBlueprintBase
->
+>;
 
-export abstract class BaseReactiveRenderer<
-  RootType extends BaseBlueprint<RootPropsType>
+export abstract class BaseRenderer<
+  RootType extends BaseBlueprint<RootPropsType, CommonBlueprintBase>
   , RootPropsType extends BasePropsType
   , CommonBlueprintBase
 > {
-  abstract render(
+  public abstract render(
     rootRenderable: BaseRootRenderableType<RootType, CommonBlueprintBase> | null,
     rootProps?: RootPropsType
   ): any;
-  abstract dispose(): any;
+  public abstract dispose(): any;
 }
 
 // FIXME: implement a loop-variant for speed up!
@@ -33,23 +38,29 @@ export function renderChild<CommonBlueprintBase>(
   instanceTree: InstanceTreeType<CommonBlueprintBase>,
   toRender: RenderableType<
     BasePropsType,
-    BaseBlueprint<BasePropsType> & CommonBlueprintBase,
-    BaseBlueprint<BasePropsType> & CommonBlueprintBase,
+    BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+      CommonBlueprintBase,
+    BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+      CommonBlueprintBase,
     CommonBlueprintBase
   >
 ) {
-  const toRenderChildrenMap = _.reduce<
+  const toRenderChildrenMap = reduce<
     RenderableType<
       BasePropsType,
-      BaseBlueprint<BasePropsType> & CommonBlueprintBase,
-      BaseBlueprint<BasePropsType> & CommonBlueprintBase,
+      BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+        CommonBlueprintBase,
+      BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+        CommonBlueprintBase,
       CommonBlueprintBase
     >,
     {
       [key: string]: RenderableType<
         BasePropsType,
-        BaseBlueprint<BasePropsType> & CommonBlueprintBase,
-        BaseBlueprint<BasePropsType> & CommonBlueprintBase,
+        BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+          CommonBlueprintBase,
+        BaseBlueprint<BasePropsType, CommonBlueprintBase> &
+          CommonBlueprintBase,
         CommonBlueprintBase
       >
     }
@@ -57,16 +68,19 @@ export function renderChild<CommonBlueprintBase>(
     toRender.children,
     (mappedChildren, child) => {
       mappedChildren[child.props.key] = child;
+
       return mappedChildren;
-  }, {});
-  _.forEach(instanceTree.childrenDict, (instanceTreeChild, key) => {
+    },
+    {}
+  );
+  forEach(instanceTree.childrenDict, (instanceTreeChild, key) => {
     if (!toRenderChildrenMap[key]
       || !(instanceTreeChild.instance instanceof toRenderChildrenMap[key].blueprint)
     ) {
       deleteChild(instanceTree, key);
     }
   });
-  _.forEach(toRender.children, (renderableChild, renderableChildKey) => {
+  forEach(toRender.children, (renderableChild, renderableChildKey) => {
     const key = renderableChild.props.key;
     if (!instanceTree.childrenDict[key]) {
       const childInstance = new renderableChild.blueprint();
@@ -77,7 +91,7 @@ export function renderChild<CommonBlueprintBase>(
         childrenDict: {},
         childrenList: [],
         key,
-      }
+      };
     }
     const childInstanceTree = instanceTree.childrenDict[key];
     childInstanceTree.instance.updateBeforeChildren(renderableChild.props);
@@ -91,11 +105,12 @@ export function deleteChild<CommonBlueprintBase>(
   instanceTree: InstanceTreeType<CommonBlueprintBase>, childKey: string
 ) {
   const childToDelete = instanceTree.childrenDict[childKey];
-  _.forEach(childToDelete.childrenDict,
+  forEach(
+    childToDelete.childrenDict,
     (childOfChild, key) => deleteChild(childToDelete, key)
   );
   childToDelete.instance.cleanUp();
   delete instanceTree.childrenDict[childKey];
 }
 
-export default BaseReactiveRenderer;
+export default BaseRenderer;
