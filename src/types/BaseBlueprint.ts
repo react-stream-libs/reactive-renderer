@@ -1,4 +1,5 @@
 import { BasePropsType } from './BasePropsType';
+import { InstanceTreeType } from './InstanceTree';
 
 /**
  * @export
@@ -15,12 +16,8 @@ export abstract class BaseBlueprint<
   public abstract updateBeforeChildren(props: PropsType): any;
   public abstract updateAfterChildren(props: PropsType): any;
   public abstract reorderChildren(
-    oldChildrenList: BaseBlueprint<
-      PropsType, CommonBlueprintBase
-    > [],
-    newChildrenList: BaseBlueprint<
-      PropsType, CommonBlueprintBase
-    > []
+    oldChildrenList: InstanceTreeType<CommonBlueprintBase>[],
+    newChildrenList: InstanceTreeType<CommonBlueprintBase>[]
   ): void;
   public abstract cleanUp(): any;
 }

@@ -5,8 +5,8 @@ import { IParentableBy } from './types/IParentableBy';
 import { InstanceTreeType } from './types/InstanceTree';
 
 import {
-  reduce,
   forEach,
+  every,
 } from 'lodash';
 
 export type BaseRootRenderableType<
@@ -34,71 +34,66 @@ export abstract class BaseRenderer<
 }
 
 // FIXME: implement a loop-variant for speed up!
-export function renderChild<CommonBlueprintBase>(
-  instanceTree: InstanceTreeType<CommonBlueprintBase>,
+export function renderChild<ICommonBlueprintBase>(
+  instanceTree: InstanceTreeType<ICommonBlueprintBase>,
   toRender: RenderableType<
     BasePropsType,
-    BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-      CommonBlueprintBase,
-    BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-      CommonBlueprintBase,
-    CommonBlueprintBase
+    BaseBlueprint<BasePropsType, ICommonBlueprintBase> &
+      ICommonBlueprintBase,
+    BaseBlueprint<BasePropsType, ICommonBlueprintBase> &
+      ICommonBlueprintBase,
+    ICommonBlueprintBase
   >
 ) {
-  const toRenderChildrenMap = reduce<
-    RenderableType<
-      BasePropsType,
-      BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-        CommonBlueprintBase,
-      BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-        CommonBlueprintBase,
-      CommonBlueprintBase
-    >,
-    {
-      [key: string]: RenderableType<
-        BasePropsType,
-        BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-          CommonBlueprintBase,
-        BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-          CommonBlueprintBase,
-        CommonBlueprintBase
-      >
-    }
-  >(
-    toRender.children,
-    (mappedChildren, child) => {
-      mappedChildren[child.props.key] = child;
+  const newChildrenList: typeof instanceTree.childrenList = [];
+  const newChildrenDict: typeof instanceTree.childrenDict = {};
 
-      return mappedChildren;
-    },
-    {}
+  let childrenChanged = false;
+  // CREATE, TRAVERSE, UPDATE
+  toRender.children.forEach(
+    (toRenderChild, nth) => {
+      const toRenderChildKey = toRenderChild.props.key;
+      let childInstanceTree = instanceTree.childrenDict[toRenderChildKey];
+      if (!childInstanceTree) {
+        childInstanceTree = {
+          instance: new toRenderChild.blueprint(),
+          childrenDict: {},
+          childrenList: [],
+          key: toRenderChildKey,
+        };
+        childrenChanged = true;
+      }
+      newChildrenList.push(childInstanceTree);
+      newChildrenDict[toRenderChildKey] = childInstanceTree;
+      childInstanceTree.instance.updateBeforeChildren(toRenderChild.props);
+      renderChild<ICommonBlueprintBase>(childInstanceTree, toRenderChild);
+      childInstanceTree.instance.updateAfterChildren(toRenderChild.props);
+    }
   );
-  forEach(instanceTree.childrenDict, (instanceTreeChild, key) => {
-    if (!toRenderChildrenMap[key]
-      || !(instanceTreeChild.instance instanceof toRenderChildrenMap[key].blueprint)
-    ) {
-      deleteChild(instanceTree, key);
-    }
-  });
-  forEach(toRender.children, (renderableChild, renderableChildKey) => {
-    const key = renderableChild.props.key;
-    if (!instanceTree.childrenDict[key]) {
-      const childInstance = new renderableChild.blueprint();
-      childInstance.init(instanceTree.instance);
-      childInstance.applyInitialProps(renderableChild.props);
-      instanceTree.childrenDict[key] = {
-        instance: childInstance,
-        childrenDict: {},
-        childrenList: [],
-        key,
-      };
-    }
-    const childInstanceTree = instanceTree.childrenDict[key];
-    childInstanceTree.instance.updateBeforeChildren(renderableChild.props);
-    renderChild<CommonBlueprintBase>(childInstanceTree, renderableChild);
-    childInstanceTree.instance.updateAfterChildren(renderableChild.props);
-  });
 
+  // REMOVE
+  forEach(
+    instanceTree.childrenDict,
+    (oldChild, oldChildKey) => {
+      if (!newChildrenDict[oldChildKey]) {
+        oldChild.instance.cleanUp();
+        childrenChanged = true;
+      }
+    }
+  );
+  childrenChanged = childrenChanged || every(
+    instanceTree.childrenList,
+    (oldChild, nth) =>
+      oldChild.key === (newChildrenList[nth] && newChildrenList[nth].key)
+  );
+  if (!childrenChanged) {
+    instanceTree.instance.reorderChildren(
+      instanceTree.childrenList,
+      newChildrenList
+    );
+  }
+  instanceTree.childrenDict = newChildrenDict;
+  instanceTree.childrenList = newChildrenList;
 }
 
 export function deleteChild<CommonBlueprintBase>(

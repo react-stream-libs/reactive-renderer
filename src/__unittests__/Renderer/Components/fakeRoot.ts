@@ -11,6 +11,7 @@ import {
   _RenderableType,
   _IParentableBy,
   BaseBlueprint,
+  InstanceTreeType,
 } from './types';
 import { ICommonBlueprintBase } from '../CommonBlueprintBase';
 
@@ -20,8 +21,8 @@ export class NoneExistentBlueprint
   public init(parent: Blueprint<BasePropsType>): void {}
 
   public reorderChildren(
-    oldChildrenList: Blueprint<BasePropsType>[],
-    newChildrenList: Blueprint<BasePropsType>[]
+    oldChildrenList: InstanceTreeType[],
+    newChildrenList: InstanceTreeType[]
   ): void { }
   public updateBeforeChildren(props: BasePropsType): void {}
   public updateAfterChildren(props: BasePropsType): void {}
@@ -46,8 +47,8 @@ export class _FakeRoot
   public updateAfterChildren(props: BasePropsType): void { }
 
   public reorderChildren(
-    oldChildrenList: Blueprint<BasePropsType>[],
-    newChildrenList: Blueprint<BasePropsType>[]
+    oldChildrenList: InstanceTreeType[],
+    newChildrenList: InstanceTreeType[]
   ): void { }
   public cleanUp(): void { }
 }

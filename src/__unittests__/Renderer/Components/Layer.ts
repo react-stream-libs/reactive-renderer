@@ -11,6 +11,7 @@ import {
   Blueprint,
   IParentableBy,
   RenderableType,
+  InstanceTreeType,
 } from './types';
 
 export type _LayerParentTypes = __GrandParent & __Layer;
@@ -27,8 +28,8 @@ export class __Layer extends Blueprint<LayerPropsType>
   public updateBeforeChildren(props: LayerPropsType) { }
   public updateAfterChildren(props: LayerPropsType) { }
   public reorderChildren(
-    oldChildrenList: Blueprint<BasePropsType>[],
-    newChildrenList: Blueprint<BasePropsType>[]
+    oldChildrenList: InstanceTreeType[],
+    newChildrenList: InstanceTreeType[]
   ) {
 
   }
@@ -78,8 +79,8 @@ export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
       }));
     }
     public reorderChildren(
-      oldChildrenList: Blueprint<BasePropsType>[],
-      newChildrenList: Blueprint<BasePropsType>[]
+      oldChildrenList: InstanceTreeType[],
+      newChildrenList: InstanceTreeType[]
     ) {
 
     }

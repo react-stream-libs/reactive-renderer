@@ -16,7 +16,7 @@
   ],
   "roots": [
     "<rootDir>/src/__unittests__/Logger",
-    "<rootDir>/src/__unittests__/Renderer/renderer.test.ts"
+    "<rootDir>/src/__unittests__/Renderer"
   ],
   "testRegex": "<rootDir>/src/__unittests__/.*\\.test.(ts|tsx|js|jsx)$"
 }

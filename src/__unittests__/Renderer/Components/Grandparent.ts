@@ -11,6 +11,7 @@ import {
   IParentableBy,
   RenderableType,
   Logger, LogItem,
+  InstanceTreeType,
 } from './types';
 
 export type _GrandparentParentTypes = _FakeRoot;
@@ -31,8 +32,8 @@ export class __GrandParent
   public updateAfterChildren(props: GrandParentPropsType) { }
 
   public reorderChildren(
-    oldChildrenList: Blueprint<GrandParentPropsType>[],
-    newChildrenList: Blueprint<GrandParentPropsType>[]
+    oldChildrenList: InstanceTreeType[],
+    newChildrenList: InstanceTreeType[]
   ) {
 
   }

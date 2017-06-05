@@ -8,6 +8,7 @@ import {
   IParentableBy,
   Logger, LogItem,
   RenderableType,
+  InstanceTreeType,
 } from './types';
 
 export type _ChildParentTypes = __Layer;
@@ -33,8 +34,8 @@ export class __Child extends Blueprint<ChildPropsType>
   public updateAfterChildren(props: ChildPropsType) {
   }
   public reorderChildren(
-    oldChildrenList: Blueprint<BasePropsType>[],
-    newChildrenList: Blueprint<BasePropsType>[]
+    oldChildrenList: InstanceTreeType[],
+    newChildrenList: InstanceTreeType[]
   ) { }
   public cleanUp() {
   }
