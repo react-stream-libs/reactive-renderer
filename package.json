@@ -21,7 +21,7 @@
   "author": "devdoomari <devdoomari __at__ gmail dotttt commmm>",
   "license": "Personal",
   "devDependencies": {
-    "@storybook/react": "^3.0.0",
+    "@storybook/react": "3.0.0",
     "@types/chai": "^3.4.34",
     "@types/history": "^4.5.0",
     "@types/jest": "^19.2.2",
