@@ -17,8 +17,7 @@ function convertImportPath(params) {
 
   toImportFilePath = toImportFilePath === '' ?
     'reactive-renderer'
-     : path.join('reactive-renderer', currentDirPath, toImportFilePath);
-  console.error('toImportFilePath: ', toImportFilePath);
+     : path.join('reactive-renderer/lib/', currentDirPath, toImportFilePath);
   // console.error('convertImportPath:: ' + params.currentModuleId + ' || ' + params.importedModuleId + '  ::  ' + toImportFilePath);
   return toImportFilePath;
 }
