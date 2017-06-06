@@ -55,8 +55,10 @@ export function renderChild<ICommonBlueprintBase>(
       const toRenderChildKey = toRenderChild.props.key;
       let childInstanceTree = instanceTree.childrenDict[toRenderChildKey];
       if (!childInstanceTree) {
+        const instance = new toRenderChild.blueprint();
+        instance.init(instanceTree.instance);
         childInstanceTree = {
-          instance: new toRenderChild.blueprint(),
+          instance,
           childrenDict: {},
           childrenList: [],
           key: toRenderChildKey,
@@ -76,6 +78,7 @@ export function renderChild<ICommonBlueprintBase>(
     instanceTree.childrenDict,
     (oldChild, oldChildKey) => {
       if (!newChildrenDict[oldChildKey]) {
+        deleteTree(oldChild);
         oldChild.instance.cleanUp();
         childrenChanged = true;
       }
@@ -98,6 +101,19 @@ export function renderChild<ICommonBlueprintBase>(
   instanceTree.childrenList = newChildrenList;
 }
 
+export function deleteTree<CommonBlueprintBase>(
+  instanceTree: InstanceTreeType<CommonBlueprintBase>
+) {
+  forEach(
+    instanceTree.childrenList,
+    child => {
+      deleteTree(child);
+    }
+  ) ;
+  instanceTree.instance.cleanUp();
+  delete instanceTree.childrenDict;
+  delete instanceTree.childrenList;
+}
 export function deleteChild<CommonBlueprintBase>(
   instanceTree: InstanceTreeType<CommonBlueprintBase>, childKey: string
 ) {

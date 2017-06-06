@@ -18,7 +18,6 @@ describe('[Renderer]', () => {
         []
       )
     );
-
     logger.partialMatch([
       new LogItem({
         blueprint: _GrandParent,
@@ -47,10 +46,7 @@ describe('[Renderer]', () => {
       logger.logs.slice(2)
     );
     loggerAfterGrandparentInit.partialMatch([
-      new LogItem({
-        blueprint: _Layer,
-        type: 'init',
-      }),
+      new LogItem({ blueprint: _Layer, type: 'init' }),
       new LogItem({
         blueprint: _Layer,
         type: 'init',
