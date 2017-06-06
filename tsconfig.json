@@ -26,6 +26,7 @@
     "src/__unittests__/TypeTests/fakes",
     "docs_ts_compiled",
     "dts-generator.js",
+    "reactive-renderer.d.ts",
     "dist",
     "docs",
     "node_modules",

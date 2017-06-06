@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@storybook/addon-actions@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.0.0.tgz#e141378eeff36cbc61d27ba4330eaadfb6cd5c8b"
+"@storybook/addon-actions@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.0.1.tgz#b3832b79c34cc8a73cfe5e7ba808c4dde25241dc"
   dependencies:
     "@storybook/addons" "^3.0.0"
     deep-equal "^1.0.1"
@@ -42,15 +42,15 @@
     fuse.js "^3.0.1"
     prop-types "^15.5.9"
 
-"@storybook/react@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-3.0.0.tgz#8e0d7118691bd09c37264000525accaf6546aa5f"
+"@storybook/react@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-3.0.1.tgz#9d6c3ddfdca22d9e7c4baedd82fa9d9a230e8770"
   dependencies:
-    "@storybook/addon-actions" "^3.0.0"
+    "@storybook/addon-actions" "^3.0.1"
     "@storybook/addon-links" "^3.0.0"
     "@storybook/addons" "^3.0.0"
     "@storybook/channel-postmessage" "^3.0.0"
-    "@storybook/ui" "^3.0.0"
+    "@storybook/ui" "^3.0.1"
     airbnb-js-shims "^1.1.1"
     autoprefixer "^7.1.1"
     babel-core "^6.24.1"
@@ -92,9 +92,9 @@
     webpack-dev-middleware "^1.10.2"
     webpack-hot-middleware "^2.18.0"
 
-"@storybook/ui@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@storybook/ui/-/ui-3.0.0.tgz#64d83dd7529ebe0ffe7622d90e08bf00cd362508"
+"@storybook/ui@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@storybook/ui/-/ui-3.0.1.tgz#fbb2dca43bb35ec7d0efd68fb8336478e5e25585"
   dependencies:
     "@storybook/react-fuzzy" "^0.4.0"
     babel-runtime "^6.23.0"
