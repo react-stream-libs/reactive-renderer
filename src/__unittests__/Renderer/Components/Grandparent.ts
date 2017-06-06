@@ -33,7 +33,9 @@ export class __GrandParent
 
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
-    newChildrenList: InstanceTreeType[]
+    oldChildrenDict: {[key: string]: InstanceTreeType},
+    newChildrenList: InstanceTreeType[],
+    newChildrenDict: {[key: string]: InstanceTreeType},
   ) {
 
   }

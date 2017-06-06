@@ -35,7 +35,9 @@ export class __Child extends Blueprint<ChildPropsType>
   }
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
-    newChildrenList: InstanceTreeType[]
+    oldChildrenDict: {[key: string]: InstanceTreeType},
+    newChildrenList: InstanceTreeType[],
+    newChildrenDict: {[key: string]: InstanceTreeType},
   ) { }
   public cleanUp() {
   }

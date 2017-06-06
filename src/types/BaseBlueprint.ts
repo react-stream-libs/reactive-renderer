@@ -17,7 +17,13 @@ export abstract class BaseBlueprint<
   public abstract updateAfterChildren(props: PropsType): any;
   public abstract reorderChildren(
     oldChildrenList: InstanceTreeType<CommonBlueprintBase>[],
-    newChildrenList: InstanceTreeType<CommonBlueprintBase>[]
+    oldChildrenDict: {
+      [key: string]: InstanceTreeType<CommonBlueprintBase>,
+    },
+    newChildrenList: InstanceTreeType<CommonBlueprintBase>[],
+    newChildrenDict: {
+      [key: string]: InstanceTreeType<CommonBlueprintBase>,
+    },
   ): void;
   public abstract cleanUp(): any;
 }

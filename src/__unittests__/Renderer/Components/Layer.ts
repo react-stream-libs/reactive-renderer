@@ -29,7 +29,9 @@ export class __Layer extends Blueprint<LayerPropsType>
   public updateAfterChildren(props: LayerPropsType) { }
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
-    newChildrenList: InstanceTreeType[]
+    oldChildrenDict: {[key: string]: InstanceTreeType},
+    newChildrenList: InstanceTreeType[],
+    newChildrenDict: {[key: string]: InstanceTreeType},
   ) {
 
   }
@@ -80,7 +82,9 @@ export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
     }
     public reorderChildren(
       oldChildrenList: InstanceTreeType[],
-      newChildrenList: InstanceTreeType[]
+      oldChildrenDict: {[key: string]: InstanceTreeType},
+      newChildrenList: InstanceTreeType[],
+      newChildrenDict: {[key: string]: InstanceTreeType},
     ) {
 
     }

@@ -22,7 +22,9 @@ export class NoneExistentBlueprint
 
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
-    newChildrenList: InstanceTreeType[]
+    oldChildrenDict: {[key: string]: InstanceTreeType},
+    newChildrenList: InstanceTreeType[],
+    newChildrenDict: {[key: string]: InstanceTreeType}
   ): void { }
   public updateBeforeChildren(props: BasePropsType): void {}
   public updateAfterChildren(props: BasePropsType): void {}
@@ -48,7 +50,9 @@ export class _FakeRoot
 
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
-    newChildrenList: InstanceTreeType[]
+    oldChildrenDict: {[key: string]: InstanceTreeType},
+    newChildrenList: InstanceTreeType[],
+    newChildrenDict: {[key: string]: InstanceTreeType},
   ): void { }
   public cleanUp(): void { }
 }

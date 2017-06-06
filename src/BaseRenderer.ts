@@ -89,7 +89,9 @@ export function renderChild<ICommonBlueprintBase>(
   if (!childrenChanged) {
     instanceTree.instance.reorderChildren(
       instanceTree.childrenList,
-      newChildrenList
+      instanceTree.childrenDict,
+      newChildrenList,
+      newChildrenDict
     );
   }
   instanceTree.childrenDict = newChildrenDict;
