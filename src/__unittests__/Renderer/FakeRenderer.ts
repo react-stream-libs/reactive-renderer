@@ -5,21 +5,20 @@
 import {
   compact,
 } from 'lodash';
-import BaseRenderer, {
-  BaseRootRenderableType,
+import {
+  BaseRenderer,
   renderChild,
-} from '../../BaseRenderer';
+} from '../..';
 
 import {
   InstanceTreeType,
   Logger,
+  RootRenderableType,
 } from './Components/types';
 import fakeRoot, {
   _FakeRoot,
   FakeRootPropsType,
 } from './Components/fakeRoot';
-
-import { ICommonBlueprintBase } from './CommonBlueprintBase';
 export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsType, ICommonBlueprintBase> {
   public logger: Logger;
   public instanceTree: InstanceTreeType;
@@ -33,7 +32,7 @@ export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsT
       childrenList: [],
     };
   }
-  public render(toRender: BaseRootRenderableType<_FakeRoot, ICommonBlueprintBase> | null, rootProps?: FakeRootPropsType) {
+  public render(toRender: RootRenderableType | null, rootProps?: FakeRootPropsType) {
     const renderRoot = fakeRoot(
       {
         key: '__FAKEROOT__',

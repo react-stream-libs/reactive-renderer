@@ -9,7 +9,10 @@ import {
   RenderableType as _RenderableType,
   createComponent as _createComponent,
   InstanceTreeType as _InstanceTreeType,
+  BaseRootRenderableType,
 } from '../../..';
+
+import { _FakeRoot } from './fakeRoot';
 
 import {
   default as _Logger,
@@ -58,6 +61,9 @@ export function createComponent<
 
 export type InstanceTreeType = _InstanceTreeType<ICommonBlueprintBase>;
 
+export type RootRenderableType = BaseRootRenderableType<
+  _FakeRoot, ICommonBlueprintBase
+>;
 export {
   BasePropsType,
   _RenderableType,
