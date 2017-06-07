@@ -35,7 +35,7 @@
     "babel-cli": "^6.18.0",
     "bootstrap": "^3.3.7",
     "chai": "^3.5.0",
-    "console-polyfill": "^0.2.3",
+    "console-polyfill": "^0.3.0",
     "copy-webpack-plugin": "^4.0.1",
     "copyfiles": "^1.0.0",
     "css-loader": "^0.27.3",
