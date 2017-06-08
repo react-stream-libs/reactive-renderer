@@ -9,7 +9,7 @@
     "jsx": "react",
     "experimentalDecorators": true,
     "rootDirs": [
-      "src", "storybook-ts"
+      "src", "storybook-ts", "dts-generator"
     ],
     "outDir": "docs_ts_compiled"
   },
