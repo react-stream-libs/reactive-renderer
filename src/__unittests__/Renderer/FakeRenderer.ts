@@ -9,7 +9,7 @@ import {
   BaseRenderer,
   renderChild,
 } from '../..';
-
+import { ICommonBlueprintBase } from './CommonBlueprintBase';
 import {
   InstanceTreeType,
   Logger,
