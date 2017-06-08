@@ -16,7 +16,7 @@
   "version": "0.0.1",
   "description": "Reactive Renderer",
   "main": "lib/index.js",
-  "types": "reactive-renderer.d.ts",
+  "types": "docs_ts_compiled/src/index.d.ts",
   "repository": "https://github.com/react-stream-libs/reactive-renderer.git",
   "author": "devdoomari <devdoomari __at__ gmail dotttt commmm>",
   "license": "Personal",

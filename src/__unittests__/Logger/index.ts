@@ -5,7 +5,7 @@ import {
 import {
   BaseBlueprint,
   BasePropsType,
-} from '../../';
+} from '../..';
 
 export default class Logger<CommonBlueprintBase> {
   public logs: LogItem<CommonBlueprintBase>[];
