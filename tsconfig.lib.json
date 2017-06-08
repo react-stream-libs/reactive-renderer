@@ -19,6 +19,7 @@
     "node_modules/**/*.d.ts"
   ],
   "exclude": [
+    "src/__unittests__",
     "storybook-ts",
     "docs", "docs_ts_compiled",
     "docs_src",
