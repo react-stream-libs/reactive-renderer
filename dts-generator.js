@@ -1,4 +1,7 @@
 console.log("dts-generator disabled for now...");
+var fs = require('fs');
+
+fs.writeFileSync('reactive-renderer.d.ts', '');
 // // var dtsGen = require('dts-generator').default;
 // import dtsGenerator from 'dts-generator';
 // import * as path from 'path';
