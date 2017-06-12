@@ -39,7 +39,7 @@ deployment:
       - git tag -a $'dist_'"$CIRCLE_BUILD_NUM" -m "dist"
       - git push --force origin dist --follow-tags
   feature:
-    branch: /feature\/*/
+    branch: /feature*/
     commands:
       - git config user.email "devdoomari@gmail.com"
       - git config user.name "devdoomari.circleci"
