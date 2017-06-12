@@ -9,6 +9,7 @@ import {
   RenderableType as _RenderableType,
   createComponent as _createComponent,
   InstanceTreeType as _InstanceTreeType,
+  IContextBase,
   BaseRootRenderableType,
 } from '../../..';
 
@@ -19,50 +20,60 @@ import {
   LogItem as _LogItem,
 } from '../../Logger';
 
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import { ICommonBlueprint } from '../ICommonBlueprint';
 
-export abstract class Blueprint<PropsType extends BasePropsType>
-  extends BaseBlueprint<PropsType, ICommonBlueprintBase>
-  implements ICommonBlueprintBase {
+export abstract class Blueprint<
+  PropsType extends BasePropsType
+  , IContext extends IContextBase
+>
+  extends BaseBlueprint<PropsType, ICommonBlueprint, IContext>
+  implements ICommonBlueprint
+{
+
+  public __EXTENDS_ICOMMON_BLUEPRINT_BASE: null;
   // abstract someCommonMethod = () => string
   public someCommonMethod: () => string;
 }
 
 export interface IParentableBy<
-  _Blueprint extends Blueprint<any>
-> extends _IParentableBy<_Blueprint, ICommonBlueprintBase> {
+  _Blueprint extends Blueprint<any, any>
+> extends _IParentableBy<_Blueprint, ICommonBlueprint> {
 
 }
 
 export type RenderableType<
   PropsType extends BasePropsType,
-  _Blueprint extends
-    Blueprint<BasePropsType>,
-  ParentableBy extends
-    Blueprint<BasePropsType>
-> = _RenderableType<PropsType, _Blueprint, ParentableBy, ICommonBlueprintBase>;
+  _Blueprint extends Blueprint<BasePropsType, IContext>,
+  ParentableBy extends Blueprint<BasePropsType, IContextBase>,
+  IContext extends IContextBase
+> = _RenderableType<PropsType, _Blueprint, ParentableBy, ICommonBlueprint, IContext>;
 
-export class Logger extends _Logger<ICommonBlueprintBase> {}
-export class LogItem extends _LogItem<ICommonBlueprintBase> {}
+export class Logger extends _Logger<ICommonBlueprint> {}
+export class LogItem extends _LogItem<ICommonBlueprint> {}
 
 export function createComponent<
-  BlueprintClass extends Blueprint<PropsType> &
+  BlueprintClass extends Blueprint<PropsType, IContextBase> &
     IParentableBy<ParentableTypes>
   ,
-  ParentableTypes extends Blueprint<BasePropsType>,
+  ParentableTypes extends Blueprint<BasePropsType, IContextBase>,
   PropsType extends BasePropsType
 >(
   blueprintClass: {
     new(): BlueprintClass & IParentableBy<ParentableTypes>
   },
 ) {
-  return _createComponent(blueprintClass);
+  return _createComponent<
+    BlueprintClass,
+    ParentableTypes,
+    PropsType,
+    ICommonBlueprint
+  >(blueprintClass);
 }
 
-export type InstanceTreeType = _InstanceTreeType<ICommonBlueprintBase>;
+export type InstanceTreeType = _InstanceTreeType<ICommonBlueprint>;
 
 export type RootRenderableType = BaseRootRenderableType<
-  _FakeRoot, ICommonBlueprintBase
+  _FakeRoot, ICommonBlueprint, IContextBase
 >;
 export {
   BasePropsType,

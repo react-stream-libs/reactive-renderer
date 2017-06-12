@@ -10,18 +10,14 @@ import { IContextBase } from './types/IContextBase';
  * @param blueprintClass - the blueprint class
  */
 
-// FIXME: use createComponentWithContext instead of re-impl.
-export const defaultContext: IContextBase = {
-  __EXTENDS_ICONTEXT_BASE: null,
-};
-
-export function createComponent<
-  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContextBase> &
+export function createComponentWithContext<
+  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContext> &
     IParentableBy<ParentableTypes, ICommonBlueprint> &
     ICommonBlueprint,
   ParentableTypes extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
   PropsType extends BasePropsType,
-  ICommonBlueprint extends ICommonBlueprintBase
+  ICommonBlueprint extends ICommonBlueprintBase,
+  IContext extends IContextBase
 >(
   blueprintClass: {
     new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
@@ -37,17 +33,18 @@ export function createComponent<
       BlueprintClass,
       ICommonBlueprint,
       IContextBase
-    > []
+    > [],
+    context: IContext,
   ): RenderableType<
     PropsType,
     BlueprintClass & ICommonBlueprint,
     ParentableTypes & ICommonBlueprint,
     ICommonBlueprint,
-    IContextBase
+    IContext
   > => ({
       blueprint: blueprintClass,
       props,
       children,
-      context: defaultContext,
+      context,
   });
 }

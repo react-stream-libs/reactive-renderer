@@ -3,15 +3,24 @@ import {
   default as Logger,
   LogItem,
 } from '.';
-import { BaseBlueprint } from '../../types/BaseBlueprint';
-import { BasePropsType } from '../../types/BasePropsType';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  ICommonBlueprintBase,
+  IContextBase,
+} from '../..';
 
-export interface ICommonBlueprintBase {
+export interface ICommonBlueprint extends ICommonBlueprintBase {
 
 }
 
-class RootBlueprint extends BaseBlueprint<BasePropsType, ICommonBlueprintBase> {
-  public init(parent: BaseBlueprint<BasePropsType, ICommonBlueprintBase>) { }
+class RootBlueprint extends BaseBlueprint<
+  BasePropsType, ICommonBlueprint, IContextBase
+> {
+  public init(
+    parent: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
+    context: IContextBase
+  ) { }
   public updateBeforeChildren(props: BasePropsType) { }
   public updateAfterChildren(props: BasePropsType) { }
 

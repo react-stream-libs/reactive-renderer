@@ -1,17 +1,20 @@
 import { BaseBlueprint } from './BaseBlueprint';
 import { BasePropsType } from './BasePropsType';
 import { IParentableBy } from './IParentableBy';
+import { IContextBase } from './IContextBase';
+import { ICommonBlueprintBase } from './ICommonBlueprintBase';
 
-export type InstanceTreeType<ICommonBlueprintBase> = {
-  instance: BaseBlueprint<BasePropsType, ICommonBlueprintBase> &
+export type InstanceTreeType<ICommonBlueprint extends ICommonBlueprintBase> = {
+  instance: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
     IParentableBy<
-      BaseBlueprint<BasePropsType, ICommonBlueprintBase>
-      , ICommonBlueprintBase
+      BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
+      , ICommonBlueprint
     > &
-    ICommonBlueprintBase,
+    ICommonBlueprint,
   key: string,
+  context: IContextBase,
   childrenDict: {
-    [key: string]: InstanceTreeType<ICommonBlueprintBase>,
+    [key: string]: InstanceTreeType<ICommonBlueprint>,
   },
-  childrenList: InstanceTreeType<ICommonBlueprintBase>[],
+  childrenList: InstanceTreeType<ICommonBlueprint>[],
 };

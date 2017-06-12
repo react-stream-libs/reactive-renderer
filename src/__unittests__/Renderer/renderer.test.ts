@@ -16,7 +16,7 @@ describe('[Renderer]', () => {
           key: 'grandparent'
         },
         []
-      )
+      ), { __EXTENDS_ICONTEXT_BASE: null }
     );
     logger.partialMatch([
       new LogItem({
@@ -40,7 +40,8 @@ describe('[Renderer]', () => {
             key: 'innerLayer',
           },    []),
         ]),
-      ])
+      ]),
+      { __EXTENDS_ICONTEXT_BASE: null }
     );
     const loggerAfterGrandparentInit = new Logger(
       logger.logs.slice(2)
@@ -70,7 +71,7 @@ describe('[Renderer]', () => {
         type: 'update',
       }),
     ]);
-    renderer.render(null);
+    renderer.render(null, { __EXTENDS_ICONTEXT_BASE: null });
     const loggerAfterDeletion = new Logger(
       logger.logs.slice(7)
     );

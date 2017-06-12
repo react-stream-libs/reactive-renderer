@@ -5,17 +5,19 @@ import {
 import {
   BaseBlueprint,
   BasePropsType,
+  ICommonBlueprintBase,
+  IContextBase,
 } from '../..';
 
-export default class Logger<CommonBlueprintBase> {
-  public logs: LogItem<CommonBlueprintBase>[];
-  constructor(logs?: LogItem<CommonBlueprintBase>[]) {
+export default class Logger<ICommonBlueprint extends ICommonBlueprintBase> {
+  public logs: LogItem<ICommonBlueprint>[];
+  constructor(logs?: LogItem<ICommonBlueprint>[]) {
     this.logs = logs || [];
   }
-  public add(logItem: LogItem<CommonBlueprintBase>) {
+  public add(logItem: LogItem<ICommonBlueprint>) {
     this.logs.push(logItem);
   }
-  public partialMatch(partialLogItems: LogItem<CommonBlueprintBase>[]) {
+  public partialMatch(partialLogItems: LogItem<ICommonBlueprint>[]) {
     forEach(
       partialLogItems,
       (value, key) => this.logs[key].partialMatch(value)
@@ -25,24 +27,24 @@ export default class Logger<CommonBlueprintBase> {
 
 export type LogItemEventType = 'init' | 'update' | 'delete' | 'reorder';
 
-export type LogItemDataType<CommonBlueprintBase> = {
-  [key: string]: BaseBlueprint<BasePropsType, CommonBlueprintBase>
+export type LogItemDataType<ICommonBlueprint extends ICommonBlueprintBase> = {
+  [key: string]: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
    | typeof BaseBlueprint
    | string
    | BasePropsType;
-  instance?: BaseBlueprint<BasePropsType, CommonBlueprintBase>,
-  parentInstance?: BaseBlueprint<BasePropsType, CommonBlueprintBase>,
+  instance?: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
+  parentInstance?: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
   blueprint?: typeof BaseBlueprint,
   key?: string,
   type: LogItemEventType,
   props?: BasePropsType,
 };
-export class LogItem<CommonBlueprintBase> {
-  private data: LogItemDataType<CommonBlueprintBase>;
-  constructor(args: LogItemDataType<CommonBlueprintBase>) {
+export class LogItem<ICommonBlueprint extends ICommonBlueprintBase> {
+  private data: LogItemDataType<ICommonBlueprint>;
+  constructor(args: LogItemDataType<ICommonBlueprint>) {
     this.data = args;
   }
-  public partialMatch(toMatch: LogItem<CommonBlueprintBase>) {
+  public partialMatch(toMatch: LogItem<ICommonBlueprint>) {
     forEach(
       toMatch.data,
       (value, key) => {

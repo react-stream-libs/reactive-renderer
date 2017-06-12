@@ -14,7 +14,9 @@ import {
   BaseBlueprint,
   BasePropsType,
   InstanceTreeType,
+  IContextBase,
   IParentableBy,
+  ICommonBlueprintBase,
   RenderableType,
 } from './types';
 
@@ -27,6 +29,8 @@ export {
   BaseBlueprint,
   BasePropsType,
   InstanceTreeType,
+  IContextBase,
   IParentableBy,
+  ICommonBlueprintBase,
   RenderableType,
 };
