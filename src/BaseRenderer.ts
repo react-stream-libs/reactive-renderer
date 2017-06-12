@@ -1,8 +1,12 @@
-import { RenderableType } from './types/Renderable';
-import { BaseBlueprint } from './types/BaseBlueprint';
-import { BasePropsType } from './types/BasePropsType';
-import { IParentableBy } from './types/IParentableBy';
-import { InstanceTreeType } from './types/InstanceTree';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  IParentableBy,
+  RenderableType,
+  ICommonBlueprintBase,
+  IContextBase,
+  InstanceTreeType,
+} from './types';
 
 import {
   forEach,
@@ -10,40 +14,51 @@ import {
 } from 'lodash';
 
 export type BaseRootRenderableType<
-    _Root extends BaseBlueprint<BasePropsType, CommonBlueprintBase>,
-    CommonBlueprintBase,
+    _Root extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContext>,
+    ICommonBlueprint extends ICommonBlueprintBase,
+    IContext extends IContextBase
 > = RenderableType<
   BasePropsType,
-  BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-    IParentableBy<_Root, CommonBlueprintBase> &
-    CommonBlueprintBase,
-  _Root & CommonBlueprintBase,
-  CommonBlueprintBase
+  BaseBlueprint<BasePropsType, ICommonBlueprint, IContext> &
+    IParentableBy<_Root, ICommonBlueprint> &
+    ICommonBlueprint,
+  _Root & ICommonBlueprint,
+  ICommonBlueprint,
+  IContext
 >;
 
 export abstract class BaseRenderer<
-  RootType extends BaseBlueprint<RootPropsType, CommonBlueprintBase>
+  RootType extends BaseBlueprint<RootPropsType, ICommonBlueprint, IContext>
   , RootPropsType extends BasePropsType
-  , CommonBlueprintBase
+  , ICommonBlueprint extends ICommonBlueprintBase
+  , IContext extends IContextBase
 > {
   public abstract render(
-    rootRenderable: BaseRootRenderableType<RootType, CommonBlueprintBase> | null,
-    rootProps?: RootPropsType
+    rootRenderable: BaseRootRenderableType<
+      RootType, ICommonBlueprint, IContext
+    > | null,
+    context: IContext,
+    rootProps?: RootPropsType,
   ): any;
   public abstract dispose(): any;
 }
 
 // FIXME: implement a loop-variant for speed up!
-export function renderChild<ICommonBlueprintBase>(
-  instanceTree: InstanceTreeType<ICommonBlueprintBase>,
+export function renderChild<
+  ICommonBlueprint extends ICommonBlueprintBase
+  , IContext extends IContextBase
+>(
+  instanceTree: InstanceTreeType<ICommonBlueprint>,
   toRender: RenderableType<
     BasePropsType,
-    BaseBlueprint<BasePropsType, ICommonBlueprintBase> &
-      ICommonBlueprintBase,
-    BaseBlueprint<BasePropsType, ICommonBlueprintBase> &
-      ICommonBlueprintBase,
-    ICommonBlueprintBase
-  >
+    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
+      ICommonBlueprint,
+    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
+      ICommonBlueprint,
+    ICommonBlueprint,
+    IContext
+  >,
+  context: IContext
 ) {
   const newChildrenList: typeof instanceTree.childrenList = [];
   const newChildrenDict: typeof instanceTree.childrenDict = {};
@@ -53,23 +68,42 @@ export function renderChild<ICommonBlueprintBase>(
   toRender.children.forEach(
     (toRenderChild, nth) => {
       const toRenderChildKey = toRenderChild.props.key;
+      const toRenderChildContext = toRenderChild.context;
+      const toRenderChildProps = toRenderChild.props;
       let childInstanceTree = instanceTree.childrenDict[toRenderChildKey];
       if (!childInstanceTree) {
         const instance = new toRenderChild.blueprint();
-        instance.init(instanceTree.instance);
+        toRenderChildProps.beforeInit &&
+          toRenderChildProps.beforeInit(instance, toRenderChildProps);
+        instance.init(instanceTree.instance, toRenderChildContext);
+        toRenderChildProps.afterInit &&
+          toRenderChildProps.afterInit(instance, toRenderChildProps);
         childInstanceTree = {
           instance,
           childrenDict: {},
           childrenList: [],
           key: toRenderChildKey,
+          context: toRenderChildContext,
         };
         childrenChanged = true;
       }
+      childInstanceTree.prevProps = toRenderChildProps;
       newChildrenList.push(childInstanceTree);
       newChildrenDict[toRenderChildKey] = childInstanceTree;
-      childInstanceTree.instance.updateBeforeChildren(toRenderChild.props);
-      renderChild<ICommonBlueprintBase>(childInstanceTree, toRenderChild);
-      childInstanceTree.instance.updateAfterChildren(toRenderChild.props);
+      toRenderChildProps.beforeChildrenUpdate &&
+        toRenderChildProps.beforeChildrenUpdate(
+          childInstanceTree.instance, toRenderChildProps
+        );
+      childInstanceTree.instance.updateBeforeChildren(
+        toRenderChild.props, toRenderChildContext
+      );
+      renderChild<ICommonBlueprintBase, IContextBase>(
+        childInstanceTree, toRenderChild, toRenderChild.context
+      );
+      childInstanceTree.instance.updateAfterChildren(
+        toRenderChild.props,
+        toRenderChildContext
+      );
     }
   );
 
@@ -78,8 +112,14 @@ export function renderChild<ICommonBlueprintBase>(
     instanceTree.childrenDict,
     (oldChild, oldChildKey) => {
       if (!newChildrenDict[oldChildKey]) {
+        oldChild.prevProps &&
+          oldChild.prevProps.beforeCleanup &&
+            oldChild.prevProps.beforeCleanup(oldChild.instance);
         deleteTree(oldChild);
         oldChild.instance.cleanUp();
+        oldChild.prevProps &&
+          oldChild.prevProps.afterCleanup &&
+            oldChild.prevProps.afterCleanup(oldChild.instance);
         childrenChanged = true;
       }
     }
@@ -101,8 +141,8 @@ export function renderChild<ICommonBlueprintBase>(
   instanceTree.childrenList = newChildrenList;
 }
 
-export function deleteTree<CommonBlueprintBase>(
-  instanceTree: InstanceTreeType<CommonBlueprintBase>
+export function deleteTree<ICommonBlueprint extends ICommonBlueprintBase>(
+  instanceTree: InstanceTreeType<ICommonBlueprint>
 ) {
   forEach(
     instanceTree.childrenList,
@@ -114,8 +154,8 @@ export function deleteTree<CommonBlueprintBase>(
   delete instanceTree.childrenDict;
   delete instanceTree.childrenList;
 }
-export function deleteChild<CommonBlueprintBase>(
-  instanceTree: InstanceTreeType<CommonBlueprintBase>, childKey: string
+export function deleteChild<ICommonBlueprint extends ICommonBlueprintBase>(
+  instanceTree: InstanceTreeType<ICommonBlueprint>, childKey: string
 ) {
   const childToDelete = instanceTree.childrenDict[childKey];
   forEach(

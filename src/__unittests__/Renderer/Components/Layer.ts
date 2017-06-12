@@ -1,11 +1,12 @@
 import {
   createComponent,
   BasePropsType,
+  IContextBase,
 } from '../../..';
 
 import { __GrandParent } from './Grandparent';
 import Logger, { LogItem } from '../../Logger';
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import { ICommonBlueprint } from '../ICommonBlueprint';
 
 import {
   Blueprint,
@@ -18,12 +19,12 @@ export type _LayerParentTypes = __GrandParent & __Layer;
 export type LayerPropsType = {
 } & BasePropsType;
 
-export class __Layer extends Blueprint<LayerPropsType>
+export class __Layer extends Blueprint<LayerPropsType, IContextBase>
     implements IParentableBy<_LayerParentTypes> {
 
   public someCommonMethod: () => '__Layer';
   public parent: _LayerParentTypes;
-  protected logger: Logger<ICommonBlueprintBase>;
+  protected logger: Logger<ICommonBlueprint>;
   public init(parent: _LayerParentTypes) { }
   public updateBeforeChildren(props: LayerPropsType) { }
   public updateAfterChildren(props: LayerPropsType) { }
@@ -38,22 +39,24 @@ export class __Layer extends Blueprint<LayerPropsType>
   public cleanUp() { }
 }
 
-export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
+export function getLayerComps(logger: Logger<ICommonBlueprint>): {
   _Layer: typeof __Layer,
   Layer (
     props: LayerPropsType,
     children: RenderableType<
       BasePropsType,
-      Blueprint<BasePropsType> & IParentableBy<__Layer>,
-      __Layer
+      Blueprint<BasePropsType, IContextBase> & IParentableBy<__Layer>,
+      __Layer,
+      IContextBase
     >[]
   ): RenderableType<
     LayerPropsType,
     __Layer,
-    _LayerParentTypes
+    _LayerParentTypes,
+    IContextBase
   >
 } {
-  class _Layer extends __Layer implements ICommonBlueprintBase {
+  class _Layer extends __Layer implements ICommonBlueprint {
     constructor() {
       super();
       this.logger = logger;
@@ -93,7 +96,7 @@ export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
     _Layer,
     _LayerParentTypes,
     LayerPropsType,
-    ICommonBlueprintBase
+    ICommonBlueprint
   >(_Layer);
 
   return {

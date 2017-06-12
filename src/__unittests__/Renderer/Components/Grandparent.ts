@@ -1,9 +1,10 @@
 import {
   BasePropsType,
   createComponent,
+  IContextBase,
 } from '../../..';
 
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import { ICommonBlueprint } from '../ICommonBlueprint';
 import { _FakeRoot } from './fakeRoot';
 
 import {
@@ -20,7 +21,7 @@ export type GrandParentPropsType = {
 } & BasePropsType;
 
 export class __GrandParent
-    extends Blueprint<GrandParentPropsType>
+    extends Blueprint<GrandParentPropsType, IContextBase>
     implements
       IParentableBy<_GrandparentParentTypes> {
 
@@ -49,13 +50,15 @@ export function getGrandparentComps(logger: Logger): {
     props: GrandParentPropsType,
     children: RenderableType<
       BasePropsType,
-      Blueprint<BasePropsType> & IParentableBy<__GrandParent>,
-      __GrandParent
+      Blueprint<BasePropsType, IContextBase> & IParentableBy<__GrandParent>,
+      __GrandParent,
+      IContextBase
     > []
   ): RenderableType<
     GrandParentPropsType,
     __GrandParent,
-    _GrandparentParentTypes
+    _GrandparentParentTypes,
+    IContextBase
   >
 } {
   class _GrandParent extends __GrandParent {
@@ -92,7 +95,7 @@ export function getGrandparentComps(logger: Logger): {
     _GrandParent,
     _GrandparentParentTypes,
     GrandParentPropsType,
-    ICommonBlueprintBase
+    ICommonBlueprint
   >(_GrandParent);
 
   return {

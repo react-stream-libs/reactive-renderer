@@ -7,15 +7,17 @@ import BaseRenderer, {
   deleteChild,
 } from './BaseRenderer';
 
-import {
-  createComponent,
-} from './createComponent';
+import { createComponent } from './createComponent';
+import { createComponentWithContext } from './createComponentWithContext';
 import {
   BaseBlueprint,
   BasePropsType,
   InstanceTreeType,
+  IContextBase,
   IParentableBy,
+  ICommonBlueprintBase,
   RenderableType,
+  ComponentType,
 } from './types';
 
 export {
@@ -23,10 +25,14 @@ export {
   renderChild, deleteChild,
 
   createComponent,
+  createComponentWithContext,
+  ComponentType,
 
   BaseBlueprint,
   BasePropsType,
   InstanceTreeType,
+  IContextBase,
   IParentableBy,
+  ICommonBlueprintBase,
   RenderableType,
 };

@@ -1,7 +1,11 @@
-import { BasePropsType } from '../../../types/BasePropsType';
-import { createComponent } from '../../../createComponent';
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import {
+  BasePropsType,
+  createComponent,
+  IContextBase,
+} from '../../../';
 import { __Layer } from './Layer';
+
+import { ICommonBlueprint } from '../ICommonBlueprint';
 
 import {
   Blueprint,
@@ -15,7 +19,7 @@ export type _ChildParentTypes = __Layer;
 export type ChildPropsType = {
 } & BasePropsType;
 
-export class __Child extends Blueprint<ChildPropsType>
+export class __Child extends Blueprint<ChildPropsType, IContextBase>
     implements IParentableBy<_ChildParentTypes> {
 
   public someCommonMethod: () => '__Child';
@@ -49,15 +53,17 @@ export function getChildComps(logger: Logger): {
     props: ChildPropsType,
     children: RenderableType<
       BasePropsType,
-      Blueprint<BasePropsType> &
+      Blueprint<BasePropsType, IContextBase> &
         IParentableBy<__Child> &
-        ICommonBlueprintBase,
-      __Child
+        ICommonBlueprint,
+      __Child,
+      IContextBase
     > []
   ): RenderableType<
     ChildPropsType,
     __Child,
-    _ChildParentTypes
+    _ChildParentTypes,
+    IContextBase
   >
 } {
   class _Child extends __Child {
@@ -70,7 +76,7 @@ export function getChildComps(logger: Logger): {
     _Child,
     _ChildParentTypes,
     ChildPropsType,
-    ICommonBlueprintBase
+    ICommonBlueprint
   >(_Child);
 
   return {

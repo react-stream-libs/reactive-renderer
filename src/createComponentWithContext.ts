@@ -5,7 +5,7 @@ import {
   RenderableType,
   ICommonBlueprintBase,
   IContextBase,
-  ComponentType,
+  ComponentWithContextType,
 } from './types';
 
 /**
@@ -13,26 +13,24 @@ import {
  * @param blueprintClass - the blueprint class
  */
 
-export const defaultContext: IContextBase = {
-  __EXTENDS_ICONTEXT_BASE: null,
-};
-
-export function createComponent<
-  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContextBase> &
+export function createComponentWithContext<
+  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContext> &
     IParentableBy<ParentableTypes, ICommonBlueprint> &
     ICommonBlueprint,
   ParentableTypes extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
   PropsType extends BasePropsType,
-  ICommonBlueprint extends ICommonBlueprintBase
+  ICommonBlueprint extends ICommonBlueprintBase,
+  IContext extends IContextBase
 >(
   blueprintClass: {
     new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
   },
-): ComponentType<
+): ComponentWithContextType<
   BlueprintClass,
   ParentableTypes,
   PropsType,
-  ICommonBlueprint
+  ICommonBlueprint,
+  IContext
 > {
   return (
     props: PropsType,
@@ -44,11 +42,12 @@ export function createComponent<
       BlueprintClass,
       ICommonBlueprint,
       IContextBase
-    > []
+    > [],
+    context: IContext
   ) => ({
       blueprint: blueprintClass,
       props,
       children,
-      context: defaultContext,
+      context,
   });
 }
