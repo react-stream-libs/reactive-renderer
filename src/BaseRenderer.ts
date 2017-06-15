@@ -67,10 +67,15 @@ export function renderChild<
     (toRenderChild, nth) => {
       const toRenderChildKey = toRenderChild.props.key;
       const toRenderChildContext = toRenderChild.context;
+      const toRenderChildProps = toRenderChild.props;
       let childInstanceTree = instanceTree.childrenDict[toRenderChildKey];
       if (!childInstanceTree) {
         const instance = new toRenderChild.blueprint();
+        toRenderChildProps.beforeInit &&
+          toRenderChildProps.beforeInit(instance, toRenderChildProps);
         instance.init(instanceTree.instance, toRenderChildContext);
+        toRenderChildProps.afterInit &&
+          toRenderChildProps.afterInit(instance, toRenderChildProps);
         childInstanceTree = {
           instance,
           childrenDict: {},
@@ -82,6 +87,10 @@ export function renderChild<
       }
       newChildrenList.push(childInstanceTree);
       newChildrenDict[toRenderChildKey] = childInstanceTree;
+      toRenderChildProps.beforeChildrenUpdate &&
+        toRenderChildProps.beforeChildrenUpdate(
+          childInstanceTree.instance, toRenderChildProps
+        );
       childInstanceTree.instance.updateBeforeChildren(
         toRenderChild.props, toRenderChildContext
       );

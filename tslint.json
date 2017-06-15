@@ -1,7 +1,4 @@
 {
-  "rulesDirectory": [
-    "node_modules/tslint-microsoft-contrib"
-  ],
   "extends": "tslint-microsoft-contrib",
   "rules": {
     "no-for-in-array": false,
@@ -49,6 +46,7 @@
       true,
       "ignore-arrow-function-shorthand"
     ],
+    "no-unused-expression": [true, "allow-fast-null-checks"],
     "completed-docs": [
       false
     ],
