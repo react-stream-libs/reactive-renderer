@@ -9,6 +9,7 @@ import BaseRenderer, {
 
 import {
   createComponent,
+  ComponentType,
 } from './createComponent';
 import {
   BaseBlueprint,
@@ -25,6 +26,7 @@ export {
   renderChild, deleteChild,
 
   createComponent,
+  ComponentType,
 
   BaseBlueprint,
   BasePropsType,
