@@ -1,10 +1,12 @@
-import { RenderableType } from './types/Renderable';
-import { BaseBlueprint } from './types/BaseBlueprint';
-import { BasePropsType } from './types/BasePropsType';
-import { IParentableBy } from './types/IParentableBy';
-import { ICommonBlueprintBase } from './types/ICommonBlueprintBase';
-import { IContextBase } from './types/IContextBase';
-import { InstanceTreeType } from './types/InstanceTree';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  IParentableBy,
+  RenderableType,
+  ICommonBlueprintBase,
+  IContextBase,
+  InstanceTreeType,
+} from './types';
 
 import {
   forEach,

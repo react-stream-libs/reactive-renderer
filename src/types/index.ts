@@ -5,6 +5,7 @@ import { IParentableBy } from './IParentableBy';
 import { IContextBase } from './IContextBase';
 import { ICommonBlueprintBase } from './ICommonBlueprintBase';
 import { RenderableType } from './Renderable';
+import { ComponentType } from './Component';
 
 export {
   BaseBlueprint,
@@ -14,4 +15,5 @@ export {
   IContextBase,
   RenderableType,
   ICommonBlueprintBase,
+  ComponentType,
 };

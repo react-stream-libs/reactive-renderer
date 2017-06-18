@@ -1,9 +1,12 @@
-import { BaseBlueprint } from './types/BaseBlueprint';
-import { BasePropsType } from './types/BasePropsType';
-import { IParentableBy } from './types/IParentableBy';
-import { RenderableType } from './types/Renderable';
-import { ICommonBlueprintBase } from './types/ICommonBlueprintBase';
-import { IContextBase } from './types/IContextBase';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  IParentableBy,
+  RenderableType,
+  ICommonBlueprintBase,
+  IContextBase,
+  ComponentType,
+} from './types';
 
 /**
  * creates Component( Props => Renderable ) from a Blueprint Class.
@@ -22,7 +25,13 @@ export function createComponentWithContext<
   blueprintClass: {
     new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
   },
-) {
+): ComponentType<
+  BlueprintClass,
+  ParentableTypes,
+  PropsType,
+  ICommonBlueprint,
+  IContext
+> {
   return (
     props: PropsType,
     children: RenderableType<
@@ -34,14 +43,8 @@ export function createComponentWithContext<
       ICommonBlueprint,
       IContextBase
     > [],
-    context: IContext,
-  ): RenderableType<
-    PropsType,
-    BlueprintClass & ICommonBlueprint,
-    ParentableTypes & ICommonBlueprint,
-    ICommonBlueprint,
-    IContext
-  > => ({
+    context: IContext
+  ) => ({
       blueprint: blueprintClass,
       props,
       children,
