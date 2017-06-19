@@ -87,6 +87,7 @@ export function renderChild<
         };
         childrenChanged = true;
       }
+      childInstanceTree.prevProps = toRenderChildProps;
       newChildrenList.push(childInstanceTree);
       newChildrenDict[toRenderChildKey] = childInstanceTree;
       toRenderChildProps.beforeChildrenUpdate &&
@@ -111,8 +112,14 @@ export function renderChild<
     instanceTree.childrenDict,
     (oldChild, oldChildKey) => {
       if (!newChildrenDict[oldChildKey]) {
+        oldChild.prevProps &&
+          oldChild.prevProps.beforeCleanup &&
+            oldChild.prevProps.beforeCleanup(oldChild.instance);
         deleteTree(oldChild);
         oldChild.instance.cleanUp();
+        oldChild.prevProps &&
+          oldChild.prevProps.afterCleanup &&
+            oldChild.prevProps.afterCleanup(oldChild.instance);
         childrenChanged = true;
       }
     }

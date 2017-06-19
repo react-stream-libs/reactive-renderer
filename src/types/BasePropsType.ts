@@ -6,4 +6,6 @@ export type BasePropsType = {
   afterInit?(instance: BaseBlueprint<any, any, any>, props: BasePropsType): void;
   beforeChildrenUpdate?(instance: BaseBlueprint<any, any, any>, props: BasePropsType): void;
   afterChildrenUpdate?(instance: BaseBlueprint<any, any, any>, props: BasePropsType): void;
+  beforeCleanup?(instance: BaseBlueprint<any, any, any>): void;
+  afterCleanup?(instance: BaseBlueprint<any, any, any>): void;
 };
