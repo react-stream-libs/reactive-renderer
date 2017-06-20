@@ -31,3 +31,31 @@ export type ComponentType<
   ICommonBlueprint,
   IContext
 >;
+
+export type ComponentWithContextType<
+  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContextBase> &
+    IParentableBy<ParentableTypes, ICommonBlueprint> &
+    ICommonBlueprint,
+  ParentableTypes extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
+  PropsType extends BasePropsType,
+  ICommonBlueprint extends ICommonBlueprintBase,
+  IContext extends IContextBase = IContextBase
+> = (
+  props: PropsType,
+  children: RenderableType<
+    BasePropsType,
+    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
+      IParentableBy<BlueprintClass, ICommonBlueprint> &
+      ICommonBlueprint,
+    BlueprintClass,
+    ICommonBlueprint,
+    IContextBase
+  > [],
+  context: IContext
+  ) => RenderableType<
+  PropsType,
+  BlueprintClass & ICommonBlueprint,
+  ParentableTypes & ICommonBlueprint,
+  ICommonBlueprint,
+  IContext
+>;

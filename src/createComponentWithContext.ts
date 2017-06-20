@@ -5,7 +5,7 @@ import {
   RenderableType,
   ICommonBlueprintBase,
   IContextBase,
-  ComponentType,
+  ComponentWithContextType,
 } from './types';
 
 /**
@@ -25,7 +25,7 @@ export function createComponentWithContext<
   blueprintClass: {
     new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
   },
-): ComponentType<
+): ComponentWithContextType<
   BlueprintClass,
   ParentableTypes,
   PropsType,
