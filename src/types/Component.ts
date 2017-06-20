@@ -3,7 +3,7 @@ import { BasePropsType } from './BasePropsType';
 import { IParentableBy } from './IParentableBy';
 import { ICommonBlueprintBase } from './ICommonBlueprintBase';
 import { IContextBase } from './IContextBase';
-import { RenderableType } from './Renderable';
+import { Renderable } from './Renderable';
 export type ComponentType<
   BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContextBase> &
     IParentableBy<ParentableTypes, ICommonBlueprint> &
@@ -14,7 +14,7 @@ export type ComponentType<
   IContext extends IContextBase = IContextBase
 > = (
   props: PropsType,
-  children: RenderableType<
+  children: Renderable<
     BasePropsType,
     BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
       IParentableBy<BlueprintClass, ICommonBlueprint> &
@@ -24,7 +24,7 @@ export type ComponentType<
     IContextBase
   > [],
   context?: IContext
-  ) => RenderableType<
+  ) => Renderable<
   PropsType,
   BlueprintClass & ICommonBlueprint,
   ParentableTypes & ICommonBlueprint,
@@ -42,7 +42,7 @@ export type ComponentWithContextType<
   IContext extends IContextBase = IContextBase
 > = (
   props: PropsType,
-  children: RenderableType<
+  children: Renderable<
     BasePropsType,
     BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
       IParentableBy<BlueprintClass, ICommonBlueprint> &
@@ -52,7 +52,7 @@ export type ComponentWithContextType<
     IContextBase
   > [],
   context: IContext
-  ) => RenderableType<
+  ) => Renderable<
   PropsType,
   BlueprintClass & ICommonBlueprint,
   ParentableTypes & ICommonBlueprint,

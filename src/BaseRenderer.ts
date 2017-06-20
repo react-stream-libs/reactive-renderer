@@ -2,7 +2,7 @@ import {
   BaseBlueprint,
   BasePropsType,
   IParentableBy,
-  RenderableType,
+  Renderable,
   ICommonBlueprintBase,
   IContextBase,
   InstanceTreeType,
@@ -17,7 +17,7 @@ export type BaseRootRenderableType<
     _Root extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContext>,
     ICommonBlueprint extends ICommonBlueprintBase,
     IContext extends IContextBase
-> = RenderableType<
+> = Renderable<
   BasePropsType,
   BaseBlueprint<BasePropsType, ICommonBlueprint, IContext> &
     IParentableBy<_Root, ICommonBlueprint> &
@@ -49,7 +49,7 @@ export function renderChild<
   , IContext extends IContextBase
 >(
   instanceTree: InstanceTreeType<ICommonBlueprint>,
-  toRender: RenderableType<
+  toRender: Renderable<
     BasePropsType,
     BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
       ICommonBlueprint,

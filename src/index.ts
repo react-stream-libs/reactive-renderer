@@ -16,7 +16,7 @@ import {
   IContextBase,
   IParentableBy,
   ICommonBlueprintBase,
-  RenderableType,
+  Renderable,
   ComponentType,
 } from './types';
 
@@ -34,5 +34,5 @@ export {
   IContextBase,
   IParentableBy,
   ICommonBlueprintBase,
-  RenderableType,
+  Renderable,
 };
