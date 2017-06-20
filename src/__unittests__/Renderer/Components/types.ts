@@ -6,7 +6,7 @@ import {
   BaseBlueprint,
   BasePropsType,
   IParentableBy as _IParentableBy,
-  RenderableType as _RenderableType,
+  Renderable as _RenderableType,
   createComponent as _createComponent,
   InstanceTreeType as _InstanceTreeType,
   IContextBase,

@@ -4,7 +4,7 @@ import { InstanceTreeType } from './InstanceTree';
 import { IParentableBy } from './IParentableBy';
 import { IContextBase } from './IContextBase';
 import { ICommonBlueprintBase } from './ICommonBlueprintBase';
-import { RenderableType } from './Renderable';
+import { Renderable } from './Renderable';
 import { ComponentType, ComponentWithContextType } from './Component';
 
 export {
@@ -13,7 +13,7 @@ export {
   InstanceTreeType,
   IParentableBy,
   IContextBase,
-  RenderableType,
+  Renderable,
   ICommonBlueprintBase,
   ComponentType, ComponentWithContextType,
 };
