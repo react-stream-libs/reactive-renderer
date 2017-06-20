@@ -50,6 +50,7 @@
     "completed-docs": [
       false
     ],
+    "no-multiline-string": false,
     "missing-jsdoc": false,
     "strict-boolean-expressions": [
       true,
