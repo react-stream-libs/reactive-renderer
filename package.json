@@ -29,7 +29,7 @@
     "@types/node": "^7.0.27",
     "@types/react": "^15.0.4",
     "@types/react-bootstrap": "^0.0.46",
-    "@types/react-dom": "^0.14.21",
+    "@types/react-dom": "^15.5.1",
     "@types/sinon": "^1.16.34",
     "@types/webpack": "^2.2.4",
     "babel-cli": "^6.18.0",
