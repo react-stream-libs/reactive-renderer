@@ -13,7 +13,6 @@ export type InstanceTreeType<ICommonBlueprint extends ICommonBlueprintBase> = {
     ICommonBlueprint,
   key: string,
   context: IContextBase,
-  prevProps?: BasePropsType,
   childrenDict: {
     [key: string]: InstanceTreeType<ICommonBlueprint>,
   },

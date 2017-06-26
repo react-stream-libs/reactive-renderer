@@ -15,6 +15,7 @@ export abstract class BaseBlueprint<
   , ICommonBlueprint extends ICommonBlueprintBase
   , IContext extends IContextBase
 > {
+  public prevProps?: PropsType;
   public applyInitialProps(props: PropsType, context: IContext) { }
   public abstract updateBeforeChildren(props: PropsType, context: IContext): any;
   public abstract updateAfterChildren(props: PropsType, context: IContext): any;
