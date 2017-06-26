@@ -1,47 +1,19 @@
 import {
-  BaseBlueprint,
-  BasePropsType,
-  IParentableBy,
-  Renderable,
-  ICommonBlueprintBase,
-  IContextBase,
-  InstanceTreeType,
-} from './types';
-
-import {
   forEach,
   every,
 } from 'lodash';
 
-export type BaseRootRenderableType<
-    _Root extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContext>,
-    ICommonBlueprint extends ICommonBlueprintBase,
-    IContext extends IContextBase
-> = Renderable<
+import {
+  BaseBlueprint,
   BasePropsType,
-  BaseBlueprint<BasePropsType, ICommonBlueprint, IContext> &
-    IParentableBy<_Root, ICommonBlueprint> &
-    ICommonBlueprint,
-  _Root & ICommonBlueprint,
-  ICommonBlueprint,
-  IContext
->;
+  Renderable,
+  ICommonBlueprintBase,
+  IContextBase,
+  InstanceTreeType,
+} from '../types';
 
-export abstract class BaseRenderer<
-  RootType extends BaseBlueprint<RootPropsType, ICommonBlueprint, IContext>
-  , RootPropsType extends BasePropsType
-  , ICommonBlueprint extends ICommonBlueprintBase
-  , IContext extends IContextBase
-> {
-  public abstract render(
-    rootRenderable: BaseRootRenderableType<
-      RootType, ICommonBlueprint, IContext
-    > | null,
-    context: IContext,
-    rootProps?: RootPropsType,
-  ): any;
-  public abstract dispose(): any;
-}
+import { deleteTree } from './deleteTree';
+
 
 // FIXME: implement a loop-variant for speed up!
 export function renderChild<
@@ -140,30 +112,3 @@ export function renderChild<
   instanceTree.childrenDict = newChildrenDict;
   instanceTree.childrenList = newChildrenList;
 }
-
-export function deleteTree<ICommonBlueprint extends ICommonBlueprintBase>(
-  instanceTree: InstanceTreeType<ICommonBlueprint>
-) {
-  forEach(
-    instanceTree.childrenList,
-    child => {
-      deleteTree(child);
-    }
-  ) ;
-  instanceTree.instance.cleanUp();
-  delete instanceTree.childrenDict;
-  delete instanceTree.childrenList;
-}
-export function deleteChild<ICommonBlueprint extends ICommonBlueprintBase>(
-  instanceTree: InstanceTreeType<ICommonBlueprint>, childKey: string
-) {
-  const childToDelete = instanceTree.childrenDict[childKey];
-  forEach(
-    childToDelete.childrenDict,
-    (childOfChild, key) => deleteChild(childToDelete, key)
-  );
-  childToDelete.instance.cleanUp();
-  delete instanceTree.childrenDict[childKey];
-}
-
-export default BaseRenderer;
