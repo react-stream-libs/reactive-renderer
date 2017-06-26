@@ -26,13 +26,11 @@ describe('[Renderer]', () => {
         type: 'init',
       }),
       new LogItem({
-        blueprint: _GrandParent,
-        type: 'update',
+        blueprint: _GrandParent, type: 'update',
       }),
     ]);
     renderer.render(
-      GrandParent(
-        {
+      GrandParent({
           key: 'grandparent',
       }, [
         Layer({
