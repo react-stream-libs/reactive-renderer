@@ -59,7 +59,6 @@ export function renderChild<
         };
         childrenChanged = true;
       }
-      childInstanceTree.instance.prevProps = toRenderChildProps;
       newChildrenList.push(childInstanceTree);
       newChildrenDict[toRenderChildKey] = childInstanceTree;
       toRenderChildProps.beforeChildrenUpdate &&
@@ -76,6 +75,7 @@ export function renderChild<
         toRenderChild.props,
         toRenderChildContext
       );
+      childInstanceTree.instance.prevProps = toRenderChildProps;
     }
   );
 
