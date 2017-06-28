@@ -10,5 +10,5 @@ export interface IParentableBy<
   >,
   ICommonBlueprint extends ICommonBlueprintBase,
 > {
-  init(parent: ParentType, context: IContextBase): any;
+  init(parent: ParentType, props: BasePropsType, context: IContextBase): any;
 }

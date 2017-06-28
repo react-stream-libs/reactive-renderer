@@ -47,7 +47,7 @@ export function renderChild<
         const instance = new toRenderChild.blueprint();
         toRenderChildProps.beforeInit &&
           toRenderChildProps.beforeInit(instance, toRenderChildProps);
-        instance.init(instanceTree.instance, toRenderChildContext);
+        instance.init(instanceTree.instance, toRenderChildProps, toRenderChildContext);
         toRenderChildProps.afterInit &&
           toRenderChildProps.afterInit(instance, toRenderChildProps);
         childInstanceTree = {
