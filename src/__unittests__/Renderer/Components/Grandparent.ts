@@ -2,6 +2,7 @@ import {
   BasePropsType,
   createComponent,
   IContextBase,
+  InstanceTreeType,
 } from '../../..';
 
 import { ICommonBlueprint } from '../ICommonBlueprint';
@@ -12,7 +13,6 @@ import {
   IParentableBy,
   RenderableType,
   Logger, LogItem,
-  InstanceTreeType,
 } from './types';
 
 export type _GrandparentParentTypes = _FakeRoot;
@@ -24,7 +24,7 @@ export class __GrandParent
     extends Blueprint<GrandParentPropsType, IContextBase>
     implements
       IParentableBy<_GrandparentParentTypes> {
-
+  public name: string;
   public someCommonMethod: () => '__GrandParent';
   protected parent: _GrandparentParentTypes;
   protected logger: Logger;
@@ -62,7 +62,7 @@ export function getGrandparentComps(logger: Logger): {
   >
 } {
   class _GrandParent extends __GrandParent {
-    private name: string;
+    public name: string;
     constructor() {
       super();
       this.name = 'GrandParent';
