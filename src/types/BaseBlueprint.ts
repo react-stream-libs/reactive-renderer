@@ -15,6 +15,13 @@ export abstract class BaseBlueprint<
   , ICommonBlueprint extends ICommonBlueprintBase
   , IContext extends IContextBase
 > {
+  // tslint:disable variable-name
+  public __children: BaseBlueprint<
+    BasePropsType,
+    ICommonBlueprint,
+    IContextBase
+  > [];
+  // tslint:enable variable-name
   public prevProps?: PropsType;
   public applyInitialProps(props: PropsType, context: IContext) { }
   public abstract updateBeforeChildren(props: PropsType, context: IContext): any;

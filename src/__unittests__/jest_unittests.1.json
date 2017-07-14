@@ -2,7 +2,7 @@
   "bail": false,
   "verbose": true,
   "transform": {
-    ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    "^.+\\.(ts|tsx)$": "typescript-babel-jest"
   },
   "testPathIgnorePatterns": [
     "<rootDir>/lib",
@@ -11,8 +11,12 @@
     "fixtures.ts",
     "/fixtures/"
   ],
-  "testRegex": "(/src/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
   "moduleFileExtensions": [
     "js", "jsx", "ts", "tsx", "node"
-  ]
+  ],
+  "roots": [
+    "<rootDir>/src/__unittests__/Logger",
+    "<rootDir>/src/__unittests__/Renderer"
+  ],
+  "testRegex": "<rootDir>/src/__unittests__/.*\\.test.(ts|tsx|js|jsx)$"
 }

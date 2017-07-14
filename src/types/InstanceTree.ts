@@ -4,10 +4,16 @@ import { IParentableBy } from './IParentableBy';
 import { IContextBase } from './IContextBase';
 import { ICommonBlueprintBase } from './ICommonBlueprintBase';
 
-export type InstanceTreeType<ICommonBlueprint extends ICommonBlueprintBase> = {
-  instance: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
+export type InstanceTreeType<
+  ICommonBlueprint
+      extends ICommonBlueprintBase = ICommonBlueprintBase
+  , Blueprint
+      extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
+       = BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
+> = {
+  instance: Blueprint &
     IParentableBy<
-      BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
+      Blueprint
       , ICommonBlueprint
     > &
     ICommonBlueprint,

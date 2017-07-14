@@ -16,12 +16,10 @@ export default class LogItemMismatchError<
     expectedValue: any,
   }) {
     let gotValue = args.gotValue;
-    // if (gotValue instanceof Function) {
     if (gotValue instanceof Function) {
       gotValue = gotValue.name;
     }
     let expectedValue = args.expectedValue;
-    // if (gotValue instanceof Function) {
     if (expectedValue instanceof Function) {
       expectedValue = expectedValue.name;
     }
