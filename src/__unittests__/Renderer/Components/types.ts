@@ -23,15 +23,16 @@ import {
 import { ICommonBlueprint } from '../ICommonBlueprint';
 
 export abstract class Blueprint<
-  PropsType extends BasePropsType
-  , IContext extends IContextBase
+  PropsType extends BasePropsType = BasePropsType
+  , IContext extends IContextBase = IContextBase
 >
   extends BaseBlueprint<PropsType, ICommonBlueprint, IContext>
   implements ICommonBlueprint
 {
-
+  // tslint:disable variable-name
+  public __children: Blueprint[];
+  // tslint:enable variable-name
   public __EXTENDS_ICOMMON_BLUEPRINT_BASE: null;
-  // abstract someCommonMethod = () => string
   public someCommonMethod: () => string;
 }
 
@@ -42,10 +43,10 @@ export interface IParentableBy<
 }
 
 export type RenderableType<
-  PropsType extends BasePropsType,
-  _Blueprint extends Blueprint<BasePropsType, IContext>,
-  ParentableBy extends Blueprint<BasePropsType, IContextBase>,
-  IContext extends IContextBase
+  PropsType extends BasePropsType = BasePropsType,
+  _Blueprint extends Blueprint<BasePropsType, IContext> = Blueprint,
+  ParentableBy extends Blueprint<BasePropsType, IContextBase> = Blueprint,
+  IContext extends IContextBase = IContextBase
 > = _RenderableType<PropsType, _Blueprint, ParentableBy, ICommonBlueprint, IContext>;
 
 export class Logger extends _Logger<ICommonBlueprint> {}
@@ -70,7 +71,7 @@ export function createComponent<
   >(blueprintClass);
 }
 
-export type InstanceTreeType = _InstanceTreeType<ICommonBlueprint>;
+export type InstanceTreeType = _InstanceTreeType<ICommonBlueprint, Blueprint>;
 
 export type RootRenderableType = BaseRootRenderableType<
   _FakeRoot, ICommonBlueprint, IContextBase

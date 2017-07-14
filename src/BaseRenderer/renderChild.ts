@@ -35,6 +35,9 @@ export function renderChild<
   const newChildrenList: typeof instanceTree.childrenList = [];
   const newChildrenDict: typeof instanceTree.childrenDict = {};
 
+  const instance = instanceTree.instance;
+  instance.__children = [];
+
   let childrenChanged = false;
   // CREATE, TRAVERSE, UPDATE
   toRender.children.forEach(
@@ -44,14 +47,16 @@ export function renderChild<
       const toRenderChildProps = toRenderChild.props;
       let childInstanceTree = instanceTree.childrenDict[toRenderChildKey];
       if (!childInstanceTree) {
-        const instance = new toRenderChild.blueprint();
+        const newChildInstance = new toRenderChild.blueprint();
         toRenderChildProps.beforeInit &&
-          toRenderChildProps.beforeInit(instance, toRenderChildProps);
-        instance.init(instanceTree.instance, toRenderChildProps, toRenderChildContext);
+          toRenderChildProps.beforeInit(newChildInstance, toRenderChildProps);
+        newChildInstance.init(
+          instanceTree.instance, toRenderChildProps, toRenderChildContext
+        );
         toRenderChildProps.afterInit &&
-          toRenderChildProps.afterInit(instance, toRenderChildProps);
+          toRenderChildProps.afterInit(newChildInstance, toRenderChildProps);
         childInstanceTree = {
-          instance,
+          instance: newChildInstance,
           childrenDict: {},
           childrenList: [],
           key: toRenderChildKey,
@@ -59,6 +64,7 @@ export function renderChild<
         };
         childrenChanged = true;
       }
+      instance.__children.push(childInstanceTree.instance);
       newChildrenList.push(childInstanceTree);
       newChildrenDict[toRenderChildKey] = childInstanceTree;
       toRenderChildProps.beforeChildrenUpdate &&
