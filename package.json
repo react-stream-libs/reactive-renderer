@@ -85,5 +85,9 @@
   },
   "dependencies": {
     "@types/storybook__react": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@types/uuid": "^3.0.0",
+    "uuid": "^3.1.0"
   }
 }

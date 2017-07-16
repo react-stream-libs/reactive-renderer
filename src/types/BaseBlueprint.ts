@@ -23,9 +23,18 @@ export abstract class BaseBlueprint<
   > [];
   // tslint:enable variable-name
   public prevProps?: PropsType;
-  public applyInitialProps(props: PropsType, context: IContext) { }
-  public abstract updateBeforeChildren(props: PropsType, context: IContext): any;
-  public abstract updateAfterChildren(props: PropsType, context: IContext): any;
+  public applyInitialProps(
+    props: PropsType, context: IContext,
+    renderCycleId: number | string,
+  ) { }
+  public abstract updateBeforeChildren(
+    props: PropsType, context: IContext,
+    renderCycleId: number | string,
+  ): any;
+  public abstract updateAfterChildren(
+    props: PropsType, context: IContext,
+    renderCycleId: number | string,
+  ): any;
   public abstract reorderChildren(
     oldChildrenList: InstanceTreeType<ICommonBlueprint>[],
     oldChildrenDict: {

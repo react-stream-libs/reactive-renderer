@@ -2,6 +2,7 @@ import {
   forEach,
   every,
 } from 'lodash';
+import * as uuid from 'uuid';
 
 import {
   BaseBlueprint,
@@ -30,7 +31,8 @@ export function renderChild<
     ICommonBlueprint,
     IContext
   >,
-  context: IContext
+  context: IContext,
+  renderCycleId: number | string = uuid.v4(),
 ) {
   const newChildrenList: typeof instanceTree.childrenList = [];
   const newChildrenDict: typeof instanceTree.childrenDict = {};
@@ -72,14 +74,16 @@ export function renderChild<
           childInstanceTree.instance, toRenderChildProps
         );
       childInstanceTree.instance.updateBeforeChildren(
-        toRenderChild.props, toRenderChildContext
+        toRenderChild.props, toRenderChildContext,
+        renderCycleId,
       );
       renderChild<ICommonBlueprintBase, IContextBase>(
-        childInstanceTree, toRenderChild, toRenderChild.context
+        childInstanceTree, toRenderChild, toRenderChild.context,
+        renderCycleId,
       );
       childInstanceTree.instance.updateAfterChildren(
-        toRenderChild.props,
-        toRenderChildContext
+        toRenderChild.props, toRenderChildContext,
+        renderCycleId,
       );
       childInstanceTree.instance.prevProps = toRenderChildProps;
     }
