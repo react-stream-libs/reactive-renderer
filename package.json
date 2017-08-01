@@ -27,7 +27,7 @@
     "@types/jest": "^19.2.2",
     "@types/lodash": "^4.14.65",
     "@types/node": "^7.0.27",
-    "@types/react": "^15.0.4",
+    "@types/react": "^16.0.0",
     "@types/react-bootstrap": "^0.0.46",
     "@types/react-dom": "^0.14.21",
     "@types/sinon": "^1.16.34",
