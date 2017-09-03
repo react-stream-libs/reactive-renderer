@@ -1,7 +1,7 @@
-/// <reference path="../../node_modules/@types/node/index.d.ts" />
+// /// <reference path="../../node_modules/@types/node/index.d.ts" />
 
-interface NodeRequireFunction {
-  context: any
-}
+// interface NodeRequireFunction {
+//   context: any
+// }
 
-declare var test2: NodeRequireFunction;
+// declare var test2: NodeRequireFunction;
