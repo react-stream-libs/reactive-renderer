@@ -16,7 +16,8 @@ export interface ICommonBlueprint extends ICommonBlueprintBase {
 
 class RootBlueprint extends BaseBlueprint<
   BasePropsType, ICommonBlueprint, IContextBase
-> {
+> implements ICommonBlueprint {
+  public __EXTENDS_ICOMMON_BLUEPRINT_BASE: null;
   public init(
     parent: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
     context: IContextBase

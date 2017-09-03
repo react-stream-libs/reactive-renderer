@@ -22,7 +22,7 @@ export abstract class BaseBlueprint<
     IContextBase
   > [];
   // tslint:enable variable-name
-  public prevProps?: PropsType;
+  public prevProps?: BasePropsType;
   public applyInitialProps(
     props: PropsType, context: IContext,
     renderCycleId: number | string,
