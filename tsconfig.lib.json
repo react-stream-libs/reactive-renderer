@@ -30,7 +30,6 @@
     "lib",
     "lib_es6",
     "examples",
-    "src_old",
     "reactive-renderer.d.ts",
     "webpack"
   ],

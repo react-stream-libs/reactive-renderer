@@ -23,7 +23,6 @@
   "exclude": [
     "docs_src",
     ".storybook",
-    "src/__unittests__/TypeTests/fakes",
     "docs_ts_compiled",
     "dts-generator.js",
     "reactive-renderer.d.ts",

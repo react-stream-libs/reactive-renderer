@@ -21,7 +21,6 @@ export type ChildPropsType = {
 
 export class __Child extends Blueprint<ChildPropsType, IContextBase>
     implements IParentableBy<_ChildParentTypes> {
-
   public someCommonMethod: () => '__Child';
   public parent: _ChildParentTypes;
   protected logger: Logger;

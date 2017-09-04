@@ -8,13 +8,10 @@ import {
 export type LogItemEventType = 'init' | 'update' | 'delete' | 'reorder';
 
 export type LogItemRawDataType<ICommonBlueprint extends ICommonBlueprintBase> = {
-  [key: string]: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
-   | typeof BaseBlueprint
-   | string
-   | BasePropsType;
+  [key: string]: any;
   instance?: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
   parentInstance?: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
-  blueprint?: typeof BaseBlueprint,
+  blueprint?: new() => BaseBlueprint<BasePropsType, ICommonBlueprintBase, IContextBase>,
   key?: string,
   type: LogItemEventType,
   props?: BasePropsType,
