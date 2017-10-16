@@ -59,7 +59,7 @@
     "sinon": "^2.1.0",
     "style-loader": "^0.18.1",
     "testdouble": "^2.0.3",
-    "ts-loader": "^2.1.0",
+    "ts-loader": "^3.0.0",
     "tslint": "^5.4.2",
     "tslint-microsoft-contrib": "^5.0.0",
     "tslint-react": "^3.0.0",
