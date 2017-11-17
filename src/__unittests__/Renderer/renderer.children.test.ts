@@ -15,6 +15,7 @@ const emptyDiff: RenderedChildrenForDiffResultType = {
 };
 
 describe('[Renderer::children]', () => {
+describe('[Renderer::children]', () => {
   it('... should have correct children', () => {
     const logger = new Logger();
     const { GrandParent } = getGrandparentComps(logger);
@@ -29,7 +30,6 @@ describe('[Renderer::children]', () => {
     );
     const rootInstance = renderer.instanceTree.instance;
     const grandParentInstance = rootInstance.__children[0];
-    console.error('rootInstance:', rootInstance);
     expect(
       renderedForChildrenDiff(grandParentInstance.__children, [])
     ).toEqual(emptyDiff);
