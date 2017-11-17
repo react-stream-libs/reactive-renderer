@@ -39,7 +39,8 @@ export class _FakeRoot
     extends Blueprint<FakeRootPropsType, IContextBase>
     implements IParentableBy<NoneExistentBlueprint> {
   public someCommonMethod: () => 'hello';
-  private logger: Logger<ICommonBlueprint>;
+  // @ts-ignore: ignore unused
+  private logger: Logger<ICommonBlueprint> | undefined;
   constructor(logger?: Logger<ICommonBlueprint>) {
     super();
     this.logger = logger;

@@ -17,7 +17,7 @@ export type RenderedForDiffResultType = {
     expected: new() => Blueprint,
   },
   propsDiff?: {
-    got: BasePropsType, expected: BasePropsType,
+    got?: BasePropsType, expected: BasePropsType,
   },
 };
 export type RenderedForDiffOptions = {
@@ -42,7 +42,7 @@ export function diffRenderedFor(
     };
   }
   const actualPrevProps: any = actual.prevProps;
-  const propsUnequal: boolean = (
+  const propsUnequal: boolean | undefined = (
     !options.allowPartialProps
       && !isEqual(actual.prevProps, expected.props)
   ) || (

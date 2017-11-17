@@ -15,7 +15,7 @@ import {
 export type RenderedChildrenForDiffResultType = {
   missing: {
     [key: string]: {
-      blueprint: Blueprint, props: BasePropsType,
+      blueprint: Blueprint, props?: BasePropsType,
     },
   },
   extra: {
@@ -63,7 +63,9 @@ export function renderedForChildrenDiff(
   > (
     actualInstances,
     (result, value) => {
-      result[value.prevProps.key] = value;
+      if (value.prevProps) {
+        result[value.prevProps.key] = value;
+      }
 
       return result;
     },

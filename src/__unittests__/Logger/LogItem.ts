@@ -28,7 +28,7 @@ export class LogItem<ICommonBlueprint extends ICommonBlueprintBase> {
     return sortObjectKeys({
       ...this.data,
       instance: null,
-      blueprint: this.data.blueprint.name,
+      blueprint: this.data.blueprint && this.data.blueprint.name,
     });
   }
   public partialExpect(expected: LogItem<ICommonBlueprint>, message?: string) {

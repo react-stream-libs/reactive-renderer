@@ -8,6 +8,7 @@
     "allowJs": false,
     "jsx": "react",
     "experimentalDecorators": true,
+    "strictNullChecks": true,
     "rootDirs": [
       "src", "storybook-ts", "dts-generator"
     ],
