@@ -13,10 +13,11 @@ dependencies:
         mkdir -p "$HOME/.local/debs"; cd "$HOME/.local/debs" \
         && sudo apt-get download libgif-dev \
       ; fi
+    - npm i -g yarn
   post:
     - sudo dpkg -i $HOME/.local/debs/*.deb
     - cd $HOME/reactive-renderer
-    - npm install
+    - yarn install
 
 test:
   override:
