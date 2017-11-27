@@ -20,7 +20,7 @@ function sortObjectKeys(object: any) {
   );
 }
 export class LogItem<ICommonBlueprint extends ICommonBlueprintBase> {
-  private data: LogItemRawDataType<ICommonBlueprint>;
+  public data: LogItemRawDataType<ICommonBlueprint>;
   constructor(args: LogItemRawDataType<ICommonBlueprint>) {
     this.data = args;
   }

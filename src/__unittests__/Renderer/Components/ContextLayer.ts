@@ -6,7 +6,10 @@ import {
 
 import { __GrandParent } from './Grandparent';
 import { __Layer } from './Layer';
-import Logger, { LogItem } from '../../Logger';
+import Logger, {
+  LogItem,
+  LogItemEventType,
+} from '../../Logger';
 import { ICommonBlueprint } from '../ICommonBlueprint';
 
 import {
@@ -30,9 +33,22 @@ export class __ContextLayer extends Blueprint<ContextLayerPropsType, IContextBas
   public someCommonMethod: () => '__Layer';
   public parent: _ContextLayerParentTypes;
   protected logger: Logger<ICommonBlueprint>;
-  public init(parent: _ContextLayerParentTypes) { }
-  public updateBeforeChildren(props: ContextLayerPropsType) { }
-  public updateAfterChildren(props: ContextLayerPropsType) { }
+  public init(
+    parent: _ContextLayerParentTypes,
+    props: ContextLayerPropsType,
+    context: IContextBase,
+    renderCycleId?: string | number,
+  ) { }
+  public updateBeforeChildren(
+    props: ContextLayerPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
+  public updateAfterChildren(
+    props: ContextLayerPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
     oldChildrenDict: {[key: string]: InstanceTreeType},
@@ -41,7 +57,9 @@ export class __ContextLayer extends Blueprint<ContextLayerPropsType, IContextBas
   ) {
 
   }
-  public cleanUp() { }
+  public cleanUp(
+    renderCycleId: number | string,
+  ) { }
 }
 
 export function getContextLayerComponent(logger: Logger<ICommonBlueprint>): {
@@ -67,26 +85,55 @@ export function getContextLayerComponent(logger: Logger<ICommonBlueprint>): {
       super();
       this.logger = logger;
     }
-    public init(parent: _ContextLayerParentTypes) {
+    public init(
+      parent: _ContextLayerParentTypes,
+      props: ContextLayerPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _ContextLayer,
-        type: 'init',
-      }));
-    }
-    public updateAfterChildren(props: ContextLayerPropsType) {
-      this.logger.add(new LogItem({
-        instance: this,
-        blueprint: _ContextLayer,
-        type: 'update',
+        type: LogItemEventType.INIT,
         props,
+        context,
+        renderCycleId,
       }));
     }
-    public cleanUp() {
+    public updateBeforeChildren(
+      props: ContextLayerPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _ContextLayer,
-        type: 'delete',
+        type: LogItemEventType.UPDATE_BEFORE_CHILDREN,
+        props,
+        context,
+        renderCycleId,
+      }));
+    }
+    public updateAfterChildren(
+      props: ContextLayerPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
+      this.logger.add(new LogItem({
+        instance: this,
+        blueprint: _ContextLayer,
+        type: LogItemEventType.UPDATE_AFTER_CHILDREN,
+        props,
+        context,
+        renderCycleId,
+      }));
+    }
+    public cleanUp(renderCycleId: number | string) {
+      this.logger.add(new LogItem({
+        instance: this,
+        blueprint: _ContextLayer,
+        type: LogItemEventType.DELETE,
+        renderCycleId,
       }));
     }
     public reorderChildren(

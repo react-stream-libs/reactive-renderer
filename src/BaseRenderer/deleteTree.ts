@@ -8,15 +8,16 @@ import {
 } from 'lodash';
 
 export function deleteTree<ICommonBlueprint extends ICommonBlueprintBase>(
-  instanceTree: InstanceTreeType<ICommonBlueprint>
+  instanceTree: InstanceTreeType<ICommonBlueprint>,
+  renderCycleId: string | number,
 ) {
   forEach(
     instanceTree.childrenList,
     child => {
-      deleteTree(child);
+      deleteTree(child, renderCycleId);
     }
   ) ;
-  instanceTree.instance.cleanUp();
+  instanceTree.instance.cleanUp(renderCycleId);
   delete instanceTree.childrenDict;
   delete instanceTree.childrenList;
 }

@@ -2,8 +2,8 @@ import {
   renderedForChildrenDiff,
   RenderedChildrenForDiffResultType,
 } from './diffs/diffRenderedChildren';
-import { getGrandparentComps } from './Components/Grandparent';
-import { getLayerComps } from './Components/Layer';
+import { getGrandparentComponent } from './Components/Grandparent';
+import { getLayerComponent } from './Components/Layer';
 import Logger from '../Logger';
 
 import FakeRenderer from './FakeRenderer';
@@ -17,8 +17,8 @@ const emptyDiff: RenderedChildrenForDiffResultType = {
 describe('[Renderer::children]', () => {
   it('... should have correct children', () => {
     const logger = new Logger();
-    const { GrandParent } = getGrandparentComps(logger);
-    const { Layer } = getLayerComps(logger);
+    const { GrandParent } = getGrandparentComponent(logger);
+    const { Layer } = getLayerComponent(logger);
     const renderer = new FakeRenderer(logger);
     renderer.render(
       GrandParent({

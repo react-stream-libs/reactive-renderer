@@ -48,7 +48,8 @@ export default class FakeRenderer extends BaseRenderer<
   public render(
     toRender: RootRenderableType | null,
     context: IFakeRootContext,
-    rootProps?: FakeRootPropsType
+    rootProps?: FakeRootPropsType,
+    renderCycleId?: number | string,
   ) {
     const renderRoot = fakeRoot(
       {
@@ -56,7 +57,7 @@ export default class FakeRenderer extends BaseRenderer<
       },
       compact([toRender])
     );
-    renderChild(this.instanceTree, renderRoot, context);
+    renderChild(this.instanceTree, renderRoot, context, renderCycleId);
   }
   public dispose() { }
 }

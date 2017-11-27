@@ -10,5 +10,10 @@ export interface IParentableBy<
   >,
   ICommonBlueprint extends ICommonBlueprintBase,
 > {
-  init(parent: ParentType, props: BasePropsType, context: IContextBase): any;
+  init(
+    parent: ParentType,
+    props: BasePropsType,
+    context: IContextBase,
+    renderCycleId?: string | number,
+  ): any;
 }

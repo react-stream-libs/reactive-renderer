@@ -45,5 +45,7 @@ export abstract class BaseBlueprint<
       [key: string]: InstanceTreeType<ICommonBlueprint>,
     },
   ): void;
-  public abstract cleanUp(): any;
+  public abstract cleanUp(
+    renderCycleId: number | string,
+  ): any;
 }

@@ -1,3 +1,4 @@
+import { Enum } from 'typescript-string-enums';
 import {
   BaseBlueprint,
   BasePropsType,
@@ -5,7 +6,16 @@ import {
   IContextBase,
 } from '../..';
 
-export type LogItemEventType = 'init' | 'update' | 'delete' | 'reorder';
+// tslint:disable variable-name
+export const LogItemEventType = Enum(
+  'INIT',
+  'UPDATE_BEFORE_CHILDREN',
+  'UPDATE_AFTER_CHILDREN',
+  'DELETE',
+  'REORDER',
+);
+// tslint:enable
+export type LogItemEventType = Enum<typeof LogItemEventType>;
 
 export type LogItemRawDataType<ICommonBlueprint extends ICommonBlueprintBase> = {
   [key: string]: any;
@@ -15,4 +25,6 @@ export type LogItemRawDataType<ICommonBlueprint extends ICommonBlueprintBase> = 
   key?: string,
   type: LogItemEventType,
   props?: BasePropsType,
+  context?: IContextBase,
+  renderCycleId?: number | string,
 };

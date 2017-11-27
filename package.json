@@ -29,6 +29,7 @@
     "@types/jest": "^21.1.6",
     "@types/lodash": "^4.14.85",
     "@types/node": "^8.0.53",
+    "@types/ramda": "^0.25.6",
     "@types/react": "^16.0.24",
     "@types/react-bootstrap": "^0.31.8",
     "@types/react-dom": "^16.0.3",
@@ -64,6 +65,7 @@
     "lodash": "^4.17.4",
     "monaco-editor": "^0.10.1",
     "node-sass": "^4.6.1",
+    "ramda": "^0.25.0",
     "raw-loader": "^0.5.1",
     "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
@@ -92,6 +94,7 @@
   },
   "dependencies": {
     "@types/uuid": "^3.4.3",
+    "typescript-string-enums": "^0.3.5",
     "uuid": "^3.1.0"
   }
 }

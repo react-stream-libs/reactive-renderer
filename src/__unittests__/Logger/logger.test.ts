@@ -2,6 +2,7 @@ import * as chai from 'chai';
 import {
   default as Logger,
   LogItem,
+  LogItemEventType,
 } from '.';
 import {
   BaseBlueprint,
@@ -33,32 +34,32 @@ describe('unittest logger should...', () => {
   it('should log correctly', () => {
     const logger = new Logger();
     logger.add(new LogItem({
-      type: 'init',
+      type: LogItemEventType.INIT,
       key: 'grandparent',
     }));
     logger.add(new LogItem({
-      type: 'init',
+      type: LogItemEventType.INIT,
       blueprint: RootBlueprint,
       props: {
         key: '123',
       }
     }));
-    logger.partialMatch([
+    logger.partialMatchWithMessage('', [
       new LogItem({
-        type: 'init',
+        type: LogItemEventType.INIT,
       }),
       new LogItem({
-        type: 'init',
+        type: LogItemEventType.INIT,
         blueprint: RootBlueprint
       })
     ]);
     chai.expect(() => {
-      logger.partialMatch([
+      logger.partialMatchWithMessage('', [
         new LogItem({
-          type: 'init',
+          type: LogItemEventType.INIT,
         }),
         new LogItem({
-          type: 'update',
+          type: LogItemEventType.UPDATE_AFTER_CHILDREN,
           blueprint: RootBlueprint
         })
       ]);

@@ -7,6 +7,7 @@ import {
 } from '../..';
 
 import { LogItem } from './LogItem';
+import { LogItemEventType } from './LogItemRawDataType';
 import LogItemMismatchError from './LogItemMismatchError';
 
 export default class Logger<ICommonBlueprint extends ICommonBlueprintBase> { //tslint:disable export-name
@@ -17,7 +18,18 @@ export default class Logger<ICommonBlueprint extends ICommonBlueprintBase> { //t
   public add(logItem: LogItem<ICommonBlueprint>) {
     this.logs.push(logItem);
   }
-  public partialMatch(partialLogItems: LogItem<ICommonBlueprint>[], message?: string) {
+  public partialMatchWithMessage(
+    message: string,
+    partialLogItems: LogItem<ICommonBlueprint>[],
+    transformActual: (
+      logItem: LogItem<ICommonBlueprint>,
+    ) => LogItem<ICommonBlueprint>
+      = (logItem) => logItem,
+    transformExpected: (
+      logItem: LogItem<ICommonBlueprint>
+    ) => LogItem<ICommonBlueprint>
+      = (logItem) => logItem,
+  ) {
     try {
       forEach(
         partialLogItems,
@@ -26,28 +38,25 @@ export default class Logger<ICommonBlueprint extends ICommonBlueprintBase> { //t
     } catch (e) {
       const error: LogItemMismatchError<ICommonBlueprint> = e;
       // FIXME: add Error class?
-      const printableLogItems = this.logs.map(
-        logItem => logItem.getPrintableData()
+      const actualLogItems = this.logs.map(
+        logItem => transformActual(logItem).getPrintableData()
       );
       const expectedLogItems = partialLogItems.map(
-        partialLogItem => partialLogItem.getPrintableData()
+        partialLogItem => transformExpected(partialLogItem).getPrintableData()
       );
       throw(new Error(`LoggerItemMismatch: ${message}
         Error: ${error}
         ${stringTable.create([{
-          logItems: JSON.stringify(printableLogItems, null, 2),
+          logItems: JSON.stringify(actualLogItems, null, 2),
           expected: JSON.stringify(expectedLogItems, null, 2),
         }], {
         })}
       `));
     }
   }
-  // bad design below.
-  public partialMatchWithmessage(message: string, partialLogItems: LogItem<ICommonBlueprint>[]) {
-    this.partialMatch(partialLogItems, message);
-  }
 }
 
 export {
   LogItem,
+  LogItemEventType,
 };

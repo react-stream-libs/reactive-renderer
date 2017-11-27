@@ -6,6 +6,9 @@ import {
 import { __Layer } from './Layer';
 
 import { ICommonBlueprint } from '../ICommonBlueprint';
+import {
+  LogItemEventType,
+} from '../../Logger';
 
 import {
   Blueprint,
@@ -24,17 +27,30 @@ export class __Child extends Blueprint<ChildPropsType, IContextBase>
   public someCommonMethod: () => '__Child';
   public parent: _ChildParentTypes;
   protected logger: Logger;
-  public init(parent: _ChildParentTypes) {
+  public init(
+    parent: _ChildParentTypes,
+    props: ChildPropsType,
+    context: IContextBase,
+    renderCycleId?: string | number,
+  ) {
     this.logger.add(new LogItem({
       instance: this,
       blueprint: __Child,
-      type: 'init',
+      type: LogItemEventType.INIT,
     }));
   }
-  public updateBeforeChildren(props: ChildPropsType) {
+  public updateBeforeChildren(
+    props: ChildPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) {
 
   }
-  public updateAfterChildren(props: ChildPropsType) {
+  public updateAfterChildren(
+    props: ChildPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) {
   }
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
@@ -42,7 +58,9 @@ export class __Child extends Blueprint<ChildPropsType, IContextBase>
     newChildrenList: InstanceTreeType[],
     newChildrenDict: {[key: string]: InstanceTreeType},
   ) { }
-  public cleanUp() {
+  public cleanUp(
+    renderCycleId: number | string,
+  ) {
   }
 }
 

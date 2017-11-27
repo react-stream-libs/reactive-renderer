@@ -53,7 +53,10 @@ export function renderChild<
         toRenderChildProps.beforeInit &&
           toRenderChildProps.beforeInit(newChildInstance, toRenderChildProps);
         newChildInstance.init(
-          instanceTree.instance, toRenderChildProps, toRenderChildContext
+          instanceTree.instance,
+          toRenderChildProps,
+          toRenderChildContext,
+          renderCycleId,
         );
         toRenderChildProps.afterInit &&
           toRenderChildProps.afterInit(newChildInstance, toRenderChildProps);
@@ -97,8 +100,8 @@ export function renderChild<
         oldChild.instance.prevProps &&
           oldChild.instance.prevProps.beforeCleanup &&
             oldChild.instance.prevProps.beforeCleanup(oldChild.instance);
-        deleteTree(oldChild);
-        oldChild.instance.cleanUp();
+        deleteTree(oldChild, renderCycleId);
+        oldChild.instance.cleanUp(renderCycleId);
         oldChild.instance.prevProps &&
           oldChild.instance.prevProps.afterCleanup &&
             oldChild.instance.prevProps.afterCleanup(oldChild.instance);

@@ -7,6 +7,9 @@ import {
 
 import { ICommonBlueprint } from '../ICommonBlueprint';
 import { _FakeRoot } from './fakeRoot';
+import {
+  LogItemEventType,
+} from '../../Logger/LogItemRawDataType';
 
 import {
   Blueprint,
@@ -28,9 +31,22 @@ export class __GrandParent
   public someCommonMethod: () => '__GrandParent';
   protected parent: _GrandparentParentTypes;
   protected logger: Logger;
-  public init(parent: _GrandparentParentTypes) { }
-  public updateBeforeChildren(props: GrandParentPropsType) { }
-  public updateAfterChildren(props: GrandParentPropsType) { }
+  public init(
+    parent: _GrandparentParentTypes,
+    props: GrandParentPropsType,
+    context: IContextBase,
+    renderCycleId?: string | number,
+  ) { }
+  public updateBeforeChildren(
+    props: GrandParentPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
+  public updateAfterChildren(
+    props: GrandParentPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
 
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
@@ -44,7 +60,7 @@ export class __GrandParent
 }
 
 
-export function getGrandparentComps(logger: Logger): {
+export function getGrandparentComponent(logger: Logger): {
   _GrandParent: typeof __GrandParent,
   GrandParent (
     props: GrandParentPropsType,
@@ -68,26 +84,54 @@ export function getGrandparentComps(logger: Logger): {
       this.name = 'GrandParent';
       this.logger = logger;
     }
-    public init(parent: _GrandparentParentTypes) {
+    public init(
+      parent: _GrandparentParentTypes,
+      props: GrandParentPropsType,
+      context: IContextBase,
+      renderCycleId?: string | number,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
-        type: 'init',
+        type: LogItemEventType.INIT,
+        props,
+        context,
+        renderCycleId,
       }));
     }
-    public updateAfterChildren(props: GrandParentPropsType) {
+    public updateBeforeChildren(
+      props: GrandParentPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
-        type: 'update',
+        type: LogItemEventType.UPDATE_BEFORE_CHILDREN,
         props,
+        context,
+        renderCycleId,
+      }));
+    }
+    public updateAfterChildren(
+      props: GrandParentPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
+      this.logger.add(new LogItem({
+        instance: this,
+        blueprint: _GrandParent,
+        type: LogItemEventType.UPDATE_AFTER_CHILDREN,
+        props,
+        context,
+        renderCycleId,
       }));
     }
     public cleanUp() {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
-        type: 'delete',
+        type: LogItemEventType.DELETE,
       }));
     }
   }
