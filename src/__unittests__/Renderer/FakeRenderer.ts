@@ -8,8 +8,9 @@ import {
 import {
   BaseRenderer,
   renderChild,
+  IContextBase,
 } from '../..';
-import { ICommonBlueprintBase } from './CommonBlueprintBase';
+import { ICommonBlueprint } from './ICommonBlueprint';
 import {
   InstanceTreeType,
   Logger,
@@ -19,7 +20,16 @@ import fakeRoot, {
   _FakeRoot,
   FakeRootPropsType,
 } from './Components/fakeRoot';
-export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsType, ICommonBlueprintBase> {
+
+export interface IFakeRootContext extends IContextBase {
+
+}
+export default class FakeRenderer extends BaseRenderer<
+  _FakeRoot
+  , FakeRootPropsType
+  , ICommonBlueprint
+  , IFakeRootContext
+> {
   public logger: Logger;
   public instanceTree: InstanceTreeType;
   constructor(logger: Logger) {
@@ -30,16 +40,24 @@ export default class FakeRenderer extends BaseRenderer<_FakeRoot, FakeRootPropsT
       key: 'FAKE_RENDERER',
       childrenDict: {},
       childrenList: [],
+      context: {
+        __EXTENDS_ICONTEXT_BASE: null,
+      },
     };
   }
-  public render(toRender: RootRenderableType | null, rootProps?: FakeRootPropsType) {
+  public render(
+    toRender: RootRenderableType | null,
+    context: IFakeRootContext,
+    rootProps?: FakeRootPropsType,
+    renderCycleId?: number | string,
+  ) {
     const renderRoot = fakeRoot(
       {
         key: '__FAKEROOT__',
       },
       compact([toRender])
     );
-    renderChild(this.instanceTree, renderRoot);
+    renderChild(this.instanceTree, renderRoot, context, renderCycleId);
   }
   public dispose() { }
 }

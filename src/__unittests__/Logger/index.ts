@@ -1,61 +1,62 @@
 import {
   forEach,
-  isEqual,
 } from 'lodash';
+import * as stringTable from 'string-table';
 import {
-  BaseBlueprint,
-  BasePropsType,
+  ICommonBlueprintBase,
 } from '../..';
 
-export default class Logger<CommonBlueprintBase> {
-  public logs: LogItem<CommonBlueprintBase>[];
-  constructor(logs?: LogItem<CommonBlueprintBase>[]) {
+import { LogItem } from './LogItem';
+import { LogItemEventType } from './LogItemRawDataType';
+import LogItemMismatchError from './LogItemMismatchError';
+
+export default class Logger<ICommonBlueprint extends ICommonBlueprintBase> { //tslint:disable export-name
+  public logs: LogItem<ICommonBlueprint>[];
+  constructor(logs?: LogItem<ICommonBlueprint>[]) {
     this.logs = logs || [];
   }
-  public add(logItem: LogItem<CommonBlueprintBase>) {
+  public add(logItem: LogItem<ICommonBlueprint>) {
     this.logs.push(logItem);
   }
-  public partialMatch(partialLogItems: LogItem<CommonBlueprintBase>[]) {
-    forEach(
-      partialLogItems,
-      (value, key) => this.logs[key].partialMatch(value)
-    );
+  public partialMatchWithMessage(
+    message: string,
+    partialLogItems: LogItem<ICommonBlueprint>[],
+    transformActual: (
+      logItem: LogItem<ICommonBlueprint>,
+    ) => LogItem<ICommonBlueprint>
+      = (logItem) => logItem,
+    transformExpected: (
+      logItem: LogItem<ICommonBlueprint>
+    ) => LogItem<ICommonBlueprint>
+      = (logItem) => logItem,
+  ) {
+    try {
+      forEach(
+        partialLogItems,
+        (value, key) => this.logs[key].partialExpect(value, message)
+      );
+    } catch (e) {
+      const error: LogItemMismatchError<ICommonBlueprint> = e;
+      // FIXME: add Error class?
+      const actualLogItems = this.logs.map(
+        logItem => transformActual(logItem).getPrintableData()
+      );
+      const expectedLogItems = partialLogItems.map(
+        partialLogItem => transformExpected(partialLogItem).getPrintableData()
+      );
+      throw(new Error(`LoggerItemMismatch: ${message}
+        Error: ${error}
+        ${stringTable.create([{
+          logItems: JSON.stringify(actualLogItems, null, 2),
+          expected: JSON.stringify(expectedLogItems, null, 2),
+        }], {
+        })}
+      `));
+    }
   }
 }
 
-export type LogItemEventType = 'init' | 'update' | 'delete' | 'reorder';
-
-export type LogItemDataType<CommonBlueprintBase> = {
-  [key: string]: BaseBlueprint<BasePropsType, CommonBlueprintBase>
-   | typeof BaseBlueprint
-   | string
-   | BasePropsType;
-  instance?: BaseBlueprint<BasePropsType, CommonBlueprintBase>,
-  parentInstance?: BaseBlueprint<BasePropsType, CommonBlueprintBase>,
-  blueprint?: typeof BaseBlueprint,
-  key?: string,
-  type: LogItemEventType,
-  props?: BasePropsType,
+export {
+  LogItem,
+  LogItemEventType,
 };
-export class LogItem<CommonBlueprintBase> {
-  private data: LogItemDataType<CommonBlueprintBase>;
-  constructor(args: LogItemDataType<CommonBlueprintBase>) {
-    this.data = args;
-  }
-  public partialMatch(toMatch: LogItem<CommonBlueprintBase>) {
-    forEach(
-      toMatch.data,
-      (value, key) => {
-        if (!isEqual(this.data[key], value)) {
-          // FIXME: use stripMargins
-          throw new Error(`
-            LogItem Mismatch!
-              value: ${value}
-              key: ${key}
-              this.data[key]: ${this.data[key]}
-          `);
-        }
-      }
-    );
-  }
-}

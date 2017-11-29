@@ -1,7 +1,14 @@
-import { BasePropsType } from '../../../types/BasePropsType';
-import { createComponent } from '../../../createComponent';
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import {
+  BasePropsType,
+  createComponent,
+  IContextBase,
+} from '../../../';
 import { __Layer } from './Layer';
+
+import { ICommonBlueprint } from '../ICommonBlueprint';
+import {
+  LogItemEventType,
+} from '../../Logger';
 
 import {
   Blueprint,
@@ -15,23 +22,35 @@ export type _ChildParentTypes = __Layer;
 export type ChildPropsType = {
 } & BasePropsType;
 
-export class __Child extends Blueprint<ChildPropsType>
+export class __Child extends Blueprint<ChildPropsType, IContextBase>
     implements IParentableBy<_ChildParentTypes> {
-
   public someCommonMethod: () => '__Child';
   public parent: _ChildParentTypes;
   protected logger: Logger;
-  public init(parent: _ChildParentTypes) {
+  public init(
+    parent: _ChildParentTypes,
+    props: ChildPropsType,
+    context: IContextBase,
+    renderCycleId?: string | number,
+  ) {
     this.logger.add(new LogItem({
       instance: this,
       blueprint: __Child,
-      type: 'init',
+      type: LogItemEventType.INIT,
     }));
   }
-  public updateBeforeChildren(props: ChildPropsType) {
+  public updateBeforeChildren(
+    props: ChildPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) {
 
   }
-  public updateAfterChildren(props: ChildPropsType) {
+  public updateAfterChildren(
+    props: ChildPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) {
   }
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
@@ -39,7 +58,9 @@ export class __Child extends Blueprint<ChildPropsType>
     newChildrenList: InstanceTreeType[],
     newChildrenDict: {[key: string]: InstanceTreeType},
   ) { }
-  public cleanUp() {
+  public cleanUp(
+    renderCycleId: number | string,
+  ) {
   }
 }
 
@@ -49,15 +70,17 @@ export function getChildComps(logger: Logger): {
     props: ChildPropsType,
     children: RenderableType<
       BasePropsType,
-      Blueprint<BasePropsType> &
+      Blueprint<BasePropsType, IContextBase> &
         IParentableBy<__Child> &
-        ICommonBlueprintBase,
-      __Child
+        ICommonBlueprint,
+      __Child,
+      IContextBase
     > []
   ): RenderableType<
     ChildPropsType,
     __Child,
-    _ChildParentTypes
+    _ChildParentTypes,
+    IContextBase
   >
 } {
   class _Child extends __Child {
@@ -70,7 +93,7 @@ export function getChildComps(logger: Logger): {
     _Child,
     _ChildParentTypes,
     ChildPropsType,
-    ICommonBlueprintBase
+    ICommonBlueprint
   >(_Child);
 
   return {

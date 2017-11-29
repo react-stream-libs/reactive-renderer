@@ -1,43 +1,62 @@
-import { BaseBlueprint } from './types/BaseBlueprint';
-import { BasePropsType } from './types/BasePropsType';
-import { IParentableBy } from './types/IParentableBy';
-import { RenderableType } from './types/Renderable';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  IParentableBy,
+  Renderable,
+  ICommonBlueprintBase,
+  IContextBase,
+  ComponentType,
+} from './types';
 
 /**
  * creates Component( Props => Renderable ) from a Blueprint Class.
  * @param blueprintClass - the blueprint class
  */
 
+export const defaultContext: IContextBase = {
+  __EXTENDS_ICONTEXT_BASE: null,
+};
+
 export function createComponent<
-  BlueprintClass extends BaseBlueprint<PropsType, CommonBlueprintBase> &
-    IParentableBy<ParentableTypes, CommonBlueprintBase> &
-    CommonBlueprintBase,
-  ParentableTypes extends BaseBlueprint<BasePropsType, CommonBlueprintBase>,
+  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContextBase> &
+    IParentableBy<ParentableTypes, ICommonBlueprint> &
+    ICommonBlueprint,
+  ParentableTypes extends
+    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
+    & ICommonBlueprint,
   PropsType extends BasePropsType,
-  CommonBlueprintBase
+  ICommonBlueprint extends ICommonBlueprintBase
 >(
   blueprintClass: {
-    new(): BlueprintClass & IParentableBy<ParentableTypes, CommonBlueprintBase>
+    new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
   },
-) {
+): ComponentType<
+  BlueprintClass,
+  ParentableTypes,
+  PropsType,
+  ICommonBlueprint
+> {
   return (
     props: PropsType,
-    children: RenderableType<
+    children: Renderable<
       BasePropsType,
-      BaseBlueprint<BasePropsType, CommonBlueprintBase> &
-        IParentableBy<BlueprintClass, CommonBlueprintBase> &
-        CommonBlueprintBase,
+      BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
+        IParentableBy<BlueprintClass, ICommonBlueprint> &
+        ICommonBlueprint,
       BlueprintClass,
-      CommonBlueprintBase
+      ICommonBlueprint,
+      IContextBase
     > []
-  ): RenderableType<
+  ) => new Renderable<
     PropsType,
-    BlueprintClass & CommonBlueprintBase,
-    ParentableTypes & CommonBlueprintBase,
-    CommonBlueprintBase
-  > => ({
+    BlueprintClass,
+    ParentableTypes,
+    ICommonBlueprint,
+    IContextBase
+  >({
       blueprint: blueprintClass,
       props,
       children,
+      context: defaultContext,
   });
 }

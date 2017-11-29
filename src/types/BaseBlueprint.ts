@@ -1,4 +1,6 @@
 import { BasePropsType } from './BasePropsType';
+import { ICommonBlueprintBase } from './ICommonBlueprintBase';
+import { IContextBase } from './IContextBase';
 import { InstanceTreeType } from './InstanceTree';
 
 /**
@@ -10,20 +12,40 @@ import { InstanceTreeType } from './InstanceTree';
  */
 export abstract class BaseBlueprint<
   PropsType extends BasePropsType
-  , CommonBlueprintBase
+  , ICommonBlueprint extends ICommonBlueprintBase
+  , IContext extends IContextBase
 > {
-  public applyInitialProps(props: PropsType) { }
-  public abstract updateBeforeChildren(props: PropsType): any;
-  public abstract updateAfterChildren(props: PropsType): any;
+  // tslint:disable variable-name
+  public __children: BaseBlueprint<
+    BasePropsType,
+    ICommonBlueprint,
+    IContextBase
+  > [];
+  // tslint:enable variable-name
+  public prevProps?: BasePropsType;
+  public applyInitialProps(
+    props: PropsType, context: IContext,
+    renderCycleId: number | string,
+  ) { }
+  public abstract updateBeforeChildren(
+    props: PropsType, context: IContext,
+    renderCycleId: number | string,
+  ): any;
+  public abstract updateAfterChildren(
+    props: PropsType, context: IContext,
+    renderCycleId: number | string,
+  ): any;
   public abstract reorderChildren(
-    oldChildrenList: InstanceTreeType<CommonBlueprintBase>[],
+    oldChildrenList: InstanceTreeType<ICommonBlueprint>[],
     oldChildrenDict: {
-      [key: string]: InstanceTreeType<CommonBlueprintBase>,
+      [key: string]: InstanceTreeType<ICommonBlueprint>,
     },
-    newChildrenList: InstanceTreeType<CommonBlueprintBase>[],
+    newChildrenList: InstanceTreeType<ICommonBlueprint>[],
     newChildrenDict: {
-      [key: string]: InstanceTreeType<CommonBlueprintBase>,
+      [key: string]: InstanceTreeType<ICommonBlueprint>,
     },
   ): void;
-  public abstract cleanUp(): any;
+  public abstract cleanUp(
+    renderCycleId: number | string,
+  ): any;
 }

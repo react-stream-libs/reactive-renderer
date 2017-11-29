@@ -1,6 +1,6 @@
 import Logger from '../../Logger';
 import {
-  // BasePropsType,
+  IContextBase,
 } from '../../..';
 
 import {
@@ -13,12 +13,12 @@ import {
   BaseBlueprint,
   InstanceTreeType,
 } from './types';
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import { ICommonBlueprint } from '../ICommonBlueprint';
 
 export class NoneExistentBlueprint
-    extends Blueprint<BasePropsType> {
+    extends Blueprint<BasePropsType, IContextBase> {
 
-  public init(parent: Blueprint<BasePropsType>): void {}
+  public init(parent: Blueprint<BasePropsType, IContextBase>): void {}
 
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
@@ -36,11 +36,12 @@ export type FakeRootPropsType = {
 } & BasePropsType;
 
 export class _FakeRoot
-    extends Blueprint<FakeRootPropsType>
+    extends Blueprint<FakeRootPropsType, IContextBase>
     implements IParentableBy<NoneExistentBlueprint> {
   public someCommonMethod: () => 'hello';
-  private logger: Logger<ICommonBlueprintBase>;
-  constructor(logger?: Logger<ICommonBlueprintBase>) {
+  // @ts-ignore: ignore unused
+  private logger: Logger<ICommonBlueprint> | undefined;
+  constructor(logger?: Logger<ICommonBlueprint>) {
     super();
     this.logger = logger;
   }

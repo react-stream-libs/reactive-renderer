@@ -1,17 +1,21 @@
 import {
   BasePropsType,
   createComponent,
+  IContextBase,
+  InstanceTreeType,
 } from '../../..';
 
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
+import { ICommonBlueprint } from '../ICommonBlueprint';
 import { _FakeRoot } from './fakeRoot';
+import {
+  LogItemEventType,
+} from '../../Logger/LogItemRawDataType';
 
 import {
   Blueprint,
   IParentableBy,
   RenderableType,
   Logger, LogItem,
-  InstanceTreeType,
 } from './types';
 
 export type _GrandparentParentTypes = _FakeRoot;
@@ -20,16 +24,29 @@ export type GrandParentPropsType = {
 } & BasePropsType;
 
 export class __GrandParent
-    extends Blueprint<GrandParentPropsType>
+    extends Blueprint<GrandParentPropsType, IContextBase>
     implements
       IParentableBy<_GrandparentParentTypes> {
-
+  public name: string;
   public someCommonMethod: () => '__GrandParent';
   protected parent: _GrandparentParentTypes;
   protected logger: Logger;
-  public init(parent: _GrandparentParentTypes) { }
-  public updateBeforeChildren(props: GrandParentPropsType) { }
-  public updateAfterChildren(props: GrandParentPropsType) { }
+  public init(
+    parent: _GrandparentParentTypes,
+    props: GrandParentPropsType,
+    context: IContextBase,
+    renderCycleId?: string | number,
+  ) { }
+  public updateBeforeChildren(
+    props: GrandParentPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
+  public updateAfterChildren(
+    props: GrandParentPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
 
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
@@ -43,48 +60,78 @@ export class __GrandParent
 }
 
 
-export function getGrandparentComps(logger: Logger): {
+export function getGrandparentComponent(logger: Logger): {
   _GrandParent: typeof __GrandParent,
   GrandParent (
     props: GrandParentPropsType,
     children: RenderableType<
       BasePropsType,
-      Blueprint<BasePropsType> & IParentableBy<__GrandParent>,
-      __GrandParent
+      Blueprint<BasePropsType, IContextBase> & IParentableBy<__GrandParent>,
+      __GrandParent,
+      IContextBase
     > []
   ): RenderableType<
     GrandParentPropsType,
     __GrandParent,
-    _GrandparentParentTypes
+    _GrandparentParentTypes,
+    IContextBase
   >
 } {
   class _GrandParent extends __GrandParent {
-    private name: string;
+    public name: string;
     constructor() {
       super();
       this.name = 'GrandParent';
       this.logger = logger;
     }
-    public init(parent: _GrandparentParentTypes) {
+    public init(
+      parent: _GrandparentParentTypes,
+      props: GrandParentPropsType,
+      context: IContextBase,
+      renderCycleId?: string | number,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
-        type: 'init',
+        type: LogItemEventType.INIT,
+        props,
+        context,
+        renderCycleId,
       }));
     }
-    public updateAfterChildren(props: GrandParentPropsType) {
+    public updateBeforeChildren(
+      props: GrandParentPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
-        type: 'update',
+        type: LogItemEventType.UPDATE_BEFORE_CHILDREN,
         props,
+        context,
+        renderCycleId,
+      }));
+    }
+    public updateAfterChildren(
+      props: GrandParentPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
+      this.logger.add(new LogItem({
+        instance: this,
+        blueprint: _GrandParent,
+        type: LogItemEventType.UPDATE_AFTER_CHILDREN,
+        props,
+        context,
+        renderCycleId,
       }));
     }
     public cleanUp() {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _GrandParent,
-        type: 'delete',
+        type: LogItemEventType.DELETE,
       }));
     }
   }
@@ -92,7 +139,7 @@ export function getGrandparentComps(logger: Logger): {
     _GrandParent,
     _GrandparentParentTypes,
     GrandParentPropsType,
-    ICommonBlueprintBase
+    ICommonBlueprint
   >(_GrandParent);
 
   return {

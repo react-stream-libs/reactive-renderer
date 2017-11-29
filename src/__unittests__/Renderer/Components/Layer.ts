@@ -1,12 +1,15 @@
 import {
   createComponent,
   BasePropsType,
+  IContextBase,
 } from '../../..';
 
 import { __GrandParent } from './Grandparent';
-import Logger, { LogItem } from '../../Logger';
-import { ICommonBlueprintBase } from '../CommonBlueprintBase';
-
+import Logger, {
+  LogItem,
+  LogItemEventType,
+} from '../../Logger';
+import { ICommonBlueprint } from '../ICommonBlueprint';
 import {
   Blueprint,
   IParentableBy,
@@ -18,15 +21,28 @@ export type _LayerParentTypes = __GrandParent & __Layer;
 export type LayerPropsType = {
 } & BasePropsType;
 
-export class __Layer extends Blueprint<LayerPropsType>
+export class __Layer extends Blueprint<LayerPropsType, IContextBase>
     implements IParentableBy<_LayerParentTypes> {
 
   public someCommonMethod: () => '__Layer';
   public parent: _LayerParentTypes;
-  protected logger: Logger<ICommonBlueprintBase>;
-  public init(parent: _LayerParentTypes) { }
-  public updateBeforeChildren(props: LayerPropsType) { }
-  public updateAfterChildren(props: LayerPropsType) { }
+  protected logger: Logger<ICommonBlueprint>;
+  public init(
+    parent: _LayerParentTypes,
+    props: LayerPropsType,
+    context: IContextBase,
+    renderCycleId: number | string
+  ) { }
+  public updateBeforeChildren(
+    props: LayerPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
+  public updateAfterChildren(
+    props: LayerPropsType,
+    context: IContextBase,
+    renderCycleId: number | string,
+  ) { }
   public reorderChildren(
     oldChildrenList: InstanceTreeType[],
     oldChildrenDict: {[key: string]: InstanceTreeType},
@@ -35,49 +51,68 @@ export class __Layer extends Blueprint<LayerPropsType>
   ) {
 
   }
-  public cleanUp() { }
+  public cleanUp(renderCycleId: string | number) { }
 }
 
-export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
+export function getLayerComponent(logger: Logger<ICommonBlueprint>): {
   _Layer: typeof __Layer,
   Layer (
     props: LayerPropsType,
     children: RenderableType<
       BasePropsType,
-      Blueprint<BasePropsType> & IParentableBy<__Layer>,
-      __Layer
+      Blueprint<BasePropsType, IContextBase> & IParentableBy<__Layer>,
+      __Layer,
+      IContextBase
     >[]
   ): RenderableType<
     LayerPropsType,
     __Layer,
-    _LayerParentTypes
+    _LayerParentTypes,
+    IContextBase
   >
 } {
-  class _Layer extends __Layer implements ICommonBlueprintBase {
+  class _Layer extends __Layer implements ICommonBlueprint {
     constructor() {
       super();
       this.logger = logger;
     }
-    public init(parent: _LayerParentTypes) {
+    public init(
+      parent: _LayerParentTypes,
+      props: LayerPropsType,
+      context: IContextBase,
+      renderCycleId?: string | number,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _Layer,
-        type: 'init',
-      }));
-    }
-    public updateAfterChildren(props: LayerPropsType) {
-      this.logger.add(new LogItem({
-        instance: this,
-        blueprint: _Layer,
-        type: 'update',
+        type: LogItemEventType.INIT,
         props,
+        context,
+        renderCycleId,
       }));
     }
-    public cleanUp() {
+
+    public updateAfterChildren(
+      props: LayerPropsType,
+      context: IContextBase,
+      renderCycleId: number | string,
+    ) {
       this.logger.add(new LogItem({
         instance: this,
         blueprint: _Layer,
-        type: 'delete',
+        type: LogItemEventType
+          .UPDATE_AFTER_CHILDREN,
+        props,
+        context,
+        renderCycleId,
+      }));
+    }
+    public cleanUp(renderCycleId: string | number) {
+      this.logger.add(new LogItem({
+        instance: this,
+        blueprint: _Layer,
+        type: LogItemEventType.DELETE,
+        renderCycleId,
       }));
     }
     public reorderChildren(
@@ -93,7 +128,7 @@ export function getLayerComps(logger: Logger<ICommonBlueprintBase>): {
     _Layer,
     _LayerParentTypes,
     LayerPropsType,
-    ICommonBlueprintBase
+    ICommonBlueprint
   >(_Layer);
 
   return {

@@ -10,3 +10,6 @@ docs_src/webpack/*.js
 docs_ts_compiled
 reactive-renderer.d.ts
 storybook-static
+
+.vscode
+!.vscode/settings.json

@@ -2,16 +2,27 @@ import * as chai from 'chai';
 import {
   default as Logger,
   LogItem,
+  LogItemEventType,
 } from '.';
-import { BaseBlueprint } from '../../types/BaseBlueprint';
-import { BasePropsType } from '../../types/BasePropsType';
+import {
+  BaseBlueprint,
+  BasePropsType,
+  ICommonBlueprintBase,
+  IContextBase,
+} from '../..';
 
-export interface ICommonBlueprintBase {
+export interface ICommonBlueprint extends ICommonBlueprintBase {
 
 }
 
-class RootBlueprint extends BaseBlueprint<BasePropsType, ICommonBlueprintBase> {
-  public init(parent: BaseBlueprint<BasePropsType, ICommonBlueprintBase>) { }
+class RootBlueprint extends BaseBlueprint<
+  BasePropsType, ICommonBlueprint, IContextBase
+> implements ICommonBlueprint {
+  public __EXTENDS_ICOMMON_BLUEPRINT_BASE: null;
+  public init(
+    parent: BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
+    context: IContextBase
+  ) { }
   public updateBeforeChildren(props: BasePropsType) { }
   public updateAfterChildren(props: BasePropsType) { }
 
@@ -23,32 +34,32 @@ describe('unittest logger should...', () => {
   it('should log correctly', () => {
     const logger = new Logger();
     logger.add(new LogItem({
-      type: 'init',
+      type: LogItemEventType.INIT,
       key: 'grandparent',
     }));
     logger.add(new LogItem({
-      type: 'init',
+      type: LogItemEventType.INIT,
       blueprint: RootBlueprint,
       props: {
         key: '123',
       }
     }));
-    logger.partialMatch([
+    logger.partialMatchWithMessage('', [
       new LogItem({
-        type: 'init',
+        type: LogItemEventType.INIT,
       }),
       new LogItem({
-        type: 'init',
+        type: LogItemEventType.INIT,
         blueprint: RootBlueprint
       })
     ]);
     chai.expect(() => {
-      logger.partialMatch([
+      logger.partialMatchWithMessage('', [
         new LogItem({
-          type: 'init',
+          type: LogItemEventType.INIT,
         }),
         new LogItem({
-          type: 'update',
+          type: LogItemEventType.UPDATE_AFTER_CHILDREN,
           blueprint: RootBlueprint
         })
       ]);
