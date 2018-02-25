@@ -85,7 +85,7 @@
     "typescript": "^2.6.1",
     "typescript-babel-jest": "latest",
     "url-loader": "^0.6.2",
-    "webpack": "^3.8.1",
+    "webpack": "^4.0.0",
     "webpack-dev-server": "^2.9.4"
   },
   "peerDependencies": {
