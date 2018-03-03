@@ -84,7 +84,7 @@
     "tsutils": "^2.12.2",
     "typescript": "^2.6.1",
     "typescript-babel-jest": "latest",
-    "url-loader": "^0.6.2",
+    "url-loader": "^1.0.0",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
   },
