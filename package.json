@@ -52,7 +52,7 @@
     "console-polyfill": "^0.3.0",
     "copy-webpack-plugin": "^4.2.0",
     "copyfiles": "^1.2.0",
-    "css-loader": "^0.28.7",
+    "css-loader": "^1.0.0",
     "dts-generator": "^2.1.0",
     "file-loader": "^1.1.5",
     "fs": "0.0.1-security",
