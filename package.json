@@ -81,7 +81,7 @@
     "tslint": "^5.8.0",
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.2.0",
-    "tsutils": "^2.12.2",
+    "tsutils": "^3.0.0",
     "typescript": "^2.6.1",
     "typescript-babel-jest": "latest",
     "url-loader": "^0.6.2",
