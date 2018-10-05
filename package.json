@@ -54,7 +54,7 @@
     "copyfiles": "^1.2.0",
     "css-loader": "^0.28.7",
     "dts-generator": "^2.1.0",
-    "file-loader": "^1.1.5",
+    "file-loader": "^2.0.0",
     "fs": "0.0.1-security",
     "history": "^4.7.2",
     "html-webpack-plugin": "^2.30.1",
