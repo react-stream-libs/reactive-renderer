@@ -65,7 +65,7 @@
     "lodash": "^4.17.4",
     "monaco-editor": "^0.10.1",
     "node-sass": "^4.6.1",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.0",
     "raw-loader": "^0.5.1",
     "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
