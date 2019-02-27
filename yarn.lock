@@ -7278,9 +7278,10 @@ typescript-babel-jest@latest:
     babel-jest "20.0.3"
     typescript "^2.4.1"
 
-typescript-string-enums@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/typescript-string-enums/-/typescript-string-enums-0.3.5.tgz#00f5c30422ec5d8061ed49a0fe06610ae99f02a2"
+typescript-string-enums@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typescript-string-enums/-/typescript-string-enums-1.0.0.tgz#4e6bf18e3c6ef02efc80bb35c7edf31b78953d2f"
+  integrity sha512-7ZtI+QpAihetJPm2qSEzH6P9m7cy3Fqa+Y9L3ONS0PStfjBgB2hiaS07qLmBolwGbPko2blakPfcgT3g+Mh7Fw==
 
 typescript@^2.4.1:
   version "2.5.2"
