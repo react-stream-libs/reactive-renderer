@@ -23,7 +23,7 @@
   "devDependencies": {
     "@storybook/react": "^3.2.16",
     "@types/chai": "^4.0.5",
-    "@types/copy-webpack-plugin": "^4.0.1",
+    "@types/copy-webpack-plugin": "^5.0.0",
     "@types/history": "^4.6.2",
     "@types/html-webpack-plugin": "^2.28.0",
     "@types/jest": "^21.1.6",
