@@ -1,7 +1,7 @@
-import { omit } from 'ramda';
 import { getGrandparentComponent } from './Components/Grandparent';
 import { getLayerComponent } from './Components/Layer';
 import { getContextLayerComponent } from './Components/ContextLayer';
+import { ICommonBlueprint } from './ICommonBlueprint'
 import Logger, {
   LogItem,
   LogItemEventType,
@@ -11,10 +11,10 @@ import FakeRenderer from './FakeRenderer';
 
 describe('[Renderer]', () => {
   it('... should corrently init, update, and remove one-depth', () => {
-    const logger = new Logger();
+    const logger = new Logger<ICommonBlueprint>();
     const { GrandParent, _GrandParent } = getGrandparentComponent(logger);
     const { Layer, _Layer } = getLayerComponent(logger);
-    const { ContextLayer, _ContextLayer }  = getContextLayerComponent(logger);
+    const { ContextLayer, _ContextLayer } = getContextLayerComponent(logger);
     const renderer = new FakeRenderer(logger);
     renderer.render(
       GrandParent(
@@ -40,18 +40,18 @@ describe('[Renderer]', () => {
     ]);
     renderer.render(
       GrandParent({
-          key: 'grandparent',
+        key: 'grandparent',
       }, [
-        Layer({
-          key: 'parent',
-        }, [
-          ContextLayer({
-            key: 'innerLayer',
-          }, [], {
-            __EXTENDS_ICONTEXT_BASE: null,
-          }),
+          Layer({
+            key: 'parent',
+          }, [
+              ContextLayer({
+                key: 'innerLayer',
+              }, [], {
+                  __EXTENDS_ICONTEXT_BASE: null,
+                }),
+            ]),
         ]),
-      ]),
       { __EXTENDS_ICONTEXT_BASE: null }
     );
     const loggerAfterGrandparentInit = new Logger(
@@ -100,18 +100,17 @@ describe('[Renderer]', () => {
         }
       }),
     ],
-    (logItem) => new LogItem(
-      omit([
-        'context',
-        'props',
-        'renderCycleId',
-      ], logItem.data)
-    ));
+      (logItem) => new LogItem({
+        ...logItem.data,
+        context: void 0,
+        props: void 0,
+        renderCycleId: void 0,
+      })
+    )
     renderer.render(null, { __EXTENDS_ICONTEXT_BASE: null });
     const loggerAfterDeletion = new Logger(
       logger.logs.slice(10)
     );
-    console.error('loggerAfterDeletion', loggerAfterDeletion);
     loggerAfterDeletion.partialMatchWithMessage('loggerAfterDeletion', [
       new LogItem({
         blueprint: _ContextLayer,

@@ -1,11 +1,7 @@
-
 {
-  "presets": ["es2015", "react"],
   "plugins": [
-    "babel-plugin-transform-decorators-legacy",
-    "babel-plugin-syntax-async-functions",
-    "babel-plugin-transform-regenerator",
-    "babel-plugin-transform-es3-member-expression-literals",
-    "babel-plugin-transform-es3-property-literals"
+    ["@babel/plugin-proposal-decorators", {
+      "decoratorsBeforeExport": true
+    }]
   ]
 }

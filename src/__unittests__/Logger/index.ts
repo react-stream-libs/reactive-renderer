@@ -1,7 +1,7 @@
 import {
   forEach,
 } from 'lodash';
-import * as stringTable from 'string-table';
+import { table } from 'table';
 import {
   ICommonBlueprintBase,
 } from '../..';
@@ -46,11 +46,10 @@ export default class Logger<ICommonBlueprint extends ICommonBlueprintBase> { //t
       );
       throw(new Error(`LoggerItemMismatch: ${message}
         Error: ${error}
-        ${stringTable.create([{
-          logItems: JSON.stringify(actualLogItems, null, 2),
-          expected: JSON.stringify(expectedLogItems, null, 2),
-        }], {
-        })}
+        ${table([[
+          `logItems: ${JSON.stringify(actualLogItems, null, 2)}`,
+          `expected: ${JSON.stringify(expectedLogItems, null, 2)}`,
+        ]])}
       `));
     }
   }

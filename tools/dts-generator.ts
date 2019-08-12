@@ -1,9 +1,12 @@
-var dtsGen = require('dts-generator').default;
+import dtsGen from 'dts-generator'
+// import dtsGen = require('dts-generator').default
+// import * as dtsGen from 'dts-generator'
+// var dtsGen = require('dts-generator').default;
 const path = require('path');
 const _ = require('lodash');
 
 
-function convertImportPath(params) {
+function convertImportPath(params: dtsGen.ResolveModuleImportParams) {
   let toImportFilePath = params.importedModuleId;
   let currentFilePath = params.currentModuleId;
   if (!toImportFilePath.startsWith('.')) {
@@ -22,7 +25,7 @@ function convertImportPath(params) {
   return toImportFilePath;
 }
 
-function convertFilePath(params) {
+function convertFilePath(params: dtsGen.ResolveModuleIdParams) {
   let filePath = params.currentModuleId;
   if (filePath === 'index') {
     return 'reactive-renderer';
@@ -35,8 +38,10 @@ function convertFilePath(params) {
   return filePath;
 }
 
+console.log('dtsGen:', dtsGen)
 dtsGen({
-  name: 'reactive-renderer',
+  main: '',
+  name: '',
   project: 'tsconfig.lib.json',
   out: 'reactive-renderer.d.ts',
   resolveModuleId: convertFilePath,
