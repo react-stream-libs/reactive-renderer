@@ -10,8 +10,10 @@
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
+    "esModuleInterop": true,
     "rootDirs": [
-      "src", "storybook-ts", "dts-generator"
+      "src", "storybook-ts", "dts-generator",
+      "tools"
     ],
     "outDir": "docs_ts_compiled"
   },
@@ -26,7 +28,6 @@
     "docs_src",
     ".storybook",
     "docs_ts_compiled",
-    "dts-generator.js",
     "reactive-renderer.d.ts",
     "dist",
     "docs",

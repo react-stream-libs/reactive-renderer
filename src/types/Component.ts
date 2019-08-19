@@ -24,7 +24,7 @@ export type ComponentType<
     IContextBase
   > [],
   context?: IContext
-  ) => Renderable<
+) => Renderable<
   PropsType,
   BlueprintClass & ICommonBlueprint,
   ParentableTypes & ICommonBlueprint,
@@ -52,7 +52,7 @@ export type ComponentWithContextType<
     IContextBase
   > [],
   context: IContext
-  ) => Renderable<
+) => Renderable<
   PropsType,
   BlueprintClass & ICommonBlueprint,
   ParentableTypes & ICommonBlueprint,
