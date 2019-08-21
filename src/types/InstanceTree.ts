@@ -12,10 +12,7 @@ export type InstanceTreeType<
        = BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
 > = {
   instance: Blueprint &
-    IParentableBy<
-      Blueprint
-      , ICommonBlueprint
-    > &
+    IParentableBy<Blueprint> &
     ICommonBlueprint,
   key: string,
   context: IContextBase,

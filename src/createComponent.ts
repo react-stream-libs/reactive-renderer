@@ -3,10 +3,10 @@ import {
   BasePropsType,
   IParentableBy,
   Renderable,
-  ICommonBlueprintBase,
   IContextBase,
   ComponentType,
 } from './types';
+import { UnpackBaseBlueprint } from './types/BaseBlueprint';
 
 /**
  * creates Component( Props => Renderable ) from a Blueprint Class.
@@ -18,41 +18,30 @@ export const defaultContext: IContextBase = {
 };
 
 export function createComponent<
-  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContextBase> &
-    IParentableBy<ParentableTypes, ICommonBlueprint> &
-    ICommonBlueprint,
+  BlueprintClass extends BaseBlueprint<any, any, any> &
+    IParentableBy<ParentableTypes>,
   ParentableTypes extends
-    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
-    & ICommonBlueprint,
-  PropsType extends BasePropsType,
-  ICommonBlueprint extends ICommonBlueprintBase
+    BaseBlueprint<BasePropsType, UnpackBaseBlueprint<BlueprintClass>['ICommonBlueprint'], IContextBase>
 >(
   blueprintClass: {
-    new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
+    new(): BlueprintClass & IParentableBy<ParentableTypes>
   },
 ): ComponentType<
   BlueprintClass,
-  ParentableTypes,
-  PropsType,
-  ICommonBlueprint
+  ParentableTypes
 > {
   return (
-    props: PropsType,
+    props: UnpackBaseBlueprint<BlueprintClass>['PropsType'],
     children: Renderable<
       BasePropsType,
-      BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
-        IParentableBy<BlueprintClass, ICommonBlueprint> &
-        ICommonBlueprint,
-      BlueprintClass,
-      ICommonBlueprint,
-      IContextBase
+      BaseBlueprint<BasePropsType, UnpackBaseBlueprint<BlueprintClass>['ICommonBlueprint'], IContextBase> &
+        IParentableBy<BlueprintClass>,
+      BlueprintClass
     > []
   ) => new Renderable<
-    PropsType,
+    UnpackBaseBlueprint<BlueprintClass>['PropsType'],
     BlueprintClass,
-    ParentableTypes,
-    ICommonBlueprint,
-    IContextBase
+    ParentableTypes
   >({
       blueprint: blueprintClass,
       props,

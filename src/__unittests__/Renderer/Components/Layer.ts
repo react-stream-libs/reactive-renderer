@@ -61,14 +61,12 @@ export function getLayerComponent(logger: Logger<ICommonBlueprint>): {
     children: RenderableType<
       BasePropsType,
       Blueprint<BasePropsType, IContextBase> & IParentableBy<__Layer>,
-      __Layer,
-      IContextBase
+      __Layer
     >[]
   ): RenderableType<
     LayerPropsType,
     __Layer,
-    _LayerParentTypes,
-    IContextBase
+    _LayerParentTypes
   >
 } {
   class _Layer extends __Layer implements ICommonBlueprint {
@@ -126,9 +124,7 @@ export function getLayerComponent(logger: Logger<ICommonBlueprint>): {
   }
   const layerComponent = createComponent<
     _Layer,
-    _LayerParentTypes,
-    LayerPropsType,
-    ICommonBlueprint
+    _LayerParentTypes
   >(_Layer);
 
   return {

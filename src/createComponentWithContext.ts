@@ -7,6 +7,7 @@ import {
   IContextBase,
   ComponentWithContextType,
 } from './types';
+import { UnpackBaseBlueprint } from './types/BaseBlueprint';
 
 /**
  * creates Component( Props => Renderable ) from a Blueprint Class.
@@ -14,38 +15,35 @@ import {
  */
 
 export function createComponentWithContext<
-  BlueprintClass extends BaseBlueprint<PropsType, ICommonBlueprint, IContext>
-    & IParentableBy<ParentableTypes, ICommonBlueprint>
-    & ICommonBlueprint,
+  BlueprintClass extends BaseBlueprint<any, any, any>
+    & IParentableBy<ParentableTypes>,
   ParentableTypes
-    extends BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
-    & ICommonBlueprint,
-  PropsType extends BasePropsType,
-  ICommonBlueprint extends ICommonBlueprintBase,
-  IContext extends IContextBase
+    extends BaseBlueprint<
+              BasePropsType, 
+              UnpackBaseBlueprint<BlueprintClass>['ICommonBlueprint'], 
+              IContextBase
+            >,
+  IRequiredContext extends IContextBase
 >(
   blueprintClass: {
-    new(): BlueprintClass & IParentableBy<ParentableTypes, ICommonBlueprint>
+    new(): BlueprintClass & IParentableBy<ParentableTypes>
   },
 ): ComponentWithContextType<
   BlueprintClass,
-  ParentableTypes,
-  PropsType,
-  ICommonBlueprint,
-  IContext
+  ParentableTypes
 > {
   return (
-    props: PropsType,
+    props: UnpackBaseBlueprint<BlueprintClass>['PropsType'],
     children: Renderable<
       BasePropsType,
-      BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
-        IParentableBy<BlueprintClass, ICommonBlueprint> &
-        ICommonBlueprint,
-      BlueprintClass,
-      ICommonBlueprint,
-      IContextBase
+      BaseBlueprint<
+        BasePropsType, 
+        UnpackBaseBlueprint<BlueprintClass>['ICommonBlueprint'], 
+        IContextBase
+      > & IParentableBy<BlueprintClass>,
+      BlueprintClass
     > [],
-    context: IContext
+    context: UnpackBaseBlueprint<BlueprintClass>// IContext
   ) => new Renderable<
     PropsType,
     BlueprintClass,

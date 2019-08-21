@@ -29,8 +29,7 @@ export function diffRenderedFor(
   expected: RenderableType<
     BasePropsType,
     Blueprint,
-    Blueprint,
-    IContextBase
+    Blueprint
   >,
   options: RenderedForDiffOptions = {}
 ): RenderedForDiffResultType {

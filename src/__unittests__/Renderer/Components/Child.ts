@@ -73,14 +73,12 @@ export function getChildComps(logger: Logger): {
       Blueprint<BasePropsType, IContextBase> &
         IParentableBy<__Child> &
         ICommonBlueprint,
-      __Child,
-      IContextBase
+      __Child
     > []
   ): RenderableType<
     ChildPropsType,
     __Child,
-    _ChildParentTypes,
-    IContextBase
+    _ChildParentTypes
   >
 } {
   class _Child extends __Child {
@@ -91,9 +89,7 @@ export function getChildComps(logger: Logger): {
   }
   const childComponent = createComponent<
     _Child,
-    _ChildParentTypes,
-    ChildPropsType,
-    ICommonBlueprint
+    _ChildParentTypes
   >(_Child);
 
   return {

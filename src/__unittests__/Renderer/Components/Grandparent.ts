@@ -5,7 +5,6 @@ import {
   InstanceTreeType,
 } from '../../..';
 
-import { ICommonBlueprint } from '../ICommonBlueprint';
 import { _FakeRoot } from './fakeRoot';
 import {
   LogItemEventType,
@@ -67,14 +66,12 @@ export function getGrandparentComponent(logger: Logger): {
     children: RenderableType<
       BasePropsType,
       Blueprint<BasePropsType, IContextBase> & IParentableBy<__GrandParent>,
-      __GrandParent,
-      IContextBase
+      __GrandParent
     > []
   ): RenderableType<
     GrandParentPropsType,
     __GrandParent,
-    _GrandparentParentTypes,
-    IContextBase
+    _GrandparentParentTypes
   >
 } {
   class _GrandParent extends __GrandParent {
@@ -137,9 +134,7 @@ export function getGrandparentComponent(logger: Logger): {
   }
   const grandParentComponent = createComponent<
     _GrandParent,
-    _GrandparentParentTypes,
-    GrandParentPropsType,
-    ICommonBlueprint
+    _GrandparentParentTypes
   >(_GrandParent);
 
   return {

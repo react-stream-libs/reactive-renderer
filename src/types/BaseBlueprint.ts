@@ -49,3 +49,11 @@ export abstract class BaseBlueprint<
     renderCycleId: number | string,
   ): any;
 }
+
+export type UnpackBaseBlueprint<
+  T extends BaseBlueprint<any, any, any>
+> = T extends BaseBlueprint<infer PropsType, infer ICommonBlueprint, infer IContext> ? {
+  PropsType: PropsType,
+  ICommonBlueprint: ICommonBlueprint,
+  IContext: IContext,
+} : never

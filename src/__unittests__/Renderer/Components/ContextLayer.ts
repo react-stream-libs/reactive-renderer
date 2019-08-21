@@ -69,15 +69,13 @@ export function getContextLayerComponent(logger: Logger<ICommonBlueprint>): {
     children: RenderableType<
       BasePropsType,
       Blueprint<BasePropsType, IContextBase> & IParentableBy<__ContextLayer>,
-      __ContextLayer,
-      IContextBase
+      __ContextLayer
     >[],
     context: IRequiredContext
   ): RenderableType<
     ContextLayerPropsType,
     __ContextLayer,
-    _ContextLayerParentTypes,
-    IContextBase
+    _ContextLayerParentTypes
   >
 } {
   class _ContextLayer extends __ContextLayer implements ICommonBlueprint {

@@ -18,11 +18,9 @@ export type BaseRootRenderableType<
 > = Renderable<
   BasePropsType,
   BaseBlueprint<BasePropsType, ICommonBlueprint, IContext> &
-    IParentableBy<_Root, ICommonBlueprint> &
+    IParentableBy<_Root> &
     ICommonBlueprint,
-  _Root & ICommonBlueprint,
-  ICommonBlueprint,
-  IContext
+  _Root & ICommonBlueprint
 >;
 
 export abstract class BaseRenderer<

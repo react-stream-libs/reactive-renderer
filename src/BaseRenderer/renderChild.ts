@@ -24,12 +24,8 @@ export function renderChild<
   instanceTree: InstanceTreeType<ICommonBlueprint>,
   toRender: Renderable<
     BasePropsType,
-    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
-      ICommonBlueprint,
-    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase> &
-      ICommonBlueprint,
-    ICommonBlueprint,
-    IContext
+    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>,
+    BaseBlueprint<BasePropsType, ICommonBlueprint, IContextBase>
   >,
   context: IContext,
   renderCycleId: number | string = uuid.v4(),

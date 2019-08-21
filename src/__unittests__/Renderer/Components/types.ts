@@ -38,16 +38,15 @@ export abstract class Blueprint<
 
 export interface IParentableBy<
   _Blueprint extends Blueprint<any, any>
-> extends _IParentableBy<_Blueprint, ICommonBlueprint> {
+> extends _IParentableBy<_Blueprint> {
 
 }
 
 export type RenderableType<
   PropsType extends BasePropsType = BasePropsType,
-  _Blueprint extends Blueprint<BasePropsType, IContext> = Blueprint,
-  ParentableBy extends Blueprint<BasePropsType, IContextBase> = Blueprint,
-  IContext extends IContextBase = IContextBase
-> = _RenderableType<PropsType, _Blueprint, ParentableBy, ICommonBlueprint, IContext>;
+  _Blueprint extends Blueprint<BasePropsType, any> = Blueprint,
+  ParentableBy extends Blueprint<BasePropsType, IContextBase> = Blueprint
+> = _RenderableType<PropsType, _Blueprint, ParentableBy>;
 
 export class Logger extends _Logger<ICommonBlueprint> {}
 export class LogItem extends _LogItem<ICommonBlueprint> {}
@@ -65,9 +64,7 @@ export function createComponent<
 ) {
   return _createComponent<
     BlueprintClass,
-    ParentableTypes,
-    PropsType,
-    ICommonBlueprint
+    ParentableTypes
   >(blueprintClass);
 }
 
