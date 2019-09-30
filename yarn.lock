@@ -1951,10 +1951,12 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
-"@types/ramda@^0.26.18":
-  version "0.26.18"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.18.tgz#a80f02b046edd5ff777e863732591bd50c53236e"
-  integrity sha512-wK3NLaAkL/ht7Nw4IZsOagJuYqzZgoboFvILolOPtmoKyy25gTdz/uvB/bXsv6vdWENYv+ml5ph873P2d/+9HA==
+"@types/ramda@^0.26.26":
+  version "0.26.26"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.26.tgz#cf5c2fa9bfbae8f81be7dfaa19e08d31452f5e4b"
+  integrity sha512-jDx2Lp2WvziMTcDxOU21yzRr6jP/VTWvpg6SQxeM63VldSjugUY1N9p1Q8YY/wpGvqzpkstUFmg2oGJdBSp5gg==
+  dependencies:
+    ts-toolbelt "^4.7.7"
 
 "@types/react@*", "@types/react@^16.8.24":
   version "16.8.24"
@@ -10538,6 +10540,11 @@ ts-pnp@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.2.tgz#be8e4bfce5d00f0f58e0666a82260c34a57af552"
   integrity sha512-f5Knjh7XCyRIzoC/z1Su1yLLRrPrFCgtUAh/9fCSP6NKbATwpOL1+idQVXQokK9GRFURn/jYPGPfegIctwunoA==
+
+ts-toolbelt@^4.7.7:
+  version "4.7.19"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-4.7.19.tgz#98d2a7f731182e7d9cca90183472736e4c659445"
+  integrity sha512-qIqDUMilFyqyVftvpsgIvQ1wI6uAfZ1XPidQjnHK1sRw3hJqzAkEZplEnKJuatuB8bkuJ+eVpbgXwKTvct0kWA==
 
 tslib@^1.9.0:
   version "1.10.0"
