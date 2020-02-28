@@ -1886,10 +1886,10 @@
     "@types/node" "*"
     "@types/webpack" "*"
 
-"@types/dts-generator@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@types/dts-generator/-/dts-generator-2.1.4.tgz#49d8ea73ff50773645eb4704bf73c0ee937a6c3e"
-  integrity sha512-+LFSj0brAEqC7TKubHoLqVbKuKECXWKAINhjukMANy1MzNi8PDqBm/H+N8WGk0bZB+D5G4AoST4NjNz349YQPQ==
+"@types/dts-generator@^2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@types/dts-generator/-/dts-generator-2.1.5.tgz#2417c8c8d1b18df6027708d6e73d5b62325598e5"
+  integrity sha512-kPkNIAGXfA6svTw/90vuA1XQGlYuBwClqljXl/6xgP8yQiAXfJGEeshEpeiEeEw38K4QzqKdV/NAAxItgKcd7Q==
   dependencies:
     "@types/bluebird" "*"
     typescript "*"
