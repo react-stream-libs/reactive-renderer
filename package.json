@@ -30,7 +30,7 @@
     "@storybook/react": "^5.1.10",
     "@types/chai": "^4.1.7",
     "@types/copy-webpack-plugin": "^5.0.0",
-    "@types/dts-generator": "^2.1.4",
+    "@types/dts-generator": "^2.1.5",
     "@types/jest": "^24.0.16",
     "@types/lodash": "^4.14.136",
     "@types/ramda": "^0.26.18",
