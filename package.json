@@ -27,7 +27,7 @@
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "@storybook/react": "^5.1.10",
+    "@storybook/react": "^5.3.17",
     "@types/chai": "^4.1.7",
     "@types/copy-webpack-plugin": "^5.0.0",
     "@types/dts-generator": "^2.1.4",
