@@ -36,7 +36,7 @@
     "@types/ramda": "^0.26.18",
     "@types/react": "^16.8.24",
     "@types/storybook__react": "^4.0.2",
-    "@types/table": "^4.0.6",
+    "@types/table": "^5.0.0",
     "@types/uuid": "^3.4.5",
     "@types/webpack": "^4.32.1",
     "chai": "^4.2.0",
