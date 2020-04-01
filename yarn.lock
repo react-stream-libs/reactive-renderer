@@ -1977,10 +1977,10 @@
     "@types/react" "*"
     "@types/webpack-env" "*"
 
-"@types/table@^4.0.6":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@types/table/-/table-4.0.6.tgz#e938209ca9dc18e2e779a7e1abd0f9dd77aac406"
-  integrity sha512-WnWHc+IAVkkyjhHZLT4zsdOOd0lR1/AlBf/kPUcQD3UNrojpWypTU19YGfh0A5YIj72Swth20xce04660NfaVg==
+"@types/table@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/table/-/table-5.0.0.tgz#67c3821138eb41d538c3d9286771c6cdeeac7172"
+  integrity sha512-fQLtGLZXor264zUPWI95WNDsZ3QV43/c0lJpR/h1hhLJumXRmHNsrvBfEzW2YMhb0EWCsn4U6h82IgwsajAuTA==
 
 "@types/tapable@*":
   version "1.0.4"
